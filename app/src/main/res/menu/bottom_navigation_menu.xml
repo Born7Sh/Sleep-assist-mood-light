@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/page_home"
+        android:enabled="true"
+        android:icon="@drawable/page_home"
+        android:title="홈"/>
+
+    <item
+        android:id="@+id/page_record"
+        android:enabled="true"
+        android:icon="@drawable/page_record"
+        android:title="기록"/>
+
+    <item
+        android:id="@+id/page_light"
+        android:enabled="true"
+        android:icon="@drawable/page_light"
+        android:title="조명"/>
+
+    <item
+        android:id="@+id/page_setting"
+        android:enabled="true"
+        android:icon="@drawable/page_setting"
+        android:title="설정"
+        />
+</menu>

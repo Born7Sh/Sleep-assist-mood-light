@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 21-07-22 하단 탭레이아웃 색깔 조정용 -->
+<!-- 참고 : https://lcw126.tistory.com/330 -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="#FFFFFF" android:state_checked="true" />
+    <item android:color="#CCCCCC" android:state_checked="false" />
+</selector>

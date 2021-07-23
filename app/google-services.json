@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "535380636250",
+    "project_id": "sleepmodelogin",
+    "storage_bucket": "sleepmodelogin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:535380636250:android:9b1072fad68621467d5e63",
+        "android_client_info": {
+          "package_name": "com.example.sleepmood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "535380636250-bj493nmbfnp9al1ev0bi8v8m6t04v9bm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sleepmood",
+            "certificate_hash": "cd232837fb1c1bf6521f1d92e7f9355922e2bff8"
+          }
+        },
+        {
+          "client_id": "535380636250-e69e72tbccpv9pqr0hi52ap81pln6q94.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLc0EKCd7BXpbyUyYjBBIOM7elBPw8Wd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "535380636250-e69e72tbccpv9pqr0hi52ap81pln6q94.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
