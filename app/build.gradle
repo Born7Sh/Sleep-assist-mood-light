@@ -37,6 +37,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -51,4 +52,9 @@ dependencies {
     //하단 레이아웃용 추가 07.22
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.android.material:material:1.2.0'
+
+    //fragment 추가용 07.23
+    implementation 'androidx.navigation:navigation-fragment:2.3.2'
+    implementation 'androidx.navigation:navigation-ui:2.3.2'
+    
 }

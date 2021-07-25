@@ -4,8 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_image"
     tools:context=".MainActivity">
+
+
+    <!-- 21-07-23 탭레이아웃 -->
+    <!-- 참고 : https://lcw126.tistory.com/330 -->
+    <FrameLayout
+        android:id="@+id/fragment_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
 
     <!-- 21-07-22 하단 탭레이아웃 -->
     <!--app:itemIconTint="@drawable/menu_selector_color" 눌렀을 때 아이콘 바뀌는 색깔 조정하는거
@@ -23,4 +31,5 @@
         app:itemTextColor="@drawable/menu_selector_color"
         app:menu="@menu/bottom_navigation_menu" />
 
+    </FrameLayout>
 </LinearLayout>
