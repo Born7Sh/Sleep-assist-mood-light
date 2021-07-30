@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_image"
     android:orientation="vertical"
-    tools:context=".Fragment_Home">
-
+    android:background="@drawable/background_image"
+    tools:context=".Fragment_Home_SleepStart">
 
     <LinearLayout
         android:gravity="center"
@@ -38,42 +37,43 @@
         android:src="@drawable/home_clock"></ImageView>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="150dp">
 
     </LinearLayout>
     <LinearLayout
+        android:gravity="center"
+        android:background="@drawable/sleepstart_backgorund"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:orientation="horizontal"
         android:weightSum="3">
 
         <ImageView
-            android:id="@+id/weatherInfo"
+            android:id="@+id/water"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="6dp"
             android:layout_weight="1"
-            android:src="@drawable/home_weatherinformation"></ImageView>
+            android:src="@drawable/sleepstart_water"></ImageView>
 
         <ImageView
-            android:id="@+id/tema"
+            android:id="@+id/awake"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:layout_weight="1"
-            android:src="@drawable/home_tema"></ImageView>
+            android:src="@drawable/sleepstart_awake"></ImageView>
 
         <ImageView
-            android:id="@+id/alramSetting"
+            android:id="@+id/toilet"
             android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="12dp"
             android:layout_weight="1"
-            android:src="@drawable/home_alarmsetting"></ImageView>
-
+            android:src="@drawable/sleepstart_toilet"></ImageView>
 
     </LinearLayout>
 
@@ -91,12 +91,11 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/sleepReady"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#1CA8D4"
-                android:text="수면 준비"></Button>
+                android:background="#CC1763"
+                android:text="수면 종료"></Button>
 
         </LinearLayout>
 
@@ -109,12 +108,11 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/sleepStart"
-                android:layout_width="143dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="#1CA8D4"
-                android:text="수면 시작"></Button>
+                android:text="무드등 제어"></Button>
 
         </LinearLayout>
     </LinearLayout>
