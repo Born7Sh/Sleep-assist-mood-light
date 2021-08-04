@@ -1,4 +1,4 @@
-package org.kpu.sleepapp;
+package org.kpu.sleepapp.controller;
 
 import java.text.DateFormat;
 import java.util.Date;

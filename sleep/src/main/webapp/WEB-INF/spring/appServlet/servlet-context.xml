@@ -21,7 +21,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="org.kpu.sleepapp" />
+	<context:component-scan base-package="org.kpu.sleepapp.controller" />
 	
 	
 	
