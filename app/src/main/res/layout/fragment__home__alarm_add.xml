@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_image"
     android:orientation="vertical"
+    android:background="@drawable/background_image"
+    android:layout_height="match_parent"
     tools:context=".Fragment_Home_AlarmAdd">
 
     <!-- TODO: Update blank fragment layout -->
@@ -24,6 +24,7 @@
         android:background="@drawable/background_opaque_white">
 
         <TimePicker
+            android:id="@+id/alarmTime"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/hello_blank_fragment"
@@ -43,11 +44,11 @@
             android:weightSum="10">
 
             <TextView
+                android:id="@+id/alarmSetting_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
                 android:layout_weight="1"
-                android:text="설정 날짜"
                 android:textColor="#FFFFFF"
                 android:textSize="14dp"
                 android:textStyle="bold"></TextView>
@@ -58,8 +59,9 @@
                 android:layout_weight="8"></View>
 
             <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:id="@+id/alarmCalendar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:src="@drawable/alarm_cal"></ImageView>
@@ -199,6 +201,48 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#C4C4C4"/>
-
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:weightSum="2"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/alarmCancel"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#CC1763"
+                android:text="취소"></Button>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:weightSum="2"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/alarmRegister"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#1CA8D4"
+                android:text="확인"></Button>
+
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>

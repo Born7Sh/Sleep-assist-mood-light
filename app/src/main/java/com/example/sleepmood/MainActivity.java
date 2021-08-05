@@ -82,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Home_AlarmAdd()).addToBackStack(null).commit();
         } else if (fragment == "alarmList") {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Home_AlarmList()).addToBackStack(null).commit();
+        } else if (fragment == "weatherInfo") {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Home_Weather()).addToBackStack(null).commit();
+        } else if (fragment == "tema") {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Home_Tema()).addToBackStack(null).commit();
         }
 
     }

@@ -1,16 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment_Setting"
+    android:orientation="vertical"
     android:background="@drawable/background_image"
     >
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="설정 페이지입니다." />
+        android:layout_height="wrap_content"
+        android:text="설정"
+        android:textSize="25dp"></TextView>
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_margin="12dp"
+        android:background="@drawable/background_opaque_black"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="130dp">
+
+            <TextView
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="회원 정보"
+                >
+            </TextView>
+
+        <TextView
+            android:id="@+id/setting_User_Edit"
+            android:textSize="17dp"
+            android:layout_marginLeft="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="회원 정보 수정">
+        </TextView>
+
+        <View
+            android:layout_margin="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#C4C4C4"/>
+
+
+        <TextView
+            android:id="@+id/setting_User_Drop"
+            android:textSize="17dp"
+            android:layout_marginLeft="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="회원 정보 탈퇴">
+        </TextView>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="12dp"
+        android:background="@drawable/background_opaque_black"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="175dp">
+
+        <TextView
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="회원 정보"
+            >
+        </TextView>
+
+        <TextView
+            android:id="@+id/setting_AppInfo"
+            android:textSize="17dp"
+            android:layout_marginLeft="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="앱 정보">
+        </TextView>
+
+        <View
+            android:layout_margin="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#C4C4C4"/>
+
+
+        <TextView
+            android:id="@+id/setting_Help"
+            android:textSize="17dp"
+            android:layout_marginLeft="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="도움말">
+        </TextView>
+
+        <View
+            android:layout_margin="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#C4C4C4"/>
+
+
+        <TextView
+            android:id="@+id/setting_Question"
+            android:textSize="17dp"
+            android:layout_marginLeft="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="문의 내용">
+        </TextView>
+
+    </LinearLayout>
+
+
+</LinearLayout>

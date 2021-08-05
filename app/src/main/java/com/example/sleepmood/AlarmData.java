@@ -7,6 +7,9 @@ public class AlarmData {
     public String alarmTime;
     public String alarmDate;
     public ArrayList<Integer> alarmRepeatWeek = new ArrayList<>(6);
+
+    // 전원 버튼
+    public int alarmPower;
     // 0 = 일, 1 = 월 .... 6 = 토
 
     public AlarmData(String alarmTime, String alarmDate, ArrayList<Integer> alarmRepeatWeek){
