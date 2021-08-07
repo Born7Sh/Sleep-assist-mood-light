@@ -1,18 +1,25 @@
 package org.kpu.sleepapp.domain;
 
-public class SleepReportVO {
+public class SleepReportVO2 {
 
 	private String email;
 	private int score;
 	private float sleeping_time;
 	private String element;
 	private String date;
+	private String end;
 	
 	public String getDate() {
 		return date;
 	}
 	public void setDate(String date) {
 		this.date = date;
+	}
+	public String getEnd() {
+		return end;
+	}
+	public void setEnd(String end) {
+		this.end = end;
 	}
 
 	public String getEmail() {

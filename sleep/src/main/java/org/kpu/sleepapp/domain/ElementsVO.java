@@ -1,14 +1,14 @@
 package org.kpu.sleepapp.domain;
 
 public class ElementsVO {
-	private int id;
+	private int reportid;
 	private String element;
 	
-	public int getId() {
-		return id;
+	public int getReportId() {
+		return reportid;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setReportId(int reportid) {
+		this.reportid = reportid;
 	}
 	public String getElement() {
 		return element;
