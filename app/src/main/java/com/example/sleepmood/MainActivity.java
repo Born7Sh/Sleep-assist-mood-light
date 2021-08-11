@@ -86,6 +86,16 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Home_Weather()).addToBackStack(null).commit();
         } else if (fragment == "tema") {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Home_Tema()).addToBackStack(null).commit();
+        } else if (fragment == "setting_User_Edit") {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_UserInfo_Edit()).addToBackStack(null).commit();
+        } else if (fragment == "setting_User_Drop") {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_UserInfo_Drop()).addToBackStack(null).commit();
+        } else if (fragment == "setting_AppInfo") {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Setting_AppInfo()).addToBackStack(null).commit();
+        } else if (fragment == "setting_Help") {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Setting_Help()).addToBackStack(null).commit();
+        } else if (fragment == "setting_Question") {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Setting_Question()).addToBackStack(null).commit();
         }
 
     }

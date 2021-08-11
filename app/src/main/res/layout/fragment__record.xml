@@ -15,30 +15,36 @@
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_control_1"
-            android:text="일"
+            android:text="전체"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></com.google.android.material.tabs.TabItem>
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_control_2"
-            android:text="주"
+            android:text="일"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></com.google.android.material.tabs.TabItem>
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_control_3"
-            android:text="월"
+            android:text="주"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></com.google.android.material.tabs.TabItem>
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_control_4"
-            android:text="달력"
+            android:text="월"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></com.google.android.material.tabs.TabItem>
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_control_5"
+            android:text="달력"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></com.google.android.material.tabs.TabItem>
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_control_6"
             android:text="일기"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></com.google.android.material.tabs.TabItem>

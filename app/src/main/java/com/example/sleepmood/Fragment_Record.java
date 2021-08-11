@@ -26,6 +26,8 @@ public class Fragment_Record extends Fragment {
     private ViewPager2 viewPager;
     private ViewPagerAdapter viewPagerAdapter;
     private TabLayout tabLayout;
+
+    private Fragment_Record_Entire fragment_record_entire;
     private Fragment_Record_Day fragment_record_day;
     private Fragment_Record_Week fragment_record_week;
     private Fragment_Record_Month fragment_record_month;
@@ -33,7 +35,6 @@ public class Fragment_Record extends Fragment {
     private Fragment_Record_Diary fragment_record_diary;
 
     ViewGroup view;
-
 
     @Override
     public void onAttach(Context context) {
@@ -55,6 +56,7 @@ public class Fragment_Record extends Fragment {
     //fragment 생성
     public void createFragment()
     {
+        fragment_record_entire = new Fragment_Record_Entire();
         fragment_record_day = new Fragment_Record_Day();
         fragment_record_week = new Fragment_Record_Week();
         fragment_record_month = new Fragment_Record_Month();
@@ -69,6 +71,7 @@ public class Fragment_Record extends Fragment {
         viewPager = (ViewPager2) view.findViewById(R.id.viewpager_control);
 
         viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), getLifecycle());
+        viewPagerAdapter.addFragment(fragment_record_entire);
         viewPagerAdapter.addFragment(fragment_record_day);
         viewPagerAdapter.addFragment(fragment_record_week);
         viewPagerAdapter.addFragment(fragment_record_month);
@@ -105,7 +108,9 @@ public class Fragment_Record extends Fragment {
                     case 4 :
                         viewPager.setCurrentItem(4);
                         break;
-
+                    case 5 :
+                        viewPager.setCurrentItem(4);
+                        break;
                 }
             }
 
