@@ -60,25 +60,24 @@ public class Fragment_Home_Tema_Color extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         colorPickerView = view.findViewById(R.id.colorPicker);
 
-        ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_DARK);
-        builder.setTitle("ColorPicker Dialog");
-        builder.setFlagView(new CustomFlag(this, R.layout.layout_flag));
-        builder.setPositiveButton(getString(R.string.confirm), new ColorEnvelopeListener() {
-            @Override
-            public void onColorSelected(ColorEnvelope envelope, boolean fromUser) {
-                setLayoutColor(envelope);
-            }
-        });
-        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-        builder.attachAlphaSlideBar(); // attach AlphaSlideBar
-        builder.attachBrightnessSlideBar(); // attach BrightnessSlideBar
-        builder.show(); // show dialog
-
-
+//        ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+//        builder.setTitle("ColorPicker Dialog");
+//        builder.setFlagView(new CustomFlag(this, R.layout.layout_flag));
+//        builder.setPositiveButton(getString(R.string.confirm), new ColorEnvelopeListener() {
+//            @Override
+//            public void onColorSelected(ColorEnvelope envelope, boolean fromUser) {
+//                setLayoutColor(envelope);
+//            }
+//        });
+//        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                dialogInterface.dismiss();
+//            }
+//        });
+//        builder.attachAlphaSlideBar(); // attach AlphaSlideBar
+//        builder.attachBrightnessSlideBar(); // attach BrightnessSlideBar
+//        builder.show(); // show dialog
     }
+
 }
