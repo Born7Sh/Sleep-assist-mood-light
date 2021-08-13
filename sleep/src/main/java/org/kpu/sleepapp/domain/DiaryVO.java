@@ -1,17 +1,17 @@
 package org.kpu.sleepapp.domain;
 
 public class DiaryVO {
-	private int id;
+	//private int id;
 	private String date;
 	private String description;
 	private String email;
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+//	public int getId() {
+//		return id;
+//	}
+//	public void setId(int id) {
+//		this.id = id;
+//	}
 	public String getDate() {
 		return date;
 	}

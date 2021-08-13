@@ -22,7 +22,7 @@ public class StatusRestController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public String insertStatus(@RequestBody SleepStatusVO statusVO) throws Exception {
-		logger.info(" /status REST-API GET method called. then method executed.");
+		logger.info(" /status REST-API POST method called. then method executed.");
 		statusService.insertStatus(statusVO);
 		return "OK";
 	}
