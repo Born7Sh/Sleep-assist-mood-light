@@ -2,3 +2,7 @@
 sleep/src/main/webapp/WEB-INF/spring/root-context.xml
 
 sleep/target/
+
+#no service key
+sleep/src/main/java/org/kpu/sleepapp/domain/ServiceKey.java
+

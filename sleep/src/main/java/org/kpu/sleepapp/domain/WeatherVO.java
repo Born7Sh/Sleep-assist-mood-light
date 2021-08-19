@@ -1,6 +1,6 @@
 package org.kpu.sleepapp.domain;
 
-public class TodaysWeatherVO {
+public class WeatherVO {
 	private String datetime;
 	private float temperature;
 	private int humidity;
