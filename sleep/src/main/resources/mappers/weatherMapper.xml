@@ -10,6 +10,8 @@
      	insert into current_weather(date_time, temperature, humidity, precipitation_type) values(#{datetime}, #{temperature}, #{humidity}, #{precipitation_type})
      </select>
      
- 
+ 	 <select id="insertForecast">
+     	insert into todays_weather(date_time, temperature, humidity, precipitation_type) values(#{datetime}, #{temperature}, #{humidity}, #{precipitation_type})
+     </select>
 	 
 </mapper>

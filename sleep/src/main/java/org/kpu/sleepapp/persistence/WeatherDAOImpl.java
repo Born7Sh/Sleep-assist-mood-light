@@ -1,5 +1,7 @@
 package org.kpu.sleepapp.persistence;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.kpu.sleepapp.domain.WeatherVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,4 +18,9 @@ public class WeatherDAOImpl implements WeatherDAO{
 	public void insertNow(WeatherVO weatherVO)throws Exception {
 		sqlSession.selectOne(namespace+".insertNow", weatherVO);
 	}
+	
+	public void insertForecast(WeatherVO weatherVO)throws Exception{
+		sqlSession.insert(namespace+".insertForecast", weatherVO);
+	}
+	
 }

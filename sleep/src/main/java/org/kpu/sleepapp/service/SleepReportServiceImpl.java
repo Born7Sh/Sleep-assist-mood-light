@@ -28,19 +28,23 @@ public class SleepReportServiceImpl implements SleepReportService{
 		String date = format1.format(nowDate);
 		reportVO.setEmail(email);
 		reportVO.setDate(date);
+		
 		reportVO = sleepreportDAO.readToday(reportVO);
+		
 		List<ElementsVO> list = sleepreportDAO.readElements(reportVO);
 		String element = str(list);
-		
 		reportVO.setElements(element);
+		
 		return reportVO;
 	}
 	public SleepReportVO readPeriodReport(SleepReportVO2 reportVO) throws Exception {
 		//기간 내 자료들 리스트에 넣기 
 		List<SleepReportVO> sreportVO = new ArrayList<SleepReportVO>();
 		sreportVO = sleepreportDAO.readPeriod(reportVO);
+
 		//평균값내서 집어넣기
 		SleepReportVO sleepreportVO = new SleepReportVO();
+
 		sleepreportVO = average(sreportVO);
 		sleepreportVO.setEmail(reportVO.getEmail());
 		
@@ -68,7 +72,9 @@ public class SleepReportServiceImpl implements SleepReportService{
 		SleepReportVO reportVO = new SleepReportVO();
 		List<SleepReportVO> list = new ArrayList<SleepReportVO>();
 		list = sleepreportDAO.readAll(email);
-
+		if(list.isEmpty()) {
+			return reportVO;
+		}
 		reportVO = average(list);
 		//요소 처리
 		List<ElementsVO> elementslist = new ArrayList<ElementsVO>();

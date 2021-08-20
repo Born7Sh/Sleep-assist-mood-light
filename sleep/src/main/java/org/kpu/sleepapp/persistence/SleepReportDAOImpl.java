@@ -20,12 +20,18 @@ public class SleepReportDAOImpl implements SleepReportDAO{
 	
 	public SleepReportVO readToday(SleepReportVO sleep_reportVO) throws Exception {
 		SleepReportVO vo = sqlSession.selectOne(namespace+".selectByEmailToday", sleep_reportVO);
+		if(vo==null) {
+			vo = new SleepReportVO();
+		}
 		return vo;   
 	}
 	
 	public List<SleepReportVO> readAll(String email) throws Exception{
 		List<SleepReportVO> list = new ArrayList<SleepReportVO>();
 		list = sqlSession.selectList(namespace + ".selectByEmailAll", email);
+		if(list.isEmpty()) {
+			list = new ArrayList<SleepReportVO>();
+		}
 		return list;
 	}
 	

@@ -30,8 +30,8 @@ public class ReportRestController {
 	@RequestMapping(value = "/{email}/today", method = RequestMethod.GET)
 	public ResponseEntity<SleepReportVO> readTodayReport(@PathVariable String email) throws Exception {
 		//report에 필요한 값 저장 후 서비스 레이어에서 처리 요청
-
 		SleepReportVO report = reportService.readTodayReport(email);
+
 		// 로그 생성
 		logger.info(" /report/{}/today REST-API GET method called. then method executed.",email);
 
@@ -74,8 +74,6 @@ public class ReportRestController {
 		logger.info(reportVO.getEnd());
 		logger.info(" /{}/{}/selection REST-API GET method called. then method executed.",reportVO.getDate(),reportVO.getEnd());
 		SleepReportVO report = reportService.readPeriodReport(reportVO);
-		
-		
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
