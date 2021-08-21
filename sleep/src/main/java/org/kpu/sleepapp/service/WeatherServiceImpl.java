@@ -160,7 +160,7 @@ public class WeatherServiceImpl implements WeatherService {
 		String data_type = "JSON"; // 타입 xml, json 등등 ..
 		String baseDate = tempDate; // "20200821"이런식으로 api에서 제공하는 형식 그대로 적으시면 됩니당.
 		
-		String baseTime = tempTime+"00"; // API 제공 시간을 입력하면 됨
+		String baseTime = "11"+"00"; // API 제공 시간을 입력하면 됨
 		System.out.println(baseTime);
 		String nx = "59"; // 위도
 		String ny = "125"; // 경도
@@ -176,8 +176,7 @@ public class WeatherServiceImpl implements WeatherService {
 		urlBuilder.append("&" + URLEncoder.encode("base_time", "UTF-8") + "="+ URLEncoder.encode(baseTime, "UTF-8")); /* 조회하고싶은 시간 AM 02시부터 3시간 단위 */
 		urlBuilder.append("&" + URLEncoder.encode("nx", "UTF-8") + "=" + URLEncoder.encode(nx, "UTF-8")); // 경도
 		urlBuilder.append("&" + URLEncoder.encode("ny", "UTF-8") + "=" + URLEncoder.encode(ny, "UTF-8")+"&"); // 위도
-	
-	
+
 		 /* GET방식으로 전송해서 파라미터 받아오기*/
 		URL url = new URL(urlBuilder.toString());
 		// 어떻게 넘어가는지 확인하고 싶으면 아래 출력분 주석 해제
@@ -216,16 +215,13 @@ public class WeatherServiceImpl implements WeatherService {
 		JSONArray parse_item = (JSONArray) parse_items.get("item");
 				
 		JSONObject weather = new JSONObject();
-		Object fcstTime;
-		Object category;
-		Object value;
-		String fcstTime1, category1, value1;
+		Object fcstTime,category,value,fcstDate;
+		String fcstTime1, category1, value1,fcstDate1,date;
 		/**
 		 * parse_item.size()/10 : 몇 개의 시간 데이터를 받아 왔는지
 		 * 받아온 데이터의 갯수 / 시간당 데이터 갯수 = 
 		 */
-		
-		
+
 		//6시간의 기상예보를 담을 리스트
 		List<WeatherVO> weatherList = new ArrayList<WeatherVO>();
 		int count=0;
@@ -237,15 +233,20 @@ public class WeatherServiceImpl implements WeatherService {
 				fcstTime = weather.get("fcstTime");
 				category = weather.get("category");
 				value = weather.get("fcstValue");
+				fcstDate = weather.get("fcstDate");
+				
+				fcstDate1 = (String)fcstDate;
 				fcstTime1 = (String)fcstTime;
 				category1 = (String)category;
 				value1 = (String)value;
-				//최적화 및 날짜 문제 해결
+				
+				
 				if(category1.equals("PTY")) {
 					weatherVO.setPrecipitation_type(Integer.parseInt(value1));
+					date = fcstDate1.substring(0,4) + "-" + fcstDate1.substring(4,6) + "-"+fcstDate1.substring(6)+" "+fcstTime1.substring(0,2)+":"+"00:00";
+					weatherVO.setDatetime(date);
 				}
-				if(category1.equals("TMP")) {
-					weatherVO.setDatetime(fcstTime1);
+				if(category1.equals("TMP")) {	
 					weatherVO.setTemperature(Float.parseFloat(value1));
 				}
 				if(category1.equals("REH")) {
@@ -258,28 +259,10 @@ public class WeatherServiceImpl implements WeatherService {
 			weatherList.add(weatherVO);
 		}
 		
-		DateFormat sdFormat1 = new SimpleDateFormat("yyyy-MM-dd");
-		Date nowDate1 = new Date();
-		String tempDate1 = sdFormat1.format(nowDate1);
-		
 		//정상적으로 작동하는지 체크
 		for(WeatherVO i : weatherList) {
 			System.out.println(i.getDatetime()+" "+i.getHumidity()+" "+i.getPrecipitation_type()+" "+i.getTemperature());
-		}
-		//DB의 DATETIME에 맞추기 위해 수정.
-		for(WeatherVO i : weatherList) {
-			String temp;
-			if(!(i.getDatetime().substring(0, 2).equals("00"))) {
-				temp = tempDate1+" "+i.getDatetime().substring(0,2)+":00:00";
-				i.setDatetime(temp);
-			}else {
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(nowDate1);
-				cal.add(Calendar.DATE, 1);
-				String tomorrow = sdFormat1.format(cal.getTime());
-				i.setDatetime(tomorrow+" "+i.getDatetime().substring(0,2)+":00:00");
-			}
-			weatherDAO.insertForecast(i);		
+			weatherDAO.insertForecast(i);	
 		}
 
 	}

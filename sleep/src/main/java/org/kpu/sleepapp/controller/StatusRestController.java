@@ -20,11 +20,11 @@ public class StatusRestController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ReportRestController.class);
 	
-	@RequestMapping(value = "weather", method = RequestMethod.POST)
-	public String insertStatus(@RequestBody SleepStatusVO statusVO) throws Exception {
-		logger.info(" /status REST-API POST method called. then method executed.");
-		statusService.insertStatus(statusVO);
-		return "OK";
-	}
-	
+//	@RequestMapping(value = "weather", method = RequestMethod.POST)
+//	public String insertStatus(@RequestBody SleepStatusVO statusVO) throws Exception {
+//		logger.info(" /status REST-API POST method called. then method executed.");
+//		statusService.insertStatus(statusVO);
+//		return "OK";
+//	}
+
 }
