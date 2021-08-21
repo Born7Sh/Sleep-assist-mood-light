@@ -48,7 +48,7 @@ public class WeatherServiceImpl implements WeatherService {
 		ServiceKey servicekey = new ServiceKey();
 		String serviceKey = servicekey.getWeatherAPI();
 		String pageNo = "1";
-		String numOfRows = "225"; // 한 페이지 결과 수
+		String numOfRows = "221"; // 한 페이지 결과 수
 		String data_type = "JSON"; // 타입 xml, json 등등 ..
 		String baseDate = tempDate; // "20200821"이런식으로 api에서 제공하는 형식 그대로 적으시면 됩니당.
 		
@@ -150,17 +150,17 @@ public class WeatherServiceImpl implements WeatherService {
 		String tempTime = now.format(formatter);
 		System.out.println(tempTime);
 		// JSON데이터를 요청하는 URLstr을 만듭니다.
-		String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
+		String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
 		// 홈페이지에서 받은 키
 		// 다른곳을 서비스키 이동시켜야 함.
 		ServiceKey servicekey = new ServiceKey();
 		String serviceKey = servicekey.getWeatherAPI();
 		String pageNo = "1";
-		String numOfRows = "225"; // 한 페이지 결과 수
+		String numOfRows = "221"; // 한 페이지 결과 수
 		String data_type = "JSON"; // 타입 xml, json 등등 ..
 		String baseDate = tempDate; // "20200821"이런식으로 api에서 제공하는 형식 그대로 적으시면 됩니당.
 		
-		String baseTime = "12"+"30"; // API 제공 시간을 입력하면 됨
+		String baseTime = tempTime+"00"; // API 제공 시간을 입력하면 됨
 		System.out.println(baseTime);
 		String nx = "59"; // 위도
 		String ny = "125"; // 경도
@@ -214,9 +214,7 @@ public class WeatherServiceImpl implements WeatherService {
 
 		// items로 부터 itemlist 를 받기 
 		JSONArray parse_item = (JSONArray) parse_items.get("item");
-			
-			
-			
+				
 		JSONObject weather = new JSONObject();
 		Object fcstTime;
 		Object category;
@@ -226,47 +224,38 @@ public class WeatherServiceImpl implements WeatherService {
 		 * parse_item.size()/10 : 몇 개의 시간 데이터를 받아 왔는지
 		 * 받아온 데이터의 갯수 / 시간당 데이터 갯수 = 
 		 */
-		int dataSize = parse_item.size()/60;
+		
 		
 		//6시간의 기상예보를 담을 리스트
 		List<WeatherVO> weatherList = new ArrayList<WeatherVO>();
+		int count=0;
 		
-		for(int i=0;i<dataSize;i++) {
-			for(int k=0;k<60;k++) {
-				WeatherVO weatherVO = new WeatherVO();
-				weather = (JSONObject) parse_item.get((i*dataSize)+k);
+		for(int i=0; i<20; i++) {
+			WeatherVO weatherVO = new WeatherVO();
+			for(int k=0;k<11;k++) {
+				weather = (JSONObject) parse_item.get(count);
 				fcstTime = weather.get("fcstTime");
 				category = weather.get("category");
 				value = weather.get("fcstValue");
 				fcstTime1 = (String)fcstTime;
 				category1 = (String)category;
 				value1 = (String)value;
-				
-				//PTY의 값과 시간 넣기
+				//최적화 및 날짜 문제 해결
 				if(category1.equals("PTY")) {
-					weatherVO.setDatetime(fcstTime1);
 					weatherVO.setPrecipitation_type(Integer.parseInt(value1));
-					weatherList.add(weatherVO);
 				}
-				//온도 값 넣기
-				if(category1.equals("T1H")) {
-					for(int j=0;j<6;j++) {
-						if(weatherList.get(j).getDatetime().equals((String)fcstTime1)) {
-							weatherList.get(j).setTemperature(Float.parseFloat(value1));
-						}
-					}
+				if(category1.equals("TMP")) {
+					weatherVO.setDatetime(fcstTime1);
+					weatherVO.setTemperature(Float.parseFloat(value1));
 				}
-				//습도 값 넣기
-				if(((String)category).equals("REH")) {
-					for(int j=0;j<6;j++) {
-						if(weatherList.get(j).getDatetime().equals((String)fcstTime1)) {
-							weatherList.get(j).setHumidity(Integer.parseInt(value1));
-						}
-					}
+				if(category1.equals("REH")) {
+					weatherVO.setHumidity(Integer.parseInt(value1));
 				}
-				//check
+				
 				System.out.println(fcstTime+" : " +category+"  "+value);
+				count++;
 			}
+			weatherList.add(weatherVO);
 		}
 		
 		DateFormat sdFormat1 = new SimpleDateFormat("yyyy-MM-dd");
@@ -274,9 +263,9 @@ public class WeatherServiceImpl implements WeatherService {
 		String tempDate1 = sdFormat1.format(nowDate1);
 		
 		//정상적으로 작동하는지 체크
-//		for(WeatherVO i : weatherList) {
-//			System.out.println(i.getDatetime()+" "+i.getHumidity()+" "+i.getPrecipitation_type()+" "+i.getTemperature());
-//		}
+		for(WeatherVO i : weatherList) {
+			System.out.println(i.getDatetime()+" "+i.getHumidity()+" "+i.getPrecipitation_type()+" "+i.getTemperature());
+		}
 		//DB의 DATETIME에 맞추기 위해 수정.
 		for(WeatherVO i : weatherList) {
 			String temp;
