@@ -6,11 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.kpu.sleepapp.domain.DiaryVO;
-import org.kpu.sleepapp.domain.SleepReportVO;
-import org.kpu.sleepapp.domain.SleepStatusVO;
-import org.kpu.sleepapp.domain.WeatherVO;
 import org.kpu.sleepapp.service.DiaryService;
-import org.kpu.sleepapp.service.WeatherService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +27,6 @@ public class DiaryRestController
 	@Autowired
 	private DiaryService diaryService;
 	
-	@Autowired
-	private WeatherService weatherService;
-	
 	private static final Logger logger = LoggerFactory.getLogger(ReportRestController.class);
 	
 	@RequestMapping(value = "{email}/all", method = RequestMethod.GET)
@@ -52,12 +45,12 @@ public class DiaryRestController
 		return new ResponseEntity<>(list, headers, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/weather", method = RequestMethod.GET)
-	public String readForecast() throws Exception {
-
-		weatherService.getTomWeather();
-		return "OK";
-	}
+//	@RequestMapping(value = "/weather", method = RequestMethod.GET)
+//	public String readForecast() throws Exception {
+//
+//		weatherService.getTomWeather();
+//		return "OK";
+//	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public String insertDiary(@RequestBody DiaryVO diaryVO) throws Exception {

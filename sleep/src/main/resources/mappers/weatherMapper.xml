@@ -14,4 +14,12 @@
      	insert into todays_weather(date_time, temperature, humidity, precipitation_type) values(#{datetime}, #{temperature}, #{humidity}, #{precipitation_type})
      </select>
 	 
+	 <select id="select" resultType="WeatherVO">
+	 	select * from todays_weather order by insert_time desc limit 20;
+	 </select>
+	 
+	 <select id="selectNow" resultType="WeatherVO">
+	 	select * from current_weather order by date_time desc limit 1;
+	 </select>
 </mapper>
+

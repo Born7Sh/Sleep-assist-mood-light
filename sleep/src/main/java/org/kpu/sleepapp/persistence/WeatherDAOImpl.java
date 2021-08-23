@@ -1,5 +1,6 @@
 package org.kpu.sleepapp.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -16,11 +17,20 @@ public class WeatherDAOImpl implements WeatherDAO{
 	private static final String namespace = "org.kpu.sleepapp.mapper.weatherMapper";
 	
 	public void insertNow(WeatherVO weatherVO)throws Exception {
-		sqlSession.selectOne(namespace+".insertNow", weatherVO);
+		sqlSession.insert(namespace+".insertNow", weatherVO);
 	}
 	
 	public void insertForecast(WeatherVO weatherVO)throws Exception{
 		sqlSession.insert(namespace+".insertForecast", weatherVO);
 	}
 	
+	public List<WeatherVO> selectForecast() throws Exception{
+		List<WeatherVO> weatherlist = new ArrayList<WeatherVO>();
+		weatherlist = sqlSession.selectList(namespace+".select");
+		return weatherlist;
+	}
+	
+	public WeatherVO selectNow() throws Exception{
+		return sqlSession.selectOne(namespace+".selectNow");
+	}
 }

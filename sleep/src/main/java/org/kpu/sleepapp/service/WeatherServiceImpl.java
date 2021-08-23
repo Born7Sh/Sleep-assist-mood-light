@@ -29,6 +29,15 @@ public class WeatherServiceImpl implements WeatherService {
 	@Autowired
 	private WeatherDAO weatherDAO;
 
+	public List<WeatherVO> readForecastWeather() throws Exception{
+		return weatherDAO.selectForecast();
+	}
+	
+	public WeatherVO readNowWeather() throws Exception{
+		return weatherDAO.selectNow();
+	}
+	
+	
 	public void getNowWeather() throws Exception {
 		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
 
@@ -266,4 +275,5 @@ public class WeatherServiceImpl implements WeatherService {
 		}
 
 	}
+
 }

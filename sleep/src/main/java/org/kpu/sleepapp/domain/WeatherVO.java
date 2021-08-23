@@ -1,7 +1,7 @@
 package org.kpu.sleepapp.domain;
 
 public class WeatherVO {
-	private String datetime;
+	private String date_time;
 	private float temperature;
 	private int humidity;
 	private int precipitation_type;
@@ -9,10 +9,10 @@ public class WeatherVO {
 	private int fine_dust2_5;
 	
 	public String getDatetime() {
-		return datetime;
+		return date_time;
 	}
 	public void setDatetime(String datetime) {
-		this.datetime = datetime;
+		this.date_time = datetime;
 	}
 	public float getTemperature() {
 		return temperature;
