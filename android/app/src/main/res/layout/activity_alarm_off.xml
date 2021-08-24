@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/background_image"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity_AlarmOff">
+
+    <ImageView
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/shutup"
+        ></ImageView>
+
+    <Button
+        android:id="@+id/alarm_stop"
+        android:text="조용히 하세요!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </Button>
+
+</LinearLayout>

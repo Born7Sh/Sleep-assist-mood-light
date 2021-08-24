@@ -3,19 +3,19 @@ package com.example.sleepmood;
 import java.util.ArrayList;
 
 public class AlarmData {
-
+    public int alarmCode;
     public String alarmTime;
     public String alarmDate;
     public ArrayList<Integer> alarmRepeatWeek = new ArrayList<>(6);
+    public boolean OnOf;
 
-    // 전원 버튼
-    public int alarmPower;
-    // 0 = 일, 1 = 월 .... 6 = 토
 
-    public AlarmData(String alarmTime, String alarmDate, ArrayList<Integer> alarmRepeatWeek){
+    public AlarmData(int alarmCode, String alarmTime, String alarmDate, ArrayList<Integer> alarmRepeatWeek) {
+        this.alarmCode = alarmCode;
         this.alarmTime = alarmTime;
         this.alarmDate = alarmDate;
         this.alarmRepeatWeek = alarmRepeatWeek;
+        this.OnOf=true;
     }
 
 
@@ -37,6 +37,15 @@ public class AlarmData {
 
     public void setAlarmRepeatWeek(ArrayList<Integer> alarmRepeatWeek) {
         this.alarmRepeatWeek = alarmRepeatWeek;
+
+    }
+
+    public int getAlarmCode() {
+        return alarmCode;
+    }
+
+    public void setAlarmCode(int alarmCode) {
+        this.alarmCode = alarmCode;
     }
 
     public void setAlarmTime(String alarmTime) {
@@ -45,5 +54,12 @@ public class AlarmData {
 
 
 
+    public boolean isOnOf() {
+        return OnOf;
+    }
+
+    public void setOnOf(boolean onOf) {
+        OnOf = onOf;
+    }
 
 }

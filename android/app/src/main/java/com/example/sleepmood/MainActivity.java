@@ -1,25 +1,34 @@
 package com.example.sleepmood;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-
+    Context mainContext;
+    Activity mainActivity;
     // 21-07-23 하단 네비게이션 변수
     BottomNavigationView bottomNavigationView;
+    public static int ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE = 2323;
+
 
     // 21-07-29 뒤로가기 버튼 클릭 / .addToBackStack(null) 추가
     private long backKeyPressedTime = 0;
+    private int AlarmNum = -1;
     private Toast toast;
 
     @Override
@@ -27,9 +36,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mainContext = getApplicationContext();
+        mainActivity = MainActivity.this;
+
+//if the user already granted the permission or the API is below Android 10 no need to ask for permission
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+                !Settings.canDrawOverlays(mainContext)) {
+            RequestPermission();
+        }
+
+
+
+
         //21-07-22 앱최초 실행 작업
         SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
         boolean checkFirst = pref.getBoolean("checkFirst", false);
+
+        Intent passedIntent = getIntent();
+        processCommand(passedIntent);
 
         if (checkFirst == false) {
             // @######구글 로그인 세션까지 조건 작업 할것######@
@@ -45,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             // 최초 실행이 아닐때 진행할 작업
         }
 
+
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_frame, new Fragment_Home()).commit();
 
@@ -59,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                                                                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Record()).addToBackStack(null).commit();
                                                                        break;
                                                                    case R.id.page_light:
-                                                                       getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_light()).addToBackStack(null).commit();
+                                                                       getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Light()).addToBackStack(null).commit();
                                                                        break;
                                                                    case R.id.page_setting:
                                                                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Setting()).addToBackStack(null).commit();
@@ -79,7 +105,16 @@ public class MainActivity extends AppCompatActivity {
         } else if (fragment == "sleepStart") {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Home_SleepStart()).addToBackStack(null).commit();
         } else if (fragment == "alarmAdd") {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Home_AlarmAdd()).addToBackStack(null).commit();
+            int a = AlarmNum;
+            Fragment_Home_AlarmAdd fragment1 = new Fragment_Home_AlarmAdd();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment1).addToBackStack(null).commit();
+            // 데이터 보내기
+            Bundle bundle = new Bundle();
+            bundle.putInt("AlarmNum",a); //fragment1로 번들 전달
+            fragment1.setArguments(bundle);
+            AlarmNum = -1;
+
+
         } else if (fragment == "alarmList") {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Home_AlarmList()).addToBackStack(null).commit();
         } else if (fragment == "weatherInfo") {
@@ -99,6 +134,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    public void setItemNumber(int AlarmNum) {
+        this.AlarmNum = AlarmNum;
+    }
+
 
 //    21-07-29 뒤로가기 버튼 추가
 //    21-07-30 뒤고가기 기능은 되는데 home에서 두번 누르면 종료되도록 하고싶은데 이건 아직 구현안됨
@@ -126,5 +166,50 @@ public class MainActivity extends AppCompatActivity {
 //            toast.show();
 //        }
 //    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        processCommand(intent);
+        super.onNewIntent(intent);
+    }
+
+    private void processCommand(Intent intent) {
+        if (intent != null) {
+            String command = intent.getStringExtra("command");
+
+            if ("show".equals(command)) {
+                startActivity(new Intent(this, Activity_AlarmOff.class));
+            }
+        }
+
+    }
+
+    private void RequestPermission () {
+        // Check if Android M or higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Show alert dialog to the user saying a separate permission is needed
+            // Launch the settings activity if the user prefers
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + mainActivity.getPackageName()));
+            startActivityForResult(intent, ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (!Settings.canDrawOverlays(mainContext)) {
+                    Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Permission Granted-System will work
+                }
+
+            }
+        }
+    }
 
 }

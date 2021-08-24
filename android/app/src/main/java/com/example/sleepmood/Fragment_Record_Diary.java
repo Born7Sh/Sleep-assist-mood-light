@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -81,6 +82,14 @@ public class Fragment_Record_Diary extends Fragment {
 
         DiaryAdapter adapter = new DiaryAdapter(mContext, diaryData);
         recyclerView.setAdapter(adapter);
+
+        ImageView diaryAdd = (ImageView)view.findViewById(R.id.diaryAdd);
+        diaryAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 }

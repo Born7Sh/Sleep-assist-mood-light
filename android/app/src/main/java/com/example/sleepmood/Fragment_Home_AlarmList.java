@@ -1,6 +1,7 @@
 package com.example.sleepmood;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 
@@ -17,7 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class Fragment_Home_AlarmList extends Fragment {
@@ -60,9 +65,19 @@ public class Fragment_Home_AlarmList extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+//        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+//
+//        alarmData = sharedViewModel.getLiveAlarmData().getValue();
 
-        alarmData = sharedViewModel.getLiveAlarmData().getValue();
+        ArrayList<AlarmData> items = new ArrayList<>();
+        SharedPreferences sp = getActivity().getSharedPreferences("AlarmData", Context.MODE_PRIVATE);
+        Gson gson = new GsonBuilder().create();
+        Collection<?> values = sp.getAll().values();
+
+        for (Object value : values) {
+            String json = (String) value;
+            items.add(gson.fromJson(json, AlarmData.class));
+        }
 
         mContext = view.getContext();
         recyclerView = view.findViewById(R.id.recycler_view);
@@ -79,7 +94,7 @@ public class Fragment_Home_AlarmList extends Fragment {
 //        alarmData.add(b);
 
 
-        AlarmAdapter adapter = new AlarmAdapter(mContext, alarmData);
+        AlarmAdapter adapter = new AlarmAdapter(mContext, items, activity);
         recyclerView.setAdapter(adapter);
 
 //        rv.setHasFixedSize(true);
@@ -92,6 +107,7 @@ public class Fragment_Home_AlarmList extends Fragment {
                 activity.onFragmentChange("alarmAdd");
             }
         });
+
 
 
     }

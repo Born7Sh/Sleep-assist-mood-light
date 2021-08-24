@@ -13,6 +13,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -26,6 +28,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+}
+
+repositories {
+    maven { url 'https://jitpack.io' }
 }
 
 //로그인용 추가 07.19
@@ -74,4 +80,17 @@ dependencies {
     implementation 'com.github.dhaval2404:colorpicker:2.0'
     implementation 'com.github.duanhong169:colorpicker:1.1.6'
     implementation "com.github.skydoves:colorpickerview:2.2.3"
+
+    // 그래프 적용
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.github.blackfizz:eazegraph:1.2.2@aar'
+    implementation 'com.nineoldandroids:library:2.4.0'
+
+    // 쓰레드 오류
+    implementation 'com.android.support:multidex:1.0.3'
+
+    // https://everyshare.tistory.com/18
+    implementation 'com.google.code.gson:gson:2.8.6'
+    
+
 }

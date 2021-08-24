@@ -109,7 +109,7 @@ public class Fragment_Record extends Fragment {
                         viewPager.setCurrentItem(4);
                         break;
                     case 5 :
-                        viewPager.setCurrentItem(4);
+                        viewPager.setCurrentItem(5);
                         break;
                 }
             }

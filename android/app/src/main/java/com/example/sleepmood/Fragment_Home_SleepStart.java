@@ -21,13 +21,24 @@ import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Fragment_Home_SleepStart extends Fragment {
 
     private TextView tv_roll, tv_pitch;
+    private TextView tv_grade;
+
     private SensorManager mSensorManager = null;
     private UserSensorListner userSensorListner;
     private Sensor mGyroscopeSensor = null;
     private Sensor mAccelerometer = null;
+
+    private int waterC = 0;
+    private int awakeC = 0;
+    private int toiletC = 0;
+
+    private int grade;
 
     /*Sensor variables*/
     private float[] mGyroValues = new float[3];
@@ -52,20 +63,6 @@ public class Fragment_Home_SleepStart extends Fragment {
         // Inflate the layout for this fragment
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment__home__sleep_start, container, false);
-
-        ImageView water = (ImageView) rootView.findViewById(R.id.water);
-        ImageView awake = (ImageView) rootView.findViewById(R.id.awake);
-        ImageView toilet = (ImageView) rootView.findViewById(R.id.toilet);
-
-
-        water.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "TextView 입니다.", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
         return rootView;
     }
 
@@ -74,8 +71,23 @@ public class Fragment_Home_SleepStart extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Timer timer = new Timer();
+        TimerTask TT = new TimerTask() {
+            @Override
+            public void run() {
+                // 반복실행할 구문
+                if(roll>5){
+                    grade++;
+                }
+            }
+        };
+
+        timer.schedule(TT, 0, 1000); //Timer 실행
+//        timer.cancel();//타이머 종료
+
         tv_roll = (TextView) view.findViewById(R.id.tv_roll);
         tv_pitch = (TextView) view.findViewById(R.id.tv_pitch);
+        tv_grade = (TextView) view.findViewById(R.id.tv_grade);
 
         mSensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         userSensorListner = new UserSensorListner();
@@ -91,6 +103,50 @@ public class Fragment_Home_SleepStart extends Fragment {
             mSensorManager.unregisterListener(userSensorListner);
 
         }
+
+        ImageView water = (ImageView) view.findViewById(R.id.water);
+        ImageView awake = (ImageView) view.findViewById(R.id.awake);
+        ImageView toilet = (ImageView) view.findViewById(R.id.toilet);
+
+        TextView waterCount = (TextView)view.findViewById(R.id.waterCount);
+        TextView awakeCount = (TextView)view.findViewById(R.id.awakeCount);
+        TextView toiletCount = (TextView)view.findViewById(R.id.toiletCount);
+
+        Button sleep_Stop = (Button) view.findViewById(R.id.sleep_Stop);
+
+        water.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                waterC++;
+                waterCount.setText(String.valueOf(waterC));
+            }
+        });
+
+        awake.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                awakeC++;
+                awakeCount.setText(String.valueOf(awakeC));
+
+            }
+        });
+
+        toilet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toiletC++;
+                toiletCount.setText(String.valueOf(toiletC));
+
+            }
+        });
+
+        sleep_Stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                grade = waterC + awakeC + toiletC + grade;
+                tv_grade.setText("grade : " + grade);
+            }
+        });
 
 
     }
@@ -126,6 +182,8 @@ public class Fragment_Home_SleepStart extends Fragment {
         tv_roll.setText("roll : " + roll);
         tv_pitch.setText("pitch : " + pitch);
 
+
+
     }
 
     public class UserSensorListner implements SensorEventListener {
@@ -160,6 +218,17 @@ public class Fragment_Home_SleepStart extends Fragment {
 
             /**두 센서 새로운 값을 받으면 상보필터 적용*/
             if (gyroRunning && accRunning) {
+
+                if(roll>5){
+                    grade++;
+                }
+
+                if((int)Math.round(roll) > 5){
+                    grade++;
+                }
+//                if(roll>5 && pitch>5){
+//                    grade = grade + 5;
+//                }
                 complementaty(event.timestamp);
             }
 
@@ -169,4 +238,6 @@ public class Fragment_Home_SleepStart extends Fragment {
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
     }
+
+
 }

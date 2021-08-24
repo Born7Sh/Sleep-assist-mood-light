@@ -1,6 +1,7 @@
 package com.example.sleepmood;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,7 +15,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class Fragment_Home extends Fragment {
@@ -23,8 +29,10 @@ public class Fragment_Home extends Fragment {
     // 사용자의 모든 정보 21.08.01
     // 앱 켜지자 마자 데이터 DB에서 다 받아오면 좋을거 같은데
     // 여기서 다 받아와지게 하자
-    private SharedViewModel sharedViewModel;
-
+    ArrayList<AlarmData> alarmData = new ArrayList<AlarmData>();
+    SharedPreferences sharedPreferences;
+    private Gson gson = new GsonBuilder().create();
+    private String json;
 
     @Override
     public void onAttach(Context context) {
@@ -49,13 +57,24 @@ public class Fragment_Home extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         ArrayList<Integer> alarmWeek = new ArrayList<Integer>(0);
 
-        AlarmData a = new AlarmData("ho", "ho", alarmWeek);
-        AlarmData b = new AlarmData("no", "no", alarmWeek);
-        sharedViewModel.addLiveAlarmData(a);
-        sharedViewModel.addLiveAlarmData(b);
+//        AlarmData a = new AlarmData(1,"ho", "ho", alarmWeek);
+//        AlarmData b = new AlarmData(2,"no", "no", alarmWeek);
+//        sharedViewModel.addLiveAlarmData(a);
+//        sharedViewModel.addLiveAlarmData(b);
+
+//        AlarmData a = new AlarmData(3, "ho", "ho", alarmWeek);
+//        alarmData.add(a);
+//
+//
+//        // 데이터 넣기
+//        sharedPreferences = getContext().getSharedPreferences( "AlarmData", MODE_PRIVATE );
+//        Gson gson = new Gson();
+//        json = gson.toJson(a, AlarmData.class);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putString(String.valueOf(0), json);
+//        editor.apply();
 
         ImageView weatherInfo = (ImageView) view.findViewById(R.id.weatherInfo);
         ImageView tema = (ImageView) view.findViewById(R.id.tema);
@@ -67,30 +86,33 @@ public class Fragment_Home extends Fragment {
         alramSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ArrayList<Integer> alarmWeek = new ArrayList<Integer>(0);
-                AlarmData a = new AlarmData("ho", "ho", alarmWeek);
-//                AlarmData b = new AlarmData("no","no", alarmWeek);
-                sharedViewModel.addLiveAlarmData(a);
-//                sharedViewModel.addLiveAlarmData(b);
 
+//                ArrayList<Integer> alarmWeek = new ArrayList<Integer>(0);
+
+//                AlarmData b = new AlarmData("no","no", alarmWeek);
+//                sharedViewModel.addLiveAlarmData(b);
                 activity.onFragmentChange("alarmList");
+//                Bundle bundle = new Bundle();
+//                bundle.putString("text",text); //fragment1로 번들 전달
+//                fragment1.setArguments(bundle);
+
+
             }
         });
 
         weatherInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    activity.onFragmentChange("weatherInfo");
+                activity.onFragmentChange("weatherInfo");
             }
         });
 
         tema.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    activity.onFragmentChange("tema");
+                activity.onFragmentChange("tema");
             }
         });
-
 
 
         sleepReady.setOnClickListener(new View.OnClickListener() {

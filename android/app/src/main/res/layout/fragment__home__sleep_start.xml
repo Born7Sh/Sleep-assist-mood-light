@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/background_image"
+    android:orientation="vertical"
     tools:context=".Fragment_Home_SleepStart">
 
     <LinearLayout
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <ImageView
             android:layout_width="200dp"
@@ -20,14 +20,13 @@
     </LinearLayout>
 
     <TextView
-        android:layout_marginTop="-50dp"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="-50dp"
+        android:gravity="center"
         android:text="오전  8시 30분"
         android:textColor="#FFFFFF"
-        android:textSize="45dp"
-        />
+        android:textSize="45dp" />
 
 
     <ImageView
@@ -35,27 +34,48 @@
         android:layout_height="70dp"
         android:layout_gravity="center"
         android:src="@drawable/home_clock"></ImageView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp">
 
     </LinearLayout>
+
     <LinearLayout
-        android:gravity="center"
-        android:background="@drawable/sleepstart_backgorund"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:background="@drawable/sleepstart_backgorund"
+        android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="3">
 
-        <ImageView
-            android:id="@+id/water"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="6dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/sleepstart_water"></ImageView>
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/water"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="6dp"
+                android:src="@drawable/sleepstart_water"></ImageView>
+
+            <TextView
+                android:id="@+id/waterCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
         <ImageView
             android:id="@+id/awake"
@@ -63,8 +83,21 @@
             android:layout_height="70dp"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
-            android:layout_weight="1"
             android:src="@drawable/sleepstart_awake"></ImageView>
+
+            <TextView
+                android:id="@+id/awakeCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
         <ImageView
             android:id="@+id/toilet"
@@ -72,47 +105,63 @@
             android:layout_height="70dp"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="12dp"
-            android:layout_weight="1"
             android:src="@drawable/sleepstart_toilet"></ImageView>
+
+            <TextView
+                android:id="@+id/toiletCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0"></TextView>
+        </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/tv_roll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="roll" />
+            android:text="roll"
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/tv_pitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="pitch" />
+            android:text="pitch"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tv_grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="grade"
+            android:textSize="20dp" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:weightSum="2">
 
         <LinearLayout
-            android:weightSum="2"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:gravity="center"
+            android:weightSum="2">
 
             <Button
-                android:layout_weight="1"
+                android:id="@+id/sleep_Stop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="#CC1763"
                 android:text="수면 종료"></Button>
 
@@ -120,16 +169,16 @@
 
 
         <LinearLayout
-            android:weightSum="2"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:gravity="center"
+            android:weightSum="2">
 
             <Button
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="#1CA8D4"
                 android:text="무드등 제어"></Button>
 

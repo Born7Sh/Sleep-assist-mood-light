@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background_image"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity_Login">
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_opaque_black"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            ></TextView>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="#FFFFFF"
+                android:text="이메일 / 아이디"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+
+            <EditText
+                android:text="이메일 / 아이디 입력"
+                android:textColor="#AAAAAA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="#FFFFFF"
+                android:text="비밀 번호"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+
+            <EditText
+                android:textColor="#AAAAAA"
+                android:text="영문/숫자 조합 6~15자"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></EditText>
+
+            <TextView
+                android:textColor="#FFFFFF"
+                android:text="비밀 번호 재입력"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+
+            <EditText
+                android:textColor="#AAAAAA"
+                android:text="비밀번호 재입력 "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></EditText>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="#FFFFFF"
+                android:text="연락처"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+
+            <EditText
+                android:textColor="#AAAAAA"
+                android:text="- 없이 입력"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></EditText>
+
+            <TextView
+                android:textColor="#FFFFFF"
+                android:text="직업"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+
+            <EditText
+                android:textColor="#AAAAAA"
+                android:text="직업 입력"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></EditText>
+            <TextView
+                android:textColor="#FFFFFF"
+                android:text="생년월일"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+
+            <EditText
+                android:textColor="#AAAAAA"
+                android:text="생년월일 입력"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></EditText>
+        </LinearLayout>
+
+
+
+
+        <Button
+            android:enabled="false"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1CA8D4"
+            android:text="SIGN IN"></Button>
+
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
