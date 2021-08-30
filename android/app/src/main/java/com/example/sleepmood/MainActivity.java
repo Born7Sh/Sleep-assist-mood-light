@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     private int AlarmNum = -1;
     private Toast toast;
 
+    Fragment_Home_AlarmList fragment_home_alarmList = new Fragment_Home_AlarmList(); // 새로고침용
+    FragmentTransaction fragmentTransaction; // 새로고침용 변수
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +51,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
         //21-07-22 앱최초 실행 작업
         SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
         boolean checkFirst = pref.getBoolean("checkFirst", false);
+
 
         Intent passedIntent = getIntent();
         processCommand(passedIntent);
@@ -59,11 +62,10 @@ public class MainActivity extends AppCompatActivity {
         if (checkFirst == false) {
             // @######구글 로그인 세션까지 조건 작업 할것######@
             // 앱 최초 실행시 하고 싶은 작업
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putBoolean("checkFirst", true);
-            editor.commit();
-
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//            SharedPreferences.Editor editor = pref.edit();
+//            editor.putBoolean("checkFirst", true);
+//            editor.commit();
+            Intent intent = new Intent(MainActivity.this, Activity_Log_in.class);
             startActivity(intent);
             finish();
         } else {
@@ -110,13 +112,24 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment1).addToBackStack(null).commit();
             // 데이터 보내기
             Bundle bundle = new Bundle();
-            bundle.putInt("AlarmNum",a); //fragment1로 번들 전달
+            bundle.putInt("AlarmNum", a); //fragment1로 번들 전달
             fragment1.setArguments(bundle);
             AlarmNum = -1;
 
+        } else if (fragment == "alarmList" || fragment == "refresh") {
+            if (fragment == "alarmList") {
+                fragment_home_alarmList = new Fragment_Home_AlarmList();
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_frame, fragment_home_alarmList);
+                fragmentTransaction.commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment_home_alarmList).addToBackStack(null).commit();
+            } else{
+                fragment_home_alarmList.getParentFragmentManager().beginTransaction().detach(fragment_home_alarmList).commit();
+                fragment_home_alarmList.getParentFragmentManager().beginTransaction().attach(fragment_home_alarmList).commit();
+//                fragmentTransaction.detach(fragment_home_alarmList);
+//                fragmentTransaction.attach(fragment_home_alarmList).commit();
 
-        } else if (fragment == "alarmList") {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Home_AlarmList()).addToBackStack(null).commit();
+  }
         } else if (fragment == "weatherInfo") {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Home_Weather()).addToBackStack(null).commit();
         } else if (fragment == "tema") {
@@ -131,6 +144,8 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Setting_Help()).addToBackStack(null).commit();
         } else if (fragment == "setting_Question") {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Setting_Question()).addToBackStack(null).commit();
+        } else if (fragment == "setting_Cycle") {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Setting_SleepCycle()).addToBackStack(null).commit();
         }
 
     }
@@ -185,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void RequestPermission () {
+    private void RequestPermission() {
         // Check if Android M or higher
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Show alert dialog to the user saying a separate permission is needed
@@ -211,5 +226,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 
 }

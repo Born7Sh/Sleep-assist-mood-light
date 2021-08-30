@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.google.android.gms.common.SignInButton;
 
 public class LoginActivity extends AppCompatActivity {
-
+        //// 안쓰는 클래스 다.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

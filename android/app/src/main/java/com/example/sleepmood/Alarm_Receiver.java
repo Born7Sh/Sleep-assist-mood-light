@@ -18,7 +18,6 @@ public class Alarm_Receiver extends BroadcastReceiver {
 
         // RingtonePlayingService 서비스 intent 생성
         Intent service_intent = new Intent(context, RingtonePlayingService.class);
-
         // RingtonePlayinService로 extra string값 보내기
         service_intent.putExtra("state", get_your_string);
         service_intent.putExtra("requestCode", get_your_int);

@@ -41,12 +41,13 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:layout_marginBottom="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="2">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -55,15 +56,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="알람 설정"
+                    android:text="서울시 영등포구"
                     android:textColor="#FFFFFF"
                     android:textSize="15dp"
                     android:textStyle="bold"></TextView>
 
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="4">
+                    android:layout_height="80dp"
+                    android:weightSum="10">
 
                     <View
                         android:layout_width="0dp"
@@ -83,9 +85,85 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="60'C"
+                        android:text="23℃"
                         android:textSize="30dp"></TextView>
+                    <View
+                        android:layout_weight="3"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"></View>
+                    <ImageView
+                        android:id="@+id/home_dust"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/bar_0"></ImageView>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_margin="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="미세먼지"
+                            android:textSize="12dp"></TextView>
+
+                        <TextView
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:id="@+id/home_dust_String"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="좋 음"
+                            android:textSize="12dp"></TextView>
+                        <TextView
+                            android:layout_margin="5dp"
+                            android:id="@+id/home_dust_Number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="15μg/㎥"
+                            android:textSize="12dp"></TextView>
+
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/home_Very_dust"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/bar_0"></ImageView>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_margin="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="초미세먼지"
+                            android:textSize="12dp"></TextView>
+
+                        <TextView
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:id="@+id/home_Very_dust_String"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="좋 음"
+                            android:textSize="12dp"></TextView>
+                        <TextView
+                            android:layout_margin="5dp"
+                            android:id="@+id/home_Very_dust_Number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12μg/㎥"
+                            android:textSize="12dp"></TextView>
+
+                    </LinearLayout>
                 </LinearLayout>
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -124,7 +202,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="18'c"></TextView>
+                    android:text="24℃"></TextView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -148,7 +226,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="60%"></TextView>
+                        android:text="57%"></TextView>
                 </LinearLayout>
 
 
@@ -179,7 +257,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="18'c"></TextView>
+                    android:text="29℃"></TextView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -203,7 +281,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="60%"></TextView>
+                        android:text="59%"></TextView>
                 </LinearLayout>
 
 
@@ -233,7 +311,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="18'c"></TextView>
+                    android:text="26℃"></TextView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -257,7 +335,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="60%"></TextView>
+                        android:text="54%"></TextView>
                 </LinearLayout>
 
 
@@ -287,7 +365,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="18'c"></TextView>
+                    android:text="24℃"></TextView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -341,7 +419,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="18'c"></TextView>
+                    android:text="23℃"></TextView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -365,7 +443,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:text="60%"></TextView>
+                        android:text="62%"></TextView>
                 </LinearLayout>
 
 

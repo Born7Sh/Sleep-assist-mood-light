@@ -30,6 +30,7 @@ public class Fragment_Home_AlarmList extends Fragment {
     private Context mContext;
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
+    AlarmAdapter adapter;
 
     private ArrayList<AlarmData> alarmData = new ArrayList<AlarmData>();
     private ArrayList<Integer> alarmWeek = new ArrayList<Integer>(6);
@@ -46,6 +47,8 @@ public class Fragment_Home_AlarmList extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         activity = (MainActivity) getActivity();
+
+
     }
 
     public void onDetach() {
@@ -70,7 +73,8 @@ public class Fragment_Home_AlarmList extends Fragment {
 //        alarmData = sharedViewModel.getLiveAlarmData().getValue();
 
         ArrayList<AlarmData> items = new ArrayList<>();
-        SharedPreferences sp = getActivity().getSharedPreferences("AlarmData", Context.MODE_PRIVATE);
+        SharedPreferences sp = getActivity().
+                getSharedPreferences("AlarmData", Context.MODE_PRIVATE);
         Gson gson = new GsonBuilder().create();
         Collection<?> values = sp.getAll().values();
 
@@ -87,14 +91,14 @@ public class Fragment_Home_AlarmList extends Fragment {
         recyclerView.setLayoutManager(manager);
         recyclerView.setHasFixedSize(true);
 
-        alarmWeek.add(0);
+//        alarmWeek.add(0);
 //        AlarmData a = new AlarmData("ho", "ho", alarmWeek);
 //        AlarmData b = new AlarmData("no", "no", alarmWeek);
 //        alarmData.add(a);
 //        alarmData.add(b);
 
 
-        AlarmAdapter adapter = new AlarmAdapter(mContext, items, activity);
+        adapter = new AlarmAdapter(mContext, items, activity, Fragment_Home_AlarmList.this);
         recyclerView.setAdapter(adapter);
 
 //        rv.setHasFixedSize(true);
@@ -108,7 +112,22 @@ public class Fragment_Home_AlarmList extends Fragment {
             }
         });
 
-
-
     }
+
+    public void refreshWishlistAdapter() {
+
+        ArrayList<AlarmData> items = new ArrayList<>();
+        items.clear();
+
+        SharedPreferences sp = getActivity().getSharedPreferences("AlarmData", Context.MODE_PRIVATE);
+        Gson gson = new GsonBuilder().create();
+        Collection<?> values = sp.getAll().values();
+
+        for (Object value : values) {
+            String json = (String) value;
+            items.add(gson.fromJson(json, AlarmData.class));
+        };
+        adapter.notifyDataSetChanged();
+    }
+
 }

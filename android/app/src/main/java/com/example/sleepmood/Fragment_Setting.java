@@ -51,6 +51,7 @@ public class Fragment_Setting extends Fragment {
        TextView setting_AppInfo = (TextView) view.findViewById(R.id.setting_AppInfo);
        TextView setting_Help = (TextView) view.findViewById(R.id.setting_Help);
        TextView setting_Question = (TextView) view.findViewById(R.id.setting_Question);
+        TextView setting_Cycle = (TextView) view.findViewById(R.id.setting_Cycle);
 
        setting_User_Edit.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -83,6 +84,13 @@ public class Fragment_Setting extends Fragment {
         setting_Question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { activity.onFragmentChange("setting_Question"); }
+        });
+
+        setting_Cycle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.onFragmentChange("setting_Cycle");
+            }
         });
 
     }

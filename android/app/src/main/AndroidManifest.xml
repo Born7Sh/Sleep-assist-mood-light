@@ -13,8 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".Activity_AlarmOff"></activity>
-        <activity android:name=".Activity_Signup" />
-        <activity android:name=".Activity_Login" />
+        <activity android:name=".Activity_Log_in" />
+        <activity android:name=".Activity_Sign_up" />
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".SplashActivity"

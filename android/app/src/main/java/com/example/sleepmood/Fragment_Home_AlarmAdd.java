@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import static android.content.Context.ALARM_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
@@ -185,41 +188,64 @@ public class Fragment_Home_AlarmAdd extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
+//                if (checkbox_0.isChecked()) {
+//                    alarmRegister_Week.add(1);
+//                } else {
+//                    alarmRegister_Week.add(0);
+//                }
+//                if (checkbox_1.isChecked()) {
+//                    alarmRegister_Week.add(1);
+//                } else {
+//                    alarmRegister_Week.add(0);
+//                }
+//                if (checkbox_2.isChecked()) {
+//                    alarmRegister_Week.add(1);
+//                } else {
+//                    alarmRegister_Week.add(0);
+//                }
+//                if (checkbox_3.isChecked()) {
+//                    alarmRegister_Week.add(1);
+//                } else {
+//                    alarmRegister_Week.add(0);
+//                }
+//                if (checkbox_4.isChecked()) {
+//                    alarmRegister_Week.add(1);
+//                } else {
+//                    alarmRegister_Week.add(0);
+//                }
+//                if (checkbox_5.isChecked()) {
+//                    alarmRegister_Week.add(1);
+//                } else {
+//                    alarmRegister_Week.add(0);
+//                }
+//                if (checkbox_6.isChecked()) {
+//                    alarmRegister_Week.add(1);
+//                } else {
+//                    alarmRegister_Week.add(0);
+//                }
+
                 if (checkbox_0.isChecked()) {
-                    alarmRegister_Week.add(1);
-                } else {
                     alarmRegister_Week.add(0);
                 }
                 if (checkbox_1.isChecked()) {
                     alarmRegister_Week.add(1);
-                } else {
-                    alarmRegister_Week.add(0);
                 }
                 if (checkbox_2.isChecked()) {
-                    alarmRegister_Week.add(1);
-                } else {
-                    alarmRegister_Week.add(0);
+                    alarmRegister_Week.add(2);
                 }
                 if (checkbox_3.isChecked()) {
-                    alarmRegister_Week.add(1);
-                } else {
-                    alarmRegister_Week.add(0);
+                    alarmRegister_Week.add(3);
                 }
                 if (checkbox_4.isChecked()) {
-                    alarmRegister_Week.add(1);
-                } else {
-                    alarmRegister_Week.add(0);
+                    alarmRegister_Week.add(4);
                 }
                 if (checkbox_5.isChecked()) {
-                    alarmRegister_Week.add(1);
-                } else {
-                    alarmRegister_Week.add(0);
+                    alarmRegister_Week.add(5);
                 }
                 if (checkbox_6.isChecked()) {
-                    alarmRegister_Week.add(1);
-                } else {
-                    alarmRegister_Week.add(0);
+                    alarmRegister_Week.add(6);
                 }
+
 
                 AlarmData a = new AlarmData(1, alarmRegsiter_Time, alarmRegister_Date, alarmRegister_Week);
                 //AlarmData b = new AlarmData("no","no", alarmWeek);
@@ -252,18 +278,26 @@ public class Fragment_Home_AlarmAdd extends Fragment {
                     my_intent.putExtra("state", "alarm on");
                     my_intent.putExtra("requestCode", alarmNum + 1);
 
-                    pendingIntent = PendingIntent.getBroadcast(getContext(), alarmNum, my_intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                    alarm_manager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+                    pendingIntent = PendingIntent.getBroadcast(
+                            getContext(), alarmNum, my_intent,
+                            PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    alarm_manager.set(AlarmManager.RTC_WAKEUP,
+                            c.getTimeInMillis(), pendingIntent);
+
+                    getAlarmRegister_Week_String();
                 } else {
                     // 수정하는게 맞을때
 
 
                     // 기존의 알람을 취소허고
-                    pendingIntent = PendingIntent.getBroadcast(getContext(), alarmNum, my_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    pendingIntent = PendingIntent.getBroadcast(getContext(),
+                            alarmNum, my_intent, PendingIntent.FLAG_UPDATE_CURRENT);
                     alarm_manager.cancel(pendingIntent);
 
                     // 값을 수정하고 알람을 다시 설정
-                    sharedPreferences = getContext().getSharedPreferences("AlarmData", MODE_PRIVATE);
+                    sharedPreferences = getContext().
+                            getSharedPreferences("AlarmData", MODE_PRIVATE);
                     Gson gson = new Gson();
                     json = gson.toJson(a, AlarmData.class);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -275,6 +309,7 @@ public class Fragment_Home_AlarmAdd extends Fragment {
 
                     pendingIntent = PendingIntent.getBroadcast(getContext(), alarmFixNum, my_intent, PendingIntent.FLAG_UPDATE_CURRENT);
                     alarm_manager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+                    getAlarmRegister_Week_String();
                 }
                 // 알람 데이터 설정
                 activity.onFragmentChange("alarmList");
@@ -310,6 +345,39 @@ public class Fragment_Home_AlarmAdd extends Fragment {
             }
         });
 
+    }
+
+    void getAlarmRegister_Week_String(){
+        Collections.sort(alarmRegister_Week);
+        List<String> days = new ArrayList<>();
+        for (int i : alarmRegister_Week)
+            switch (i) {
+                case 0:
+                    days.add("일");
+                    break;
+                case 1:
+                    days.add("월");
+                    break;
+                case 2:
+                    days.add("화");
+                    break;
+                case 3:
+                    days.add("수");
+                    break;
+                case 4:
+                    days.add("목");
+                    break;
+                case 5:
+                    days.add("금");
+                    break;
+                case 6:
+                    days.add("토");
+                    break;
+                default:
+                    break;
+            }
+        String day_text = TextUtils.join(", ", days);
+        Toast.makeText(getContext(), day_text, Toast.LENGTH_SHORT).show();
     }
 
 

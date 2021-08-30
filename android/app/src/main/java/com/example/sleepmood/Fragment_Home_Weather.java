@@ -37,7 +37,6 @@ public class Fragment_Home_Weather extends Fragment {
     TextView home_21_Temp;
     TextView home_21_Hum;
 
-
     ImageView location_9_Img;
     TextView location_9_Temp;
     TextView location_9_Hum;
@@ -57,6 +56,17 @@ public class Fragment_Home_Weather extends Fragment {
     ImageView location_21_Img;
     TextView location_21_Temp;
     TextView location_21_Hum;
+
+    ImageView home_dust;
+    ImageView home_Very_dust;
+    TextView home_dust_String;
+    TextView home_dust_Number;
+    TextView home_Very_dust_String;
+    TextView home_Very_dust_Number;
+
+
+    ImageView location_dust;
+    ImageView location_Very_dust;
 
 
     @Override
@@ -114,12 +124,22 @@ public class Fragment_Home_Weather extends Fragment {
         location_21_Temp = (TextView) view.findViewById(R.id.location_21_Temp);
         location_21_Hum = (TextView) view.findViewById(R.id.location_21_Hum);
 
+        home_dust = (ImageView) view.findViewById(R.id.home_dust);
+        home_dust_String = (TextView) view.findViewById(R.id.home_dust_String);
+        home_dust_Number = (TextView) view.findViewById(R.id.home_dust_Number);
 
-        setWeatherImg(home_9_Img,1);
-        setWeatherImg(home_12_Img,2);
-        setWeatherImg(home_15_Img,3);
-        setWeatherImg(home_18_Img,4);
-        setWeatherImg(home_21_Img,5);
+        home_Very_dust = (ImageView) view.findViewById(R.id.home_Very_dust);
+        home_Very_dust_String = (TextView) view.findViewById(R.id.home_Very_dust_String);
+        home_Very_dust_Number = (TextView) view.findViewById(R.id.home_Very_dust_Number);
+
+        setWeatherImg(home_9_Img, 2);
+        setWeatherImg(home_12_Img, 2);
+        setWeatherImg(home_15_Img, 3);
+        setWeatherImg(home_18_Img, 3);
+        setWeatherImg(home_21_Img, 2);
+
+        setDustImg(home_dust, 2);
+        setDustImg(home_Very_dust, 4);
 
     }
 
@@ -160,6 +180,26 @@ public class Fragment_Home_Weather extends Fragment {
 
     }
 
+    void setDustImg(ImageView imageView, int score) {
+        switch (score) {
+            case 1:
+                imageView.setImageResource(R.drawable.bar_0);
+                break;
+            case 2:
+                imageView.setImageResource(R.drawable.bar_25);
+                break;
+            case 3:
+                imageView.setImageResource(R.drawable.bar_50);
+                break;
+            case 4:
+                imageView.setImageResource(R.drawable.bar_75);
+                break;
+            case 5:
+                imageView.setImageResource(R.drawable.bar_100);
+                break;
+        }
+    }
+
     public void setWeatherTemp(TextView textView, String text) {
 
         textView.setText(text);
@@ -167,6 +207,14 @@ public class Fragment_Home_Weather extends Fragment {
     }
 
     public void setWeatherHum(TextView textView, String text) {
+        textView.setText(text);
+    }
+
+    public void setWeatherDustString(TextView textView, String text) {
+        textView.setText(text);
+    }
+
+    public void setWeatherDustNumber(TextView textView, String text) {
         textView.setText(text);
     }
 

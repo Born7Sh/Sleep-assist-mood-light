@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_image"
     android:orientation="vertical"
-    tools:context=".Activity_Signup">
+    tools:context=".Activity_Log_in">
 
     <LinearLayout
         android:layout_margin="10dp"
@@ -39,6 +39,7 @@
                 android:layout_height="wrap_content"></TextView>
 
             <EditText
+                android:id="@+id/login_Id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></EditText>
         </LinearLayout>
@@ -56,6 +57,7 @@
                 android:layout_height="wrap_content"></TextView>
 
             <EditText
+                android:id="@+id/login_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></EditText>
         </LinearLayout>
@@ -70,6 +72,7 @@
         </TextView>
 
         <Button
+            android:id="@+id/btn_Login"
             android:layout_margin="12dp"
             android:layout_weight="1"
             android:layout_width="match_parent"
@@ -86,6 +89,7 @@
         </TextView>
 
         <Button
+            android:id="@+id/btn_Signup"
             android:layout_margin="12dp"
             android:layout_weight="1"
             android:textColor="#1CA8D4"

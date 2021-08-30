@@ -77,9 +77,7 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     // colorpicker 사용
-    implementation 'com.github.dhaval2404:colorpicker:2.0'
-    implementation 'com.github.duanhong169:colorpicker:1.1.6'
-    implementation "com.github.skydoves:colorpickerview:2.2.3"
+    implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
 
     // 그래프 적용
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'

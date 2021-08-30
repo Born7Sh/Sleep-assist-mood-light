@@ -41,8 +41,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="18도"
-                android:textSize="50dp"></TextView>
+                android:text="25.6℃"
+                android:textSize="35dp"></TextView>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,8 +59,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="18%"
-                android:textSize="50dp"></TextView>
+                android:text="25%"
+                android:textSize="35dp"></TextView>
 
         </LinearLayout>
 
@@ -86,8 +86,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="18도"
-                android:textSize="50dp"></TextView>
+                android:text="24℃"
+                android:textSize="35dp"></TextView>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="현재습도"></TextView>
+                android:text="추천습도"></TextView>
 
             <TextView
                 android:id="@+id/recommendHum"
@@ -104,8 +104,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="18%"
-                android:textSize="50dp"></TextView>
+                android:text="30%"
+                android:textSize="35dp"></TextView>
 
         </LinearLayout>
 
@@ -134,7 +134,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:gravity="center"
-                android:text="내일의 기상 상태는 십창이 나있으니 뒤지기 싫으면 집에 들가있어용 ㅎggggggggggggggggggggggggggggggggggg"></TextView>
+                android:text="내일의 기상 상태는 [비] \n 실내 온도는 [내려]주시고 \n 실내 습도는 [유지]시켜주시기 바랍니다. \n창문 닫는 것을 추천 드립니다."></TextView>
 
         </LinearLayout>
     </LinearLayout>

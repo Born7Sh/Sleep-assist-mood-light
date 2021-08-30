@@ -53,10 +53,10 @@ public class Fragment_Record_Diary extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        DiaryData a = new DiaryData("1","2","3");
-        DiaryData b = new DiaryData("1","2","3");
-        DiaryData c = new DiaryData("1","2","3");
-        DiaryData d = new DiaryData("1","2","3");
+        DiaryData a = new DiaryData("1","21/08/24","오늘은 수면을 취했다");
+        DiaryData b = new DiaryData("2","21/08/25","오늘은 밥을 먹었다");
+        DiaryData c = new DiaryData("3","21/08/26","오늘은 코딩을 했다");
+        DiaryData d = new DiaryData("4","21/08/27","내일은 라면을 먹을까?");
 
         diaryData.add(a);
         diaryData.add(b);

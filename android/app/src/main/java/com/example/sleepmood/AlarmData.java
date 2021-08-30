@@ -6,7 +6,7 @@ public class AlarmData {
     public int alarmCode;
     public String alarmTime;
     public String alarmDate;
-    public ArrayList<Integer> alarmRepeatWeek = new ArrayList<>(6);
+    public ArrayList<Integer> alarmRepeatWeek;
     public boolean OnOf;
 
 

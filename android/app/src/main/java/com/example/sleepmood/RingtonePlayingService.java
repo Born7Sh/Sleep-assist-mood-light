@@ -47,7 +47,8 @@ public class RingtonePlayingService extends Service {
 
             ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(channel);
 
-            Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+            Notification notification =
+                    new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setContentTitle("알람시작")
                     .setContentText("알람음이 재생됩니다.")
                     .setSmallIcon(R.mipmap.ic_launcher)
@@ -63,7 +64,7 @@ public class RingtonePlayingService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent == null) { // 인테트가 null이면,
-            return Service.START_STICKY; // 서비스가 종료 되었을 때도 다시 자동으로 실행 함.
+            return Service.START_NOT_STICKY; // 서비스가 종료 되었을 때도 다시 자동으로 실행 함.
         } else {
             processCommand(intent);
         }
@@ -72,8 +73,14 @@ public class RingtonePlayingService extends Service {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        mediaPlayer.stop();
+        mediaPlayer.reset();
+        mediaPlayer.release();
 
+        this.isRunning = false;
+        this.startId = 0;
+
+        super.onDestroy();
         Log.d("onDestory() 실행", "서비스 파괴");
 
     }
@@ -82,7 +89,8 @@ public class RingtonePlayingService extends Service {
 
         String getState = intent.getExtras().getString("state");
         int getRequestCode = intent.getExtras().getInt("requestCode");
-        createNotificationMessage("알람 시작", "알람음 재생중...");
+        createNotificationMessage("알람 시작"
+                , "알람음 재생중...");
 
         goAlarmOff.putExtra("command", "show");
 
@@ -161,10 +169,14 @@ public class RingtonePlayingService extends Service {
         Intent notificationIntent = new Intent(this, Activity_AlarmOff.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 200, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(this, 200,
+                        notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "alarm");
+        NotificationManager notificationManager =
+                (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(this, "alarm");
 
         String chanelId = "alarm";
 

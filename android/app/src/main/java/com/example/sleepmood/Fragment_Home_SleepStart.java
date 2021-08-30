@@ -192,7 +192,7 @@ public class Fragment_Home_SleepStart extends Fragment {
         public void onSensorChanged(SensorEvent event) {
             switch (event.sensor.getType()) {
 
-                /** GYROSCOPE */
+                /** 자이로 센서 */
                 case Sensor.TYPE_GYROSCOPE:
 
                     /*센서 값을 mGyroValues에 저장*/
@@ -203,7 +203,7 @@ public class Fragment_Home_SleepStart extends Fragment {
 
                     break;
 
-                /** ACCELEROMETER */
+                /** 가속도 센서 */
                 case Sensor.TYPE_ACCELEROMETER:
 
                     /*센서 값을 mAccValues에 저장*/

@@ -9,16 +9,10 @@
     android:layout_height="match_parent"
     tools:context=".Activity_AlarmOff">
 
-    <ImageView
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/shutup"
-        ></ImageView>
 
     <Button
         android:id="@+id/alarm_stop"
-        android:text="조용히 하세요!"
+        android:text="알람 종료!"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     </Button>
