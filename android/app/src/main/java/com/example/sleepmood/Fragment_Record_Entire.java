@@ -1,6 +1,7 @@
 package com.example.sleepmood;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,20 +21,26 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.utils.Utils;
 import com.google.android.material.transition.MaterialSharedAxis;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class Fragment_Record_Entire extends Fragment {
@@ -43,13 +50,10 @@ public class Fragment_Record_Entire extends Fragment {
     private int TotalTime;
     private int DB;
 
-    LineChart lineChart;
+    LineChart chart;
 
-    ArrayList<Entry> entry1 = new ArrayList<>(); // 얕 수면
-    ArrayList<Entry> entry2 = new ArrayList<>(); // 렘 수면
-    ArrayList<Entry> entry3 = new ArrayList<>(); // 깊 수면
-
-    ArrayList<String> xAxisLabel = new ArrayList<>(); // 시간 설정
+    List<String> xAxisValues = new ArrayList<>(Arrays.asList("일","주", "월"));
+    // 시간 설정
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,70 +77,51 @@ public class Fragment_Record_Entire extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        chart = view.findViewById(R.id.chart);
+        // background color
+        chart.setBackgroundColor(Color.WHITE);
+        // disable description text
+        chart.getDescription().setEnabled(false);
+        // enable touch gestures
+        chart.setTouchEnabled(true);
+        // set listeners
+        chart.setDrawGridBackground(false);
 
-        lineChart = (LineChart) view.findViewById(R.id.chart);//layout의 id
-        LineData chartData = new LineData();
+        // enable scaling and dragging
+        chart.setDragEnabled(true);
+        chart.setScaleEnabled(true);
+        // chart.setScaleXEnabled(true);
+        // chart.setScaleYEnabled(true);
+        // force pinch zoom along both axis
+        chart.setPinchZoom(true);
 
-        entry1.add(new Entry(0100, 2));
-        entry1.add(new Entry(0200, 3));
-        entry1.add(new Entry(0300, 4));
-        entry1.add(new Entry(0500, 2));
-        entry1.add(new Entry(0600, 3));
-        entry1.add(new Entry(0700, 4));
+        XAxis xAxis;
+        {   // // X-Axis Style // //
+            xAxis = chart.getXAxis();
+            chart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues));
+            xAxis.setGranularity(1f);
+            // vertical grid lines
+            xAxis.enableGridDashedLine(10f, 10f, 0f);
+        }
 
-//        entry2.add(new Entry(3, 5));
-//        entry2.add(new Entry(4, 6));
-//        entry2.add(new Entry(6, 7));
-//
-//        entry3.add(new Entry(4, 5));
-//        entry3.add(new Entry(5, 6));
-//        entry3.add(new Entry(7, 8));
+        YAxis yAxis;
+        {   // // Y-Axis Style // //
+            yAxis = chart.getAxisLeft();
 
-        /* 만약 (2, 3) add하고 (2, 5)한다고해서
-         기존 (2, 3)이 사라지는게 아니라 x가 2인곳에 y가 3, 5의 점이 찍힘 */
+            // disable dual axis (only use LEFT axis)
+            chart.getAxisRight().setEnabled(false);
 
+            // horizontal grid lines
+            yAxis.enableGridDashedLine(10f, 10f, 0f);
 
-
-
-        LineDataSet set1 = new LineDataSet(entry1, "얕은 수면");
-        set1.setLineWidth(2); // 선 굵기
-        set1.setCircleRadius(6); // 곡률
-        chartData.addDataSet(set1);
-        set1.setCircleColor(Color.BLACK);
-        set1.setCircleHoleRadius(Color.BLACK);
-
-        LineDataSet set2 = new LineDataSet(entry2, "램 수면");
-        chartData.addDataSet(set2);
-        set2.setCircleColor(Color.RED);
-        set2.setCircleHoleRadius(Color.RED);
-
-        LineDataSet set3 = new LineDataSet(entry3, "깊은 수면");
-        chartData.addDataSet(set3);
-        set3.setCircleColor(Color.BLUE);
-        set3.setCircleHoleRadius(Color.BLUE);
-
-        XAxis xAxis = lineChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setDrawGridLines(false);
-        xAxis.setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisLabel));
-
-        xAxis.setPosition(XAxis.XAxisPosition.TOP); //x 축 표시에 대한 위치 설정
-        xAxis.setTextColor(ContextCompat.getColor(getContext(), R.color.color2)); // X축 텍스트컬러설정
-        xAxis.setGridColor(ContextCompat.getColor(getContext(), R.color.color2)); // X축 줄의 컬러 설정
-
-        YAxis yAxisLeft = lineChart.getAxisLeft(); //Y축의 왼쪽면 설정
-        yAxisLeft.setTextColor(ContextCompat.getColor(getContext(), R.color.black)); //Y축 텍스트 컬러 설정
-        yAxisLeft.setGridColor(ContextCompat.getColor(getContext(), R.color.black)); // Y축 줄의 컬러 설정
-
-        YAxis yAxisRight = lineChart.getAxisRight(); //Y축의 오른쪽면 설정
-        yAxisRight.setDrawLabels(false);
-        yAxisRight.setDrawAxisLine(false);
-        yAxisRight.setDrawGridLines(false);
-
-        lineChart.setData(chartData);
-        lineChart.invalidate();
+            // axis range
+            yAxis.setAxisMaximum(100f);
+            yAxis.setAxisMinimum(0);
+        }
 
 
+
+        setData(3, 100);
         // 파이차트
         org.eazegraph.lib.charts.PieChart mPieChart =
                 (org.eazegraph.lib.charts.PieChart)
@@ -152,6 +137,83 @@ public class Fragment_Record_Entire extends Fragment {
         mPieChart.startAnimation();
 
 
+    }
+
+    private void setData(int count, float range) {
+
+        ArrayList<Entry> values = new ArrayList<>();
+
+        for (int i = 0; i < count; i++) {
+
+            float val = (float) (Math.random() * range) - 30;
+            values.add(new Entry(i, val, getResources().getDrawable(R.drawable.alarm_else)));
+        }
+
+        LineDataSet set1;
+
+        if (chart.getData() != null &&
+                chart.getData().getDataSetCount() > 0) {
+            set1 = (LineDataSet) chart.getData().getDataSetByIndex(0);
+            set1.setValues(values);
+            set1.notifyDataSetChanged();
+            chart.getData().notifyDataChanged();
+            chart.notifyDataSetChanged();
+        } else {
+            // create a dataset and give it a type
+            set1 = new LineDataSet(values, "수면 점수");
+
+            set1.setDrawIcons(false);
+
+
+            // black lines and points
+            set1.setColor(Color.BLACK);
+            set1.setCircleColor(Color.BLACK);
+
+            // line thickness and point size
+            set1.setLineWidth(1f);
+            set1.setCircleRadius(3f);
+
+            // draw points as solid circles
+            set1.setDrawCircleHole(false);
+
+            // customize legend entry
+            set1.setFormLineWidth(1f);
+            set1.setFormSize(15.f);
+
+            // text size of values
+            set1.setValueTextSize(9f);
+
+            // draw selection line as dashed
+            set1.enableDashedHighlightLine(10f, 5f, 0f);
+
+            // set the filled area
+            set1.setDrawFilled(true);
+            set1.setFillFormatter(new IFillFormatter() {
+
+                @Override
+                public float getFillLinePosition(ILineDataSet dataSet, LineDataProvider dataProvider) {
+                    return chart.getAxisLeft().getAxisMinimum();
+                }
+            });
+
+            // set color of filled area
+            if (Utils.getSDKInt() >= 18) {
+                // drawables only supported on api level 18 and above
+                Drawable drawable = ContextCompat.getDrawable(getContext(), R.drawable.alarm_else);
+                set1.setFillDrawable(drawable);
+            } else {
+                set1.setFillColor(Color.BLACK);
+            }
+
+            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+            dataSets.add(set1); // add the data sets
+
+            // create a data object with the data sets
+            LineData data = new LineData(dataSets);
+
+            // set data
+            chart.setData(data);
+        }
     }
 
     void setXAxisLabel(int pivot) {
