@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Fragment_Light"
+    android:background="@drawable/background_image"
+    >
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="현재 상태"
+            android:textSize="25dp"></TextView>
+
+        <ImageView
+
+            android:layout_gravity="center"
+            android:id="@+id/mood_State"
+            android:layout_width="wrap_content"
+            android:layout_height="270dp"
+            android:src="@drawable/mood_notworking" />
+
+        <TextView
+            android:id="@+id/mood_Ip"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="IP : 192.168.0.50"
+            android:textSize="20dp"></TextView>
+
+        <Button
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/mood_start"
+            android:layout_width="143dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#1CA8D4"
+            android:text="수면 시작"></Button>
+
+        <LinearLayout
+            android:layout_margin="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/mood_sound"
+                ></ImageView>
+
+            <SeekBar
+                android:id="@+id/mood_seekbar_sound"
+                android:max="100"
+                android:progress="10"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></SeekBar>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_margin="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/mood_light"
+                ></ImageView>
+
+            <SeekBar
+                android:id="@+id/mood_seekbar_Light"
+                android:max="100"
+                android:progress="10"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></SeekBar>
+        </LinearLayout>
+
+    </LinearLayout>
+    <!-- TODO: Update blank fragment layout -->
+
+</LinearLayout>

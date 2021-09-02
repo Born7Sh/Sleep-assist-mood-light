@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_image"
+    android:orientation="vertical"
+    tools:context=".Fragment_Setting_AppInfo">
+
+    <ImageView
+        android:layout_gravity="center"
+        android:layout_width="150dp"
+        android:layout_height="170dp"
+        android:src="@drawable/fragment_setting_info_logo"
+        ></ImageView>
+
+    <TextView
+        android:text="MoodSleep"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
+
+    <LinearLayout
+        android:layout_margin="12dp"
+        android:background="@drawable/background_opaque_black"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/setting_app_info_security"
+            android:textSize="17dp"
+            android:layout_marginLeft="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="보안 정책">
+        </TextView>
+
+        <View
+            android:layout_margin="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#C4C4C4"/>
+
+
+        <TextView
+            android:id="@+id/setting_app_info_appVersion"
+            android:textSize="17dp"
+            android:layout_marginLeft="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="앱 Version">
+        </TextView>
+
+        <View
+            android:layout_margin="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#C4C4C4"/>
+
+
+        <TextView
+            android:id="@+id/setting_app_info_contributor"
+            android:textSize="17dp"
+            android:layout_marginLeft="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="기여자">
+        </TextView>
+
+
+    </LinearLayout>
+
+</LinearLayout>

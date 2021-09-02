@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background_image"
+    android:layout_height="match_parent"
+    tools:context=".Fragment_Home_AlarmAdd">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:text="알람 설정"
+        android:textColor="#FFFFFF"
+        android:textSize="30dp"
+        android:textStyle="bold"></TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="12dp"
+        android:background="@drawable/background_opaque_white">
+
+        <TimePicker
+            android:id="@+id/alarmTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/hello_blank_fragment"
+            android:timePickerMode="spinner" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="12dp"
+        android:background="@drawable/background_opaque_white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10">
+
+            <TextView
+                android:id="@+id/alarmSetting_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:textSize="14dp"
+                android:textStyle="bold"></TextView>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="8"></View>
+
+            <ImageView
+                android:id="@+id/alarmCalendar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/alarm_cal"></ImageView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/checkbox_0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_checkbox"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:text="일"
+                android:textColor="#FF0000" />
+
+            <CheckBox
+                android:id="@+id/checkbox_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_checkbox"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:text="월" />
+
+            <CheckBox
+                android:id="@+id/checkbox_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_checkbox"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:text="화" />
+
+            <CheckBox
+                android:id="@+id/checkbox_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_checkbox"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:text="수" />
+
+            <CheckBox
+                android:id="@+id/checkbox_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_checkbox"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:text="목" />
+
+            <CheckBox
+                android:id="@+id/checkbox_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_checkbox"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:text="금" />
+
+            <CheckBox
+                android:id="@+id/checkbox_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_checkbox"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:text="토"
+                android:textColor="#0F59EA" />
+
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/alarmName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="알람 이름"
+            android:textSize="15dp"></EditText>
+
+        <View
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#C4C4C4"/>
+
+        <LinearLayout
+            android:weightSum="10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_weight="1.5"
+                android:layout_marginLeft="12dp"
+                android:textColor="#FFFFFF"
+                android:text="다시 울림"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+
+            <View
+                android:layout_weight="7"
+                android:layout_width="0dp"
+                android:layout_height="0dp"></View>
+
+            <Switch
+                android:layout_margin="5dp"
+                android:layout_weight="1.5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></Switch>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginLeft="16dp"
+            android:textColor="#40F372"
+            android:textSize="12dp"
+            android:text="5분 3회"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></TextView>
+        <View
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#C4C4C4"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:weightSum="2"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/alarmCancel"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#CC1763"
+                android:text="취소"></Button>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:weightSum="2"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/alarmRegister"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#1CA8D4"
+                android:text="확인"></Button>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
