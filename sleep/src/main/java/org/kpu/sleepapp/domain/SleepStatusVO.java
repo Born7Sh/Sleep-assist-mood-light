@@ -1,55 +1,41 @@
 package org.kpu.sleepapp.domain;
 
 public class SleepStatusVO {
-	private int id;
-	private float shallow_sleep;
-	private float deep_sleep;
+	private float x;
+	private float y;
 	private float gyro_sensor;
-	private String sound;
-	private String email;
-	private String datetime;
+	private int sleep_id;
+	private String time;
 	
-	public int getId() {
-		return id;
+	public String getTime() {
+		return time;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setTime(String time) {
+		this.time = time;
 	}
-	public float getShallow_sleep() {
-		return shallow_sleep;
+	public int getSleep_id() {
+		return sleep_id;
 	}
-	public void setShallow_sleep(float shallow_sleep) {
-		this.shallow_sleep = shallow_sleep;
+	public void setSleep_id(int sleep_id) {
+		this.sleep_id = sleep_id;
 	}
-	public float getDeep_sleep() {
-		return deep_sleep;
+	public float getX() {
+		return x;
 	}
-	public void setDeep_sleep(float deep_sleep) {
-		this.deep_sleep = deep_sleep;
+	public void setX(float x) {
+		this.x = x;
+	}
+	public float getY() {
+		return y;
+	}
+	public void setY(float y) {
+		this.y = y;
 	}
 	public float getGyro_sensor() {
 		return gyro_sensor;
 	}
 	public void setGyro_sensor(float gyro_sensor) {
 		this.gyro_sensor = gyro_sensor;
-	}
-	public String getSound() {
-		return sound;
-	}
-	public void setSound(String sound) {
-		this.sound = sound;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getDatetime() {
-		return datetime;
-	}
-	public void setDatetime(String datetime) {
-		this.datetime = datetime;
 	}
 
 	

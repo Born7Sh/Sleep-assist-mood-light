@@ -1,19 +1,13 @@
 package org.kpu.sleepapp.domain;
 
 public class CalendarVO {
-	private int id;
 	private String start;
 	private String end;
 	private String title;
 	private String description;
 	private String email;
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+
 	public String getStart() {
 		return start;
 	}

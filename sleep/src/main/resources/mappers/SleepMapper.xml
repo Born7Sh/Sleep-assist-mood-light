@@ -4,10 +4,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.kpu.sleepapp.mapper.SSMapper">
+<mapper namespace="org.kpu.sleepapp.mapper.SleepMapper">
 
      <select id="insert">
- 		insert into sleep_status(x, y, gyro_sensor, sleep_id, time) values(#{x},#{y}, #{gyro_sensor}, #{sleep_id}, #{time})
+ 		insert into sleep(start,end,elements,email) values(#{start}, #{end}, #{elements},#{email})
      </select>
      
 
