@@ -67,8 +67,8 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ItemViewHold
         }
 
         void onBind(DiaryData data) {
-            textView1.setText(data.getDiary_date());
-            textView2.setText(data.getDiary_content());
+            textView1.setText(data.getDate());
+            textView2.setText(data.getDescription());
 
         }
     }

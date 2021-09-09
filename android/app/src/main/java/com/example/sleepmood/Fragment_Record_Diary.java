@@ -11,12 +11,18 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Fragment_Record_Diary extends Fragment {
 
@@ -53,6 +59,29 @@ public class Fragment_Record_Diary extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
+
+        // 디이어리 데이터 가져오는 부분.
+//        RetroBuilder retro = new RetroBuilder();
+//        Call<List<DiaryData>> call2 = retro.service.getDiaryToday("born7sh@gmail.com");
+//        call2.enqueue(new Callback<List<DiaryData>>() {
+//            @Override
+//            public void onResponse(Call<List<DiaryData>> call, Response<List<DiaryData>> response) {
+//                if(response.isSuccessful()){
+//                    List<DiaryData> reportL = response.body();
+//                    Log.v("알림", "일단 들어는옴2");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<DiaryData>> call, Throwable t) {
+//                Log.v("알림", "안됨2");
+//            }
+//
+//        });
+
+
+
         DiaryData a = new DiaryData("1","21/08/24","오늘은 수면을 취했다");
         DiaryData b = new DiaryData("2","21/08/25","오늘은 밥을 먹었다");
         DiaryData c = new DiaryData("3","21/08/26","오늘은 코딩을 했다");

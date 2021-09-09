@@ -36,9 +36,22 @@
         android:src="@drawable/home_clock"></ImageView>
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="150dp">
+        <TextView
+            android:id="@+id/timeNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="time"
+            android:textSize="20dp" />
 
+        <TextView
+            android:id="@+id/timeAfter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="time2"
+            android:textSize="20dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -142,6 +155,8 @@
             android:layout_height="wrap_content"
             android:text="grade"
             android:textSize="20dp" />
+
+
     </LinearLayout>
 
     <LinearLayout
