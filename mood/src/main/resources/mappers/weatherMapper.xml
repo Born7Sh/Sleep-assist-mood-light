@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.kpu.sleepapp.mapper.weatherMapper">
+
+     <select id="insertNow">
+     	insert into current_weather(date_time, temperature, humidity, precipitation_type) values(#{datetime}, #{temperature}, #{humidity}, #{precipitation_type})
+     </select>
+     
+ 	 <select id="insertForecast">
+     	insert into todays_weather(date_time, temperature, humidity, precipitation_type) values(#{datetime}, #{temperature}, #{humidity}, #{precipitation_type})
+     </select>
+	 
+	 <select id="select" resultType="WeatherVO">
+	 	select * from todays_weather order by insert_time desc limit 20;
+	 </select>
+	 
+	 <select id="selectNow" resultType="WeatherVO">
+	 	select * from current_weather order by date_time desc limit 1;
+	 </select>
+</mapper>
+

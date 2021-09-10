@@ -12,7 +12,12 @@ public class SleepDAOImpl implements SleepDAO{
 	
 	private static final String namespace = "org.kpu.sleepapp.mapper.SleepMapper";
 	
-	public void insert(SleepVO sleepVO) throws Exception {
+	public int insert(SleepVO sleepVO) throws Exception {
 		sqlSession.insert(namespace+".insert", sleepVO);
+		return sqlSession.selectOne(namespace+".selectId", sleepVO);
+	}
+	
+	public void update(SleepVO sleepVO) throws Exception {
+		sqlSession.update(namespace+".update", sleepVO);
 	}
 }

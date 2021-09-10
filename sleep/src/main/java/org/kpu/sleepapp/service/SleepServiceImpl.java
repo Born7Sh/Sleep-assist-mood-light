@@ -11,8 +11,10 @@ public class SleepServiceImpl implements SleepService {
 	@Autowired
 	private SleepDAO sleepDAO;
 	
-	public void insertSleep(SleepVO sleepVO) throws Exception {
-		sleepDAO.insert(sleepVO);
+	public int insertSleep(SleepVO sleepVO) throws Exception {
+		return sleepDAO.insert(sleepVO);
 	}
-	
+	public void updateSleep(SleepVO sleepVO) throws Exception {
+		sleepDAO.update(sleepVO);
+	}
 }
