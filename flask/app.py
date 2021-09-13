@@ -1,6 +1,8 @@
 from flask import Flask
 import time
 import serial
+import pymysql
+import config
 
 app = Flask(__name__)
 #arduino = serial.Serial('/dev/ttyACM0',9600)
@@ -8,7 +10,7 @@ app = Flask(__name__)
 @app.route('/temp')
 def temp():
     arduino = serial.Serial('/dev/ttyACM0',9600)
-    var = '0'
+    var = 'T'
     humidity = 0
     temperature = 0
     lux = 0.0
@@ -17,22 +19,33 @@ def temp():
 
     var = var.encode('utf-8')
     arduino.write(var)
-    for i in range (0, 3):
-        data = arduino.readline() 
-        print(data)
-        if i == 2:    #온습도 센서가 2초 정도의 딜레이 후에 정상적으로 반응하는데 3번째 정도면 값을 받을 수 있음.
-            string = str(data)
-            string = string.split()     
-            string[0] = string[0][2:]   #쓰레기 값 제거
-            string[2] = string[2][:-5]  #쓰레기 값 제거
-            print(string)
-            humidity = string[0]
-            temperature = string[1]
-            lux = string[2]
-            print(temperature)
-            print(humidity)    
-            print(lux)  
-            arduino.close()
+    #for i in range (0, 3):
+    data = arduino.readline() 
+    print(data)
+        #if i == 2:    #온습도 센서가 2초 정도의 딜레이 후에 정상적으로 반응하는데 3번째 정도면 값을 받을 수 있음.
+    string = str(data)
+    string = string.split()     
+    string[0] = string[0][2:]   #쓰레기 값 제거
+    string[2] = string[2][:-5]  #쓰레기 값 제거
+    print(string)
+    humidity = int(string[0])
+    temperature = int(string[1])
+    lux = int(string[2])
+
+    database = pymysql.connect(host=str(config.host),user=str(config.user),db=str(config.database),password=str(config.password), charset='utf8')
+    curs=database.cursor()
+
+    email = str(config.email)
+
+    sql = '''INSERT INTO hardware_control_status(email, bright, humidity, temperature) values (%s,%s,%s,%s)'''
+
+    curs.execute(sql,(email, lux,humidity,temperature))
+    database.commit()
+    database.close()                                     
+    print(temperature)
+    print(humidity)    
+    print(lux)  
+    arduino.close()
     return 'ok'
 
 @app.route('/red')
@@ -41,8 +54,6 @@ def red():
     var = 'R'
     var = var.encode('utf-8')
     arduino.write(var)
-    data = arduino.readline() 
-    print(data)
     arduino.close()
     return 'ok'
 
@@ -73,14 +84,14 @@ def pink():
     arduino.close()
     return 'ok'
 
-@app.route('/white')
-def white():
-    arduino = serial.Serial('/dev/ttyACM0',9600)
-    var = 'W'
-    var = var.encode('utf-8')
-    arduino.write(var)
-    arduino.close()
-    return 'ok'
+# @app.route('/white')
+# def white():
+#     arduino = serial.Serial('/dev/ttyACM0',9600)
+#     var = 'W'
+#     var = var.encode('utf-8')
+#     arduino.write(var)
+#     arduino.close()
+#     return 'ok'
 
 @app.route('/yellow')
 def yellow():
@@ -109,15 +120,6 @@ def rainbow():
     arduino.close()
     return 'ok'
 
-@app.route('/black')
-def black():
-    arduino = serial.Serial('/dev/ttyACM0',9600)
-    var = 'L'
-    var = var.encode('utf-8')
-    arduino.write(var)
-    arduino.close()
-    return 'ok'
-
 @app.route('/poweron')
 def poweron():
     arduino = serial.Serial('/dev/ttyACM0',9600)
@@ -136,24 +138,49 @@ def poweroff():
     arduino.close()
     return 'ok'
 
-@app.route('/brightup')
-def brightup():
+@app.route('/bright10')
+def bright10():
     arduino = serial.Serial('/dev/ttyACM0',9600)
-    var = 'U'
+    var = '1'
     var = var.encode('utf-8')
     arduino.write(var)
     arduino.close()
     return 'ok'
 
-@app.route('/brightdown')
-def brightdown():
+@app.route('/bright25')
+def bright25():
     arduino = serial.Serial('/dev/ttyACM0',9600)
-    var = 'D'
+    var = '2'
     var = var.encode('utf-8')
     arduino.write(var)
     arduino.close()
     return 'ok'
 
+@app.route('/bright50')
+def bright50():
+    arduino = serial.Serial('/dev/ttyACM0',9600)
+    var = '5'
+    var = var.encode('utf-8')
+    arduino.write(var)
+    arduino.close()
+    return 'ok'
 
+@app.route('/bright100')
+def bright100():
+    arduino = serial.Serial('/dev/ttyACM0',9600)
+    var = '0'
+    var = var.encode('utf-8')
+    arduino.write(var)
+    arduino.close()
+    return 'ok'
+
+@app.route('/bright255')
+def bright255():
+    arduino = serial.Serial('/dev/ttyACM0',9600)
+    var = 'M'
+    var = var.encode('utf-8')
+    arduino.write(var)
+    arduino.close()
+    return 'ok'  
 
 app.run(host='0.0.0.0',port='80')
