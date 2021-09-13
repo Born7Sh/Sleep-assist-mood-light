@@ -1,11 +1,13 @@
 package org.kpu.mood.controller;
 
+import org.kpu.mood.domain.SleepReportVO;
 import org.kpu.mood.domain.SleepVO;
 import org.kpu.mood.service.SleepService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
