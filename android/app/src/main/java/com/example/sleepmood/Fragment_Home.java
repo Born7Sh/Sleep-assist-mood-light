@@ -2,6 +2,7 @@ package com.example.sleepmood;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -67,7 +68,8 @@ public class Fragment_Home extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ArrayList<Integer> alarmWeek = new ArrayList<Integer>(0);
-
+        SharedPreferences pref = getActivity().getSharedPreferences("token", Activity.MODE_PRIVATE);
+        String checkFirst = pref.getString("token","NULL");
 //        AlarmData a = new AlarmData(1,"ho", "ho", alarmWeek);
 //        AlarmData b = new AlarmData(2,"no", "no", alarmWeek);
 //        sharedViewModel.addLiveAlarmData(a);
@@ -155,30 +157,31 @@ public class Fragment_Home extends Fragment {
 
 
 /////////////////////////////////////////////////////////여기 부터 주석 삭제하면 됨
-//        */
-//        RetroBuilder retro = new RetroBuilder();
-//        DiaryData d2 = new DiaryData("born7sh@gmail.com","2021-08-14","potato?");
-//      //  Call<DiaryData2> call = retro.service.provideDiaryDay("json","born7sh@gmail.com","2021-08-26","posttestright?");
-//        Call<DiaryData> call = retro.service.provideDiaryDay(d2);
-//
-//        call.enqueue(new Callback<DiaryData>() {
-//                         @Override
-//                         public void onResponse(Call<DiaryData> call, Response<DiaryData> response) {
-//                                 Log.v("알림","확인");
-//                             if(response.isSuccessful()){
-//                                 Log.v("알림","성공1");
-//                             }
-//                         }
-//
-//                         @Override
-//                         public void onFailure(Call<DiaryData> call, Throwable t) {
-//                             Log.v("알림","실패1");
-//                         }
-//                     }
-//        );
-//
-//
-//
+        */
+        RetroBuilder retro = new RetroBuilder();
+        DiaryData d2 = new DiaryData("born7sh@gmail.com","2021-09-14","test");
+      //  Call<DiaryData2> call = retro.service.provideDiaryDay("json","born7sh@gmail.com","2021-08-26","posttestright?");
+//        Call<DiaryData> call = retro.service.provideDiaryDay(d2,"Bearer " +checkFirst);
+        Call<DiaryData> call = retro.service.provideDiaryDay(d2,"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpbmhvMjE2IiwiZXhwIjoxNjMxNTU3NDc2LCJpYXQiOjE2MzE1MjE0NzZ9.pEhPbnoBaouNWd5tYUqTJAKeczUgorfbazLbJS_70xA");
+
+        call.enqueue(new Callback<DiaryData>() {
+                         @Override
+                         public void onResponse(Call<DiaryData> call, Response<DiaryData> response) {
+                                 Log.v("알림","확인");
+                             if(response.isSuccessful()){
+                                 Log.v("알림","성공1");
+                             }
+                         }
+
+                         @Override
+                         public void onFailure(Call<DiaryData> call, Throwable t) {
+                             Log.v("알림","실패1");
+                         }
+                     }
+        );
+
+
+
 //        Call<List<DiaryData>> call2 = retro.service.getDiaryToday("born7sh@gmail.com","all");
 //        call2.enqueue(new Callback<List<DiaryData>>() {
 //            @Override

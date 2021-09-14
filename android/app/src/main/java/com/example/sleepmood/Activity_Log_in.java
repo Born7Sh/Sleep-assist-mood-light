@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class Activity_Log_in extends AppCompatActivity {
 
     @Override
@@ -29,20 +33,49 @@ public class Activity_Log_in extends AppCompatActivity {
             public void onClick(View v) {
                 // login_Id 랑 login_pwd 가져와서 로그인 하면 됨.
 
-                if(login_Id.getText().toString().equals("1")  || login_pwd.getText().toString().equals("1")){
+                LoginData ld = new LoginData("inho216","pw1");
+                RetroBuilder retro = new RetroBuilder();
+                Call<String> call = retro.service.tryLogin(ld);
+                call.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
 
-                    SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
-                    boolean checkFirst = pref.getBoolean("checkFirst", false);
+                        String token = response.body();
+                        SharedPreferences pref = getSharedPreferences("token", Activity.MODE_PRIVATE);
+                        String checkFirst = pref.getString("token", token);
 
-                    SharedPreferences.Editor editor = pref.edit();
-                    editor.putBoolean("checkFirst", true);
-                    editor.commit();
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString("token", token);
+                        editor.commit();
 
-                    Intent intent = new Intent(Activity_Log_in.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                        Intent intent = new Intent(Activity_Log_in.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
 
-                }
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+
+                    }
+                });
+
+
+
+//                if(login_Id.getText().toString().equals("1")  || login_pwd.getText().toString().equals("1")){
+//
+//                    SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
+//                    boolean checkFirst = pref.getBoolean("checkFirst", false);
+//
+//                    SharedPreferences.Editor editor = pref.edit();
+//                    editor.putBoolean("checkFirst", true);
+//                    editor.commit();
+//
+//                    Intent intent = new Intent(Activity_Log_in.this, MainActivity.class);
+//                    startActivity(intent);
+//                    finish();
+//
+//                }
             }
         });
         btn_Signup.setOnClickListener(new View.OnClickListener() {

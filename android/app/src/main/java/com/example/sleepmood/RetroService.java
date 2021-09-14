@@ -8,6 +8,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -18,19 +19,19 @@ public interface RetroService {
   //Call<ComCafeInfo> requestCafe(@Path("path") int id);
 
     @GET("diary/{email}/{date}")
-    Call<List<DiaryData>> getDiaryToday(@Path("email") String diary_id, @Path("date") String date);
+    Call<List<DiaryData>> getDiaryToday(@Path("email") String diary_id, @Path("date") String date, @Header("Authorization") String auth);
 
     @GET("diary/{email}/all")
-    Call<List<DiaryData>> getDiaryAll(@Path("email") String email);
+    Call<List<DiaryData>> getDiaryAll(@Path("email") String email, @Header("Authorization") String auth);
 
     @GET("report/{email}/{date}/selection")
-    Call<ReportData> getReportDate(@Path("email") String email, @Path("date") String date);
+    Call<ReportData> getReportDate(@Path("email") String email, @Path("date") String date, @Header("Authorization") String auth);
 
     @GET("report/{email}/all")
-    Call<List<ReportData>> getReportAll(@Path("email") String email);
+    Call<List<ReportData>> getReportAll(@Path("email") String email, @Header("Authorization") String auth);
 
     @GET("report/{email}/today")
-    Call<ReportData> getReportToday(@Path("email") String email);
+    Call<ReportData> getReportToday(@Path("email") String email, @Header("Authorization") String auth);
 /*
     @FormUrlEncoded
     @POST("diary/")
@@ -43,22 +44,32 @@ public interface RetroService {
 */
     @POST("diary/")
     Call<DiaryData> provideDiaryDay(
-            @Body DiaryData diary
+            @Body DiaryData diary, @Header("Authorization") String auth
     );
 
     @POST("status/")
     Call<SleepData> provideSleepData(
-            @Body SleepData sd
+            @Body SleepData sd, @Header("Authorization") String auth
     );
 
     @POST("report/")
     Call<ReportData> provideReportData(
-            @Body ReportData rd
+            @Body ReportData rd, @Header("Authorization") String auth
     );
 
     @POST("sleep/")
     Call<SleepTimeData> provideSleepTimeData(
-            @Body SleepTimeData std
+            @Body SleepTimeData std, @Header("Authorization") String auth
+    );
+
+    @POST("authenticate")
+    Call<String> tryLogin(
+            @Body LoginData ld
+    );
+
+    @POST("sleep")
+    Call<Integer> provideSleepTime(
+            @Body SleepTime st, @Header("Authorization") String auth
     );
 
 

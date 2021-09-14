@@ -51,15 +51,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        //21-07-22 앱최초 실행 작업
-        SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
-        boolean checkFirst = pref.getBoolean("checkFirst", false);
-
+//        //21-07-22 앱최초 실행 작업
+//        SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
+//        boolean checkFirst = pref.getBoolean("checkFirst", false);
+        SharedPreferences pref = getSharedPreferences("token", Activity.MODE_PRIVATE);
+        String checkFirst = pref.getString("token","NULL");
 
         Intent passedIntent = getIntent();
         processCommand(passedIntent);
 
-        if (checkFirst == false) {
+        if (checkFirst == "NULL") {
             // @######구글 로그인 세션까지 조건 작업 할것######@
             // 앱 최초 실행시 하고 싶은 작업
 //            SharedPreferences.Editor editor = pref.edit();
