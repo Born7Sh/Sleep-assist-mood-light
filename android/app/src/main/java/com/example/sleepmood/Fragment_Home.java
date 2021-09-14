@@ -157,28 +157,28 @@ public class Fragment_Home extends Fragment {
 
 
 /////////////////////////////////////////////////////////여기 부터 주석 삭제하면 됨
-        */
-        RetroBuilder retro = new RetroBuilder();
-        DiaryData d2 = new DiaryData("born7sh@gmail.com","2021-09-14","test");
-      //  Call<DiaryData2> call = retro.service.provideDiaryDay("json","born7sh@gmail.com","2021-08-26","posttestright?");
-//        Call<DiaryData> call = retro.service.provideDiaryDay(d2,"Bearer " +checkFirst);
-        Call<DiaryData> call = retro.service.provideDiaryDay(d2,"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpbmhvMjE2IiwiZXhwIjoxNjMxNTU3NDc2LCJpYXQiOjE2MzE1MjE0NzZ9.pEhPbnoBaouNWd5tYUqTJAKeczUgorfbazLbJS_70xA");
-
-        call.enqueue(new Callback<DiaryData>() {
-                         @Override
-                         public void onResponse(Call<DiaryData> call, Response<DiaryData> response) {
-                                 Log.v("알림","확인");
-                             if(response.isSuccessful()){
-                                 Log.v("알림","성공1");
-                             }
-                         }
-
-                         @Override
-                         public void onFailure(Call<DiaryData> call, Throwable t) {
-                             Log.v("알림","실패1");
-                         }
-                     }
-        );
+//        */
+//        RetroBuilder retro = new RetroBuilder();
+//        DiaryData d2 = new DiaryData("born7sh@gmail.com","2021-09-14","test");
+//      //  Call<DiaryData2> call = retro.service.provideDiaryDay("json","born7sh@gmail.com","2021-08-26","posttestright?");
+////        Call<DiaryData> call = retro.service.provideDiaryDay(d2,"Bearer " +checkFirst);
+//        Call<DiaryData> call = retro.service.provideDiaryDay(d2,"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpbmhvMjE2IiwiZXhwIjoxNjMxNTU3NDc2LCJpYXQiOjE2MzE1MjE0NzZ9.pEhPbnoBaouNWd5tYUqTJAKeczUgorfbazLbJS_70xA");
+//
+//        call.enqueue(new Callback<DiaryData>() {
+//                         @Override
+//                         public void onResponse(Call<DiaryData> call, Response<DiaryData> response) {
+//                                 Log.v("알림","확인");
+//                             if(response.isSuccessful()){
+//                                 Log.v("알림","성공1");
+//                             }
+//                         }
+//
+//                         @Override
+//                         public void onFailure(Call<DiaryData> call, Throwable t) {
+//                             Log.v("알림","실패1");
+//                         }
+//                     }
+//        );
 
 
 

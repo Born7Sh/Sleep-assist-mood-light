@@ -72,6 +72,11 @@ public interface RetroService {
             @Body SleepTime st, @Header("Authorization") String auth
     );
 
+    @POST("signup")
+    Call<UserData> provideUserData(
+            @Body UserData ud
+    );
+
 
     /*
     @FormUrlEncoded

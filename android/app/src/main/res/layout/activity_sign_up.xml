@@ -40,9 +40,10 @@
                 android:layout_height="wrap_content"></TextView>
 
             <EditText
-                android:hint="이메일 / 아이디 입력"
+                android:hint="아이디 입력"
                 android:id="@+id/signup_Id"
-                android:textColor="#AAAAAA"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></EditText>
         </LinearLayout>
@@ -61,10 +62,12 @@
                 android:layout_height="wrap_content"></TextView>
 
             <EditText
+                android:inputType="textPassword"
                 android:maxLength="15"
                 android:hint="영문/숫자 조합 6~15자"
                 android:id="@+id/signup_Pwd"
-                android:textColor="#AAAAAA"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></EditText>
 
@@ -75,10 +78,12 @@
                 android:layout_height="wrap_content"></TextView>
 
             <EditText
+                android:inputType="textPassword"
                 android:maxLength="15"
                 android:hint="비밀번호 재입력"
                 android:id="@+id/signup_Pwd_Check"
-                android:textColor="#AAAAAA"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></EditText>
 
@@ -102,8 +107,9 @@
             <EditText
                 android:inputType="number"
                 android:id="@+id/signup_Phone"
-                android:textColor="#AAAAAA"
-                android:hint="- 없이 입력"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:hint="번호 입력"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></EditText>
 
@@ -115,7 +121,8 @@
 
             <EditText
                 android:id="@+id/signup_Job"
-                android:textColor="#AAAAAA"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
                 android:hint="직업 입력"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></EditText>
@@ -126,10 +133,38 @@
                 android:layout_height="wrap_content"></TextView>
 
             <EditText
-                android:inputType="number"
                 android:id="@+id/signup_Birth"
-                android:textColor="#AAAAAA"
-                android:hint="생년월일 입력"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:hint="YYYY-MM-YY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></EditText>
+
+            <TextView
+                android:textColor="#FFFFFF"
+                android:text="이메일"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+
+            <EditText
+                android:id="@+id/signup_Email"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:hint="이메일 입력"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></EditText>
+
+            <TextView
+                android:textColor="#FFFFFF"
+                android:text="주소"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+
+            <EditText
+                android:id="@+id/signup_Address"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:hint="주소 입력"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></EditText>
         </LinearLayout>
@@ -139,15 +174,12 @@
 
         <Button
             android:id="@+id/btn_Signup_Finish"
-            android:enabled="false"
             android:layout_margin="12dp"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#1CA8D4"
             android:text="SIGN IN"></Button>
-
-
 
 
 
