@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.kpu.sleepapp.mapper.SensorMapper">
+	 
+	 <select id="selectbyEmail" resultType="Hardware_Control_StatusVO">
+	 	select * from hardware_control_status where email = #{email} order by id desc limit 1
+	 </select>
+
+</mapper>
+
