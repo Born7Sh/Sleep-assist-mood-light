@@ -5,7 +5,7 @@ sleep/target/
 
 #no service key
 sleep/src/main/java/org/kpu/sleepapp/domain/ServiceKey.java
-
+mood/src/main/java/org/kpu/mood/domain/ServiceKey.java
 sleep/src/main/resources/client_secret_606756820571-qhcspakd6h3juq93m94qps0b8o8g9pvb.apps.googleusercontent.com.json
 
 mood/src/main/resources/application.properties
