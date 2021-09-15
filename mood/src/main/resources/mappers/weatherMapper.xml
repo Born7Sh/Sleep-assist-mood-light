@@ -21,5 +21,9 @@
 	 <select id="selectNow" resultType="WeatherVO">
 	 	select * from current_weather order by date_time desc limit 1;
 	 </select>
+	 
+	 <select id="update">
+	 	update current_weather set fine_dust10 = #{fine_dust10}, fine_dust2_5 = #{fine_dust2_5} where date_time = #{date_time} ;
+	 </select>
 </mapper>
 

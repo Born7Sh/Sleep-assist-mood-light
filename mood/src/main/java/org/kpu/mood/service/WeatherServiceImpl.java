@@ -281,4 +281,92 @@ public class WeatherServiceImpl implements WeatherService {
 
 	}
 
+	
+	@Scheduled(cron = "0 32 * * * ?", zone = "Asia/Seoul")
+	public void getNowAirPollution() throws Exception {
+		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+
+		DateFormat sdFormat = new SimpleDateFormat("yyyyMMdd");
+		Date nowDate = new Date();
+		String tempDate = sdFormat.format(nowDate);
+		
+		LocalTime now = LocalTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH");
+		
+		String tempTime = now.format(formatter);
+
+		// JSON데이터를 요청하는 URLstr을 만듭니다.
+		String apiUrl = "http://apis.data.go.kr/B552584/ArpltnStatsSvc/getCtprvnMesureSidoLIst";
+		// 홈페이지에서 받은 키
+		// 다른곳을 서비스키 이동시켜야 함.
+		ServiceKey servicekey = new ServiceKey();
+		String serviceKey = servicekey.getAirPollutionAPI();
+		String pageNo = "1";
+		String numOfRows = "100"; // 한 페이지 결과 수
+		String data_type = "JSON"; // 타입 xml, json 등등 ..
+
+		// 전날 23시 부터 153개의 데이터를 조회하면 오늘과 내일의 날씨를 알 수 있음
+		WeatherVO TW = new WeatherVO();
+		StringBuilder urlBuilder = new StringBuilder(apiUrl);
+		urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);
+		urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8"));
+		urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="+ URLEncoder.encode(numOfRows, "UTF-8")); /* 한 페이지 결과 수 */
+		urlBuilder.append("&" + URLEncoder.encode("returnType", "UTF-8") + "=" + URLEncoder.encode(data_type, "UTF-8")); /* 타입 */	
+		urlBuilder.append("&" + URLEncoder.encode("sidoName", "UTF-8") + "="+ URLEncoder.encode("서울", "UTF-8")); /* 조회하고싶은 날짜 */
+		urlBuilder.append("&" + URLEncoder.encode("searchCondition", "UTF-8") + "="+ URLEncoder.encode("HOUR", "UTF-8")); /* 조회하고싶은 시간 AM 02시부터 3시간 단위 */
+			
+	
+		 /* GET방식으로 전송해서 파라미터 받아오기*/
+		URL url = new URL(urlBuilder.toString());
+
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Content-type", "application/json");
+		System.out.println("Response code: " + conn.getResponseCode());
+		BufferedReader rd;
+		if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		} else {
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+		}
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		rd.close();
+		conn.disconnect();
+		String result = sb.toString();
+		System.out.println("결과: " + result);
+		
+		// 문자열을 JSON으로 파싱합니다. 마지막 배열형태로 저장된 데이터까지 파싱해냅니다.
+		JSONParser jsonParser = new JSONParser();
+		JSONObject jsonObj = (JSONObject) jsonParser.parse(result);
+		JSONObject parse_response = (JSONObject) jsonObj.get("response");
+		JSONObject parse_header = (JSONObject) parse_response.get("header");
+		JSONObject parse_body = (JSONObject) parse_response.get("body");// response 로 부터 body 찾아오기
+		JSONArray parse_items = (JSONArray) parse_body.get("items");// body 로 부터 items 받아오기		
+		JSONObject obj,obj1;
+		String resultCode,cityName; // 기준 날짜와 기준시간을 VillageWeather 객체에 저장합니다.
+		
+		obj1 = (JSONObject) parse_header;
+		resultCode = (String) obj1.get("resultCode");
+
+		if(resultCode.equals("00")) {
+			for (int i = 0; i < parse_items.size(); i++) {
+				obj = (JSONObject) parse_items.get(i); // 해당 item을 가져옵니다.
+				cityName = (String) obj.get("cityName");
+			
+				// 검색한 카테고리와 일치하는 변수에 문자형으로 데이터를 저장합니다.
+				if(cityName.equals("관악구")) {
+					TW.setFine_dust10(Integer.parseInt((String) obj.get("pm10Value")));
+					TW.setFine_dust2_5(Integer.parseInt((String) obj.get("pm25Value")));
+				}
+			}	
+			DateFormat sdFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+			String tempDate1 = sdFormat1.format(nowDate);
+			TW.setDatetime(tempDate1+" "+tempTime+":"+"00"+":"+"00");
+			weatherDAO.updateFineDust(TW);
+		}
+	}
 }

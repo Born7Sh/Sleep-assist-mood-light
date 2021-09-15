@@ -9,4 +9,5 @@ public interface WeatherService {
 	public void getTomWeather() throws Exception;
 	public List<WeatherVO> readForecastWeather() throws Exception;
 	public WeatherVO readNowWeather() throws Exception;
+	public void getNowAirPollution() throws Exception;
 }

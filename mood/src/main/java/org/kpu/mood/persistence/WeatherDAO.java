@@ -11,4 +11,5 @@ public interface WeatherDAO {
 	public void insertForecast(WeatherVO weatherVO)throws Exception;
 	public List<WeatherVO> selectForecast() throws Exception;
 	public WeatherVO selectNow() throws Exception;
+	public void updateFineDust(WeatherVO weatherVO) throws Exception;
 }

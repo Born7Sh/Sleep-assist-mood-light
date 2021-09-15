@@ -1,6 +1,6 @@
 package org.kpu.mood.domain;
 
-public class Hardware_Control_Status {
+public class Hardware_Control_StatusVO {
 	private int id;
 	private String email;
 	private int bright;

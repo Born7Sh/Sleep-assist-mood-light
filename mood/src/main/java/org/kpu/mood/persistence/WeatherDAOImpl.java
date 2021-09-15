@@ -33,4 +33,8 @@ public class WeatherDAOImpl implements WeatherDAO{
 	public WeatherVO selectNow() throws Exception{
 		return sqlSession.selectOne(namespace+".selectNow");
 	}
+	
+	public void updateFineDust(WeatherVO weatherVO) throws Exception{
+		sqlSession.update(namespace+".update",weatherVO);
+	}
 }

@@ -58,4 +58,5 @@ public class WeatherRestController {
 		// 이거와 차이를 좀 알았으면 좋겠음.
 		return new ResponseEntity<>(weatherVO, headers, HttpStatus.OK);
 	}
+	
 }
