@@ -1,12 +1,18 @@
 package org.kpu.sleepapp.domain;
 
 public class SleepVO {
-
+	private int id;
 	private String start;
 	private String end;
 	private int elements;
 	private String email;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getEmail() {
 		return email;
 	}

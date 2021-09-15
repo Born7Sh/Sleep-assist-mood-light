@@ -1,0 +1,43 @@
+package org.kpu.mood.domain;
+
+public class CalendarVO {
+	private String start;
+	private String end;
+	private String title;
+	private String description;
+	private String email;
+	
+
+	public String getStart() {
+		return start;
+	}
+	public void setStart(String start) {
+		this.start = start;
+	}
+	public String getEnd() {
+		return end;
+	}
+	public void setEnd(String end) {
+		this.end = end;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	
+}

@@ -10,6 +10,7 @@
 	<properties>
 		<java-version>1.8</java-version>
 		<org.springframework-version>5.2.12.RELEASE</org.springframework-version>
+		<org.spring.security.version>4.2.20.RELEASE</org.spring.security.version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
@@ -179,6 +180,7 @@
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework-version}</version>
 	   	</dependency>
+	   	
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -187,24 +189,21 @@
 			<scope>test</scope>
 		</dependency>    
 		
-		<!-- google api -->
-        <dependency>
-            <groupId>com.google.api-client</groupId>
-            <artifactId>google-api-client</artifactId>
-            <version>1.22.0</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.google.oauth-client</groupId>
-            <artifactId>google-oauth-client-jetty</artifactId>
-            <version>1.22.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.apis</groupId>
-            <artifactId>google-api-services-calendar</artifactId>
-            <version>v3-rev235-1.22.0</version>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${org.spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${org.spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${org.spring.security.version}</version>
+		</dependency>
 
 	</dependencies>
     <build>

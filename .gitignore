@@ -7,6 +7,11 @@ sleep/target/
 sleep/src/main/java/org/kpu/sleepapp/domain/ServiceKey.java
 mood/src/main/java/org/kpu/mood/domain/ServiceKey.java
 
+<<<<<<< HEAD
+=======
+sleep/src/main/resources/client_secret_606756820571-qhcspakd6h3juq93m94qps0b8o8g9pvb.apps.googleusercontent.com.json
+
+>>>>>>> 8c561f52609049bed3cae4688226110191ce9bc8
 mood/src/main/resources/application.properties
 mood/target/
 
