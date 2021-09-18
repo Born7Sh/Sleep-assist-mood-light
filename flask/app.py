@@ -25,7 +25,7 @@ def temp():
         #if i == 2:    #온습도 센서가 2초 정도의 딜레이 후에 정상적으로 반응하는데 3번째 정도면 값을 받을 수 있음.
     string = str(data)
     string = string.split()     
-    string[0] = string[0][2:]   #쓰레기 값 제거
+    string[0] = string[0][4:]   #쓰레기 값 제거
     string[2] = string[2][:-5]  #쓰레기 값 제거
     print(string)
     humidity = int(string[0])
@@ -47,6 +47,8 @@ def temp():
     print(lux)  
     arduino.close()
     return 'ok'
+
+
 
 @app.route('/red')
 def red():
@@ -92,6 +94,15 @@ def pink():
 #     arduino.write(var)
 #     arduino.close()
 #     return 'ok'
+
+@app.route('/warmwhite')
+def warmwhite():
+    arduino = serial.Serial('/dev/ttyACM0',9600)
+    var = 'E'
+    var = var.encode('utf-8')
+    arduino.write(var)
+    arduino.close()
+    return 'ok'
 
 @app.route('/yellow')
 def yellow():

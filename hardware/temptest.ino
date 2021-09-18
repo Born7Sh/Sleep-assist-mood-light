@@ -35,6 +35,9 @@ void loop(){
     
     data = Serial.read();
     Serial.print(data);
+    if(data == 69){ //WarmWhite
+      colorWipe(strip.Color(255, 100, 0), 40);
+    }
     if(data == 82){ //RED
       colorWipe(strip.Color(255, 0, 0), 50);
     }
@@ -76,9 +79,9 @@ void loop(){
     if(data == 68){ //Bright DOWN
       strip.setBrightness(strip.getBrightness()-3);
     }
-    
-    h = dht.readHumidity();     //온도
-    t = dht.readTemperature();  //습도
+
+    h = dht.readHumidity();     //습도
+    t = dht.readTemperature();  //온도
     Serial.print(h);
     Serial.print(" ");
     Serial.print(t);
