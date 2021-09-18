@@ -51,6 +51,14 @@ public class Activity_Log_in extends AppCompatActivity {
                         editor.putString("token", token);
                         editor.commit();
 
+
+                        SharedPreferences pref2 = getSharedPreferences("id", Activity.MODE_PRIVATE);
+                        String checkFirst2 = pref2.getString("id", token);
+
+                        SharedPreferences.Editor editor2 = pref2.edit();
+                        editor2.putString("id", login_Id.getText().toString());
+                        editor2.commit();
+
                         if(token == "NULL") {
                             Log.v("알림", "틀림");
                             Toast.makeText(getApplicationContext(), "로그인 실패!!!", Toast.LENGTH_LONG).show();

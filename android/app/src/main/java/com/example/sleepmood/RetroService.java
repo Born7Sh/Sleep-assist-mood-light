@@ -32,6 +32,9 @@ public interface RetroService {
 
     @GET("report/{email}/today")
     Call<ReportData> getReportToday(@Path("email") String email, @Header("Authorization") String auth);
+
+    @GET("weather/now")
+    Call<WeatherData> getWeatherNow(@Header("Authorization") String auth);
 /*
     @FormUrlEncoded
     @POST("diary/")
