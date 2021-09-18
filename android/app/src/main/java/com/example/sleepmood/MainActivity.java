@@ -74,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+
+
+
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_frame, new Fragment_Home()).commit();
 

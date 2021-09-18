@@ -47,7 +47,7 @@ public interface RetroService {
             @Body DiaryData diary, @Header("Authorization") String auth
     );
 
-    @POST("status/")
+    @POST("status")
     Call<SleepData> provideSleepData(
             @Body SleepData sd, @Header("Authorization") String auth
     );
@@ -57,10 +57,6 @@ public interface RetroService {
             @Body ReportData rd, @Header("Authorization") String auth
     );
 
-    @POST("sleep/")
-    Call<SleepTimeData> provideSleepTimeData(
-            @Body SleepTimeData std, @Header("Authorization") String auth
-    );
 
     @POST("authenticate")
     Call<String> tryLogin(
@@ -70,6 +66,11 @@ public interface RetroService {
     @POST("sleep")
     Call<Integer> provideSleepTime(
             @Body SleepTime st, @Header("Authorization") String auth
+    );
+
+    @POST("sleep/update/")
+    Call<SleepTimeUpdate> provideSleepTimeUpdate(
+            @Body SleepTimeUpdate st, @Header("Authorization") String auth
     );
 
     @POST("signup")

@@ -1,6 +1,8 @@
 package com.example.sleepmood;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -52,6 +54,7 @@ public class Fragment_Home_SleepStart extends Fragment {
 
     private int grade;
 
+    private int id; // 멈추기 위한 id
 
     // 시간을 분 단위로 계산
     private long timeNow;
@@ -75,6 +78,8 @@ public class Fragment_Home_SleepStart extends Fragment {
     private boolean gyroRunning;
     private boolean accRunning;
 
+    private SharedPreferences pref;
+    private String checkFirst;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,6 +94,10 @@ public class Fragment_Home_SleepStart extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        pref = getActivity().getSharedPreferences("token", Activity.MODE_PRIVATE);
+        checkFirst = pref.getString("token", "NULL");
+
 
         tv_timeAfter = (TextView) view.findViewById(R.id.timeAfter);
         tv_timeNow = (TextView) view.findViewById(R.id.timeAfter);
@@ -111,54 +120,30 @@ public class Fragment_Home_SleepStart extends Fragment {
         TimerTask TT = new TimerTask() {
             @Override
             public void run() {
-
-                Log.v("알림", "Timer1");
-                // 반복실행할 구문
-//                RetroBuilder retro = new RetroBuilder();
-//                float a = (float) pitch;
-//                float b = (float) roll;
-//                SleepData d2 = new SleepData(a, b, 4, 1, "08:14");
-//                //  Call<DiaryData2> call = retro.service.provideDiaryDay("json","born7sh@gmail.com","2021-08-26","posttestright?");
-//                Call<SleepData> call = retro.service.provideSleepData(d2);
-//
-//                call.enqueue(new Callback<SleepData>() {
-//                                 @Override
-//                                 public void onResponse(Call<SleepData> call, Response<SleepData> response) {
-//                                     Log.v("알림", "확인");
-//                                     if (response.isSuccessful()) {
-//                                         Log.v("알림", "성공1");
-//                                     }
-//                                 }
-//
-//                                 @Override
-//                                 public void onFailure(Call<SleepData> call, Throwable t) {
-//                                     Log.v("알림", "실패1");
-//                                 }
-//                             }
-//                );
-
-
+                callStatus();
             }
         };
 
-        timer.schedule(TT, 0, 300000); //Timer 실행
+        timer.schedule(TT, 0, 100000); //Timer 실행
 //        timer.cancel();//타이머 종료
 
-        Timer timer2 = new Timer();
-
-        TimerTask TT2 = new TimerTask() {
-            @Override
-            public void run() {
-                // 반복실행할 구문
-                Log.v("알림", String.valueOf(pitch));
-                Log.v("알림", String.valueOf(roll));
-
-            }
 
 
-        };
-
-        timer2.schedule(TT2, 0, 1000); //Timer 실행
+//        Timer timer2 = new Timer();
+//
+//        TimerTask TT2 = new TimerTask() {
+//            @Override
+//            public void run() {
+//                // 반복실행할 구문
+//                Log.v("알림", String.valueOf(pitch));
+//                Log.v("알림", String.valueOf(roll));
+//
+//            }
+//
+//
+//        };
+//
+//        timer2.schedule(TT2, 0, 1000); //Timer 실행
 
         tv_roll = (TextView) view.findViewById(R.id.tv_roll);
         tv_pitch = (TextView) view.findViewById(R.id.tv_pitch);
@@ -218,53 +203,35 @@ public class Fragment_Home_SleepStart extends Fragment {
         sleep_Stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                grade = waterC + awakeC + toiletC + grade; // 점수
-                tv_grade.setText("grade : " + grade);
 
-                Date curDate2 = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm"); // 시간 차이 용
-                SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd"); // 날짜 구하는 용
+                callUpdate();
 
-                //요청시간을 Date로 parsing 후 time가져오기
-                try {
-                    curDate2 = dateFormat.parse(dateFormat.format(curDate2));
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                timeAfter = curDate2.getTime(); // 분 차이
-                tv_timeAfter.setText(Long.toString((timeAfter - timeNow) / 60000));
-                dateNow = dateFormat2.format(curDate2); // 현재 날짜
-                Toast.makeText(getContext(), dateNow, Toast.LENGTH_SHORT).show();
-
-
-                List<String> l1 = new ArrayList<>(); // 임시로 요소 추가한것
-                l1.add("커피 과다");
-                l1.add("낮잠");
-
-
-//                ReportData data1 = new ReportData(" born7sh@gmail.com", grade, timeAfter, l1, dateNow);
-//                RetroBuilder retro = new RetroBuilder();
-//                Call<ReportData> call = retro.service.provideReportData(data1);
-//                call.enqueue(new Callback<ReportData>() {
-//                    @Override
-//                    public void onResponse(Call<ReportData> call, Response<ReportData> response) {
-//                        Log.v("테스트", "확인");
-//                        if (response.isSuccessful()) {
-//                            Log.v("성공여부", "성공");
-//                        }
-//                    }
+//                grade = waterC + awakeC + toiletC + grade; // 점수
+//                tv_grade.setText("grade : " + grade);
 //
-//                    @Override
-//                    public void onFailure(Call<ReportData> call, Throwable t) {
+//                Date curDate2 = new Date();
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm"); // 시간 차이 용
+//                SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd"); // 날짜 구하는 용
 //
-//                    }
-//                });
+//                //요청시간을 Date로 parsing 후 time가져오기
+//                try {
+//                    curDate2 = dateFormat.parse(dateFormat.format(curDate2));
+//
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                timeAfter = curDate2.getTime(); // 분 차이
+//                tv_timeAfter.setText(Long.toString((timeAfter - timeNow) / 60000));
+//                dateNow = dateFormat2.format(curDate2); // 현재 날짜
+//                Toast.makeText(getContext(), dateNow, Toast.LENGTH_SHORT).show();
+//
 
 
             }
         });
+
+        callSleep();
 
 
     }
@@ -356,5 +323,89 @@ public class Fragment_Home_SleepStart extends Fragment {
         }
     }
 
+    public void callSleep() {
+
+        Date curDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 시간 차이 용
+
+        RetroBuilder retro = new RetroBuilder();
+        SleepTime st = new SleepTime(dateFormat.format(curDate), 1, "1");
+        Call<Integer> call = retro.service.provideSleepTime(st, "Bearer " + checkFirst);
+
+        call.enqueue(new Callback<Integer>() {
+                         @Override
+                         public void onResponse(Call<Integer> call, Response<Integer> response) {
+                             Log.v("알림", "callSleep 돌입");
+                             if (response.isSuccessful()) {
+                                 Log.v("알림", "callSleep 돌입 값 받아오기 성공");
+                             }
+                             id = response.body();
+                             Log.v("알림", "id는 : "+ id);
+
+                         }
+
+                         @Override
+                         public void onFailure(Call<Integer> call, Throwable t) {
+                             Log.v("알림", "callSleep 실패");
+                         }
+                     }
+        );
+    }
+
+    public void callStatus() {
+        RetroBuilder retro = new RetroBuilder();
+        float a = (float) pitch;
+        float b = (float) roll;
+
+        Date curDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+
+        SleepData d2 = new SleepData(a, b, 4, id, dateFormat.format(curDate));
+        Call<SleepData> call2 = retro.service.provideSleepData(d2,"Bearer " + checkFirst);
+
+        call2.enqueue(new Callback<SleepData>() {
+                         @Override
+                         public void onResponse(Call<SleepData> call, Response<SleepData> response) {
+                             Log.v("알림", "callStatus 돌입");
+                             if (response.isSuccessful()) {
+                                 Log.v("알림", "값 받아오기 성공");
+                             }
+                             Log.v("알림", "roll : " + a + "/ pitch : " + b);
+                         }
+
+                         @Override
+                         public void onFailure(Call<SleepData> call, Throwable t) {
+                             Log.v("알림", "callStatus 실패");
+                         }
+                     }
+        );
+
+    }
+
+    public void callUpdate() {
+
+        Date curDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 시간 차이 용
+
+        RetroBuilder retro = new RetroBuilder();
+        SleepTimeUpdate stu = new SleepTimeUpdate(id, dateFormat.format(curDate));
+        Call<SleepTimeUpdate> call3 = retro.service.provideSleepTimeUpdate(stu, "Bearer " + checkFirst);
+
+        call3.enqueue(new Callback<SleepTimeUpdate>() {
+                         @Override
+                         public void onResponse(Call<SleepTimeUpdate> call, Response<SleepTimeUpdate> response) {
+                             Log.v("알림", "callUpdate 돌입");
+                             if (response.isSuccessful()) {
+                                 Log.v("알림", "업데이트 성공");
+                             }
+                         }
+
+                         @Override
+                         public void onFailure(Call<SleepTimeUpdate> call, Throwable t) {
+                             Log.v("알림", "callUpdate 실패" + t);
+                         }
+                     }
+        );
+    }
 
 }
