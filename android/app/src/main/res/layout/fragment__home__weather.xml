@@ -78,6 +78,7 @@
                         android:layout_height="70dp"
                         android:layout_weight="1"
                         android:src="@drawable/weather_humity"></ImageView>
+
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="wrap_content"

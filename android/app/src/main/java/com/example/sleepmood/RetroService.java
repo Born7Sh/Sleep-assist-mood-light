@@ -35,6 +35,9 @@ public interface RetroService {
 
     @GET("weather/now")
     Call<WeatherData> getWeatherNow(@Header("Authorization") String auth);
+
+    @GET("weather/forecast")
+    Call<List<WeatherData>> getWeatherForecast (@Header("Authorization") String auth);
 /*
     @FormUrlEncoded
     @POST("diary/")

@@ -17,7 +17,10 @@ import android.widget.TextView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,7 +69,7 @@ public class Fragment_Home_Weather extends Fragment {
     TextView location_21_Temp;
     TextView location_21_Hum;
 
-
+    ImageView home_now_Image;
     TextView home_now_Temp;
     TextView home_now_Hum;
     ImageView home_dust;
@@ -82,6 +85,7 @@ public class Fragment_Home_Weather extends Fragment {
     private SharedPreferences pref;
     private String checkFirst;
     private WeatherData cwd;
+    private List<WeatherData> lwd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -149,6 +153,7 @@ public class Fragment_Home_Weather extends Fragment {
         home_Very_dust_String = (TextView) view.findViewById(R.id.home_Very_dust_String);
         home_Very_dust_Number = (TextView) view.findViewById(R.id.home_Very_dust_Number);
 
+        home_now_Image = (ImageView) view.findViewById(R.id.home_now_Img);
         home_now_Temp = (TextView) view.findViewById(R.id.home_now_Temp);
         home_now_Hum = (TextView) view.findViewById(R.id.home_now_Hum);
 
@@ -162,18 +167,63 @@ public class Fragment_Home_Weather extends Fragment {
         setDustImg(home_Very_dust, 4);
 
         callWeatherData();
+        callForecastData();
+
 
     }
 
-    public void setCurrentWeather(){
-        home_now_Temp.setText(""+cwd.temperature.toString() + "℃");
+    public void setCurrentWeather() {
+        home_now_Temp.setText("" + cwd.temperature.toString() + "℃");
         home_now_Hum.setText(String.valueOf(cwd.humidity) + "%");
-        home_dust_String.setText(""+cwd.fine_dust2_5+"μg/㎥");
-        home_Very_dust_String.setText(""+cwd.fine_dust10+"μg/㎥");
+        home_dust_String.setText("" + cwd.fine_dust2_5 + "μg/㎥");
+        home_Very_dust_String.setText("" + cwd.fine_dust10 + "μg/㎥");
 
         setDustImg(home_dust, cwd.fine_dust2_5);
         setDustImg(home_Very_dust, cwd.fine_dust10);
+        setWeatherImg(home_now_Image,cwd.precipitation_type);
 
+    }
+
+    public void setForecast() throws ParseException {
+        setForecastData();
+
+
+    }
+
+    public void setForecastData() throws ParseException {
+        for (int i = 0 ; i<lwd.size(); i ++ ){
+            String time = lwd.get(i).datetime.substring(11,19);
+
+            if(time.equals("12:00:00")){
+                home_12_Temp.setText(lwd.get(i).temperature.toString()+ "℃");
+                home_12_Hum.setText(Integer.toString(lwd.get(i).humidity)+ "%");
+                setWeatherImg(home_12_Img,lwd.get(i).precipitation_type);
+                Log.v("알림", lwd.get(i).datetime);
+            }else if(time.equals("15:00:00")){
+                home_15_Temp.setText(lwd.get(i).temperature.toString()+ "℃");
+                home_15_Hum.setText(Integer.toString(lwd.get(i).humidity)+ "%");
+                setWeatherImg(home_15_Img,lwd.get(i).precipitation_type);
+                Log.v("알림", lwd.get(i).datetime);
+            }else if(time.equals("18:00:00")){
+                home_18_Temp.setText(lwd.get(i).temperature.toString()+ "℃");
+                home_18_Hum.setText(Integer.toString(lwd.get(i).humidity)+ "%");
+                setWeatherImg(home_18_Img,lwd.get(i).precipitation_type);
+                Log.v("알림", lwd.get(i).datetime);
+            }else if(time.equals("21:00:00")){
+                home_21_Temp.setText(lwd.get(i).temperature.toString()+ "℃");
+                home_21_Hum.setText(Integer.toString(lwd.get(i).humidity)+ "%");
+                setWeatherImg(home_21_Img,lwd.get(i).precipitation_type);
+                Log.v("알림", lwd.get(i).datetime);
+            }else if(time.equals("07:00:00")){
+                home_9_Temp.setText(lwd.get(i).temperature.toString()+ "℃");
+                home_9_Hum.setText(Integer.toString(lwd.get(i).humidity)+ "%");
+                setWeatherImg(home_9_Img,lwd.get(i).precipitation_type);
+                Log.v("알림", lwd.get(i).datetime);
+            }else{
+                continue;
+            }
+
+        }
     }
 
     public void setWeatherImg(ImageView imageView, int weather) {
@@ -181,8 +231,11 @@ public class Fragment_Home_Weather extends Fragment {
         // 값들마다 달라져야함
 
         switch (weather) {
-            case 1:
+            case 0:
                 imageView.setImageResource(R.drawable.weather_sunny);
+                break;
+            case 1:
+                imageView.setImageResource(R.drawable.weather_rain);
                 break;
             case 2:
                 imageView.setImageResource(R.drawable.weather_cloudy);
@@ -190,9 +243,7 @@ public class Fragment_Home_Weather extends Fragment {
             case 3:
                 imageView.setImageResource(R.drawable.weather_humity);
                 break;
-            case 4:
-                imageView.setImageResource(R.drawable.weather_rain);
-                break;
+
             case 5:
                 imageView.setImageResource(R.drawable.weather_snowing);
                 break;
@@ -215,23 +266,23 @@ public class Fragment_Home_Weather extends Fragment {
 
     void setDustImg(ImageView imageView, int score) {
 
-        if(score < 15){
+        if (score < 15) {
             home_dust_String.setText("매우 좋음");
             home_Very_dust_String.setText("매우 좋음");
             imageView.setImageResource(R.drawable.bar_0);
-        }else if (score < 35){
+        } else if (score < 35) {
             home_dust_String.setText("좋음");
             home_Very_dust_String.setText("좋음");
             imageView.setImageResource(R.drawable.bar_25);
-        }else if (score < 65){
+        } else if (score < 65) {
             home_dust_String.setText("보통");
             home_Very_dust_String.setText("보통");
             imageView.setImageResource(R.drawable.bar_50);
-        }else if (score < 85){
+        } else if (score < 85) {
             home_dust_String.setText("나쁨");
             home_Very_dust_String.setText("나쁨");
             imageView.setImageResource(R.drawable.bar_75);
-        }else if (score <= 150){
+        } else if (score <= 150) {
             home_dust_String.setText("매우 나쁨");
             home_Very_dust_String.setText("매우 나쁨");
             imageView.setImageResource(R.drawable.bar_100);
@@ -256,16 +307,25 @@ public class Fragment_Home_Weather extends Fragment {
         textView.setText(text);
     }
 
-    public void callWeatherData(){
+
+
+
+
+
+
+
+
+
+    public void callWeatherData() {
 
         RetroBuilder retro = new RetroBuilder();
         Call<WeatherData> call = retro.service.getWeatherNow("Bearer " + checkFirst);
         call.enqueue(new Callback<WeatherData>() {
             @Override
             public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     cwd = response.body();
-
+                    Log.v("알림", "시간 : " + cwd.datetime);
                     Log.v("알림", "온도 : " + cwd.temperature);
                     Log.v("알림", "미세먼지 : " + cwd.humidity);
                     Log.v("알림", "type : " + cwd.precipitation_type);
@@ -281,6 +341,40 @@ public class Fragment_Home_Weather extends Fragment {
                 Log.v("알림", "안됨1");
             }
         });
+
+
+    }
+
+    public void callForecastData() {
+
+        RetroBuilder retro2 = new RetroBuilder();
+        Call<List<WeatherData>> call2 = retro2.service.getWeatherForecast("Bearer " + checkFirst);
+        call2.enqueue(new Callback<List<WeatherData>>() {
+            @Override
+            public void onResponse(Call<List<WeatherData>> call, Response<List<WeatherData>> response) {
+                if (response.isSuccessful()) {
+                    lwd = response.body();
+
+                    Log.v("알림", "시간 : " + lwd.get(0).datetime);
+                    Log.v("알림", "온도 : " + lwd.get(0).temperature);
+                    Log.v("알림", "습도 : " + lwd.get(0).humidity);
+                    Log.v("알림", "type : " + lwd.get(0).precipitation_type);
+                    Log.v("알림", "lwd 크기 : " + lwd.size());
+
+                }
+                try {
+                    setForecast();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<WeatherData>> call, Throwable t) {
+                Log.v("알림", "안됨1");
+            }
+        });
+
 
 
     }
