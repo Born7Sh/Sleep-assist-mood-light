@@ -150,7 +150,10 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Setting_Question()).addToBackStack(null).commit();
         } else if (fragment == "setting_Cycle") {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Setting_SleepCycle()).addToBackStack(null).commit();
+        } else if (fragment == "diaryAdd") {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new Fragment_Record_Diary_Add()).addToBackStack(null).commit();
         }
+
 
     }
 

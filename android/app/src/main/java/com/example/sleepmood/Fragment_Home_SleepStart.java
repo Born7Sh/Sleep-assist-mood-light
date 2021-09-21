@@ -359,7 +359,6 @@ public class Fragment_Home_SleepStart extends Fragment {
 
         Date curDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-
         SleepData d2 = new SleepData(a, b, 4, id, dateFormat.format(curDate));
         Call<SleepData> call2 = retro.service.provideSleepData(d2,"Bearer " + checkFirst);
 
