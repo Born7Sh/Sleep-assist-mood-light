@@ -332,6 +332,9 @@ public class Fragment_Home_Weather extends Fragment {
                     Log.v("알림", "미세먼지 2 : " + cwd.fine_dust2_5);
                     Log.v("알림", "미세먼지 10 : " + cwd.fine_dust10);
 
+                }else {
+                    Log.v("알림", "오류! 데이터를 못받아옴");
+                    cwd = new WeatherData("0", (float) 0.0,0,0,0,0);
                 }
                 setCurrentWeather();
             }
@@ -361,6 +364,9 @@ public class Fragment_Home_Weather extends Fragment {
                     Log.v("알림", "type : " + lwd.get(0).precipitation_type);
                     Log.v("알림", "lwd 크기 : " + lwd.size());
 
+                }else {
+                    Log.v("알림", "오류! 데이터를 못받아옴");
+                    cwd = new WeatherData("0", (float) 0.0,0,0,0,0);
                 }
                 try {
                     setForecast();
