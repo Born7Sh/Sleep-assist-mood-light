@@ -71,6 +71,7 @@ public class Fragment_Record extends Fragment {
         viewPager = (ViewPager2) view.findViewById(R.id.viewpager_control);
 
         viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), getLifecycle());
+
         viewPagerAdapter.addFragment(fragment_record_entire);
         viewPagerAdapter.addFragment(fragment_record_day);
         viewPagerAdapter.addFragment(fragment_record_week);
@@ -95,12 +96,15 @@ public class Fragment_Record extends Fragment {
                 {
                     case 0 :
                         viewPager.setCurrentItem(0);
+
                         break;
                     case 1 :
                         viewPager.setCurrentItem(1);
+
                         break;
                     case 2 :
                         viewPager.setCurrentItem(2);
+
                         break;
                     case 3 :
                         viewPager.setCurrentItem(3);
@@ -121,7 +125,10 @@ public class Fragment_Record extends Fragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+            }
 
+            public void refresh(){
+                viewPagerAdapter.notifyDataSetChanged();
             }
         });
     }

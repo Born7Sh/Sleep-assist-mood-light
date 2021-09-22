@@ -17,4 +17,25 @@
         app:mcv_selectionColor="#00F"
         app:mcv_showOtherDates="all" />
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:text="추가"
+            android:id="@+id/calendar_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></Button>
+
+        <TextView
+            android:textColor="@color/black"
+            android:text="반갑습니다."
+            android:id="@+id/calendar_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+
+
+
 </LinearLayout>

@@ -33,6 +33,9 @@ public interface RetroService {
     @GET("report/{email}/today")
     Call<ReportData> getReportToday(@Path("email") String email, @Header("Authorization") String auth);
 
+    @GET("calendar/{email}/list/")
+    Call<List<CalendarData>> getCalendarAll(@Path("email") String email, @Header("Authorization") String auth);
+
     @GET("weather/now")
     Call<WeatherData> getWeatherNow(@Header("Authorization") String auth);
 
@@ -79,10 +82,16 @@ public interface RetroService {
             @Body SleepTimeUpdate st, @Header("Authorization") String auth
     );
 
+    @POST("calendar/")
+    Call<CalendarData> provideCalendarData(
+            @Body CalendarData cd, @Header("Authorization") String auth
+    );
     @POST("signup")
     Call<UserData> provideUserData(
             @Body UserData ud
     );
+
+
 
 
     /*
