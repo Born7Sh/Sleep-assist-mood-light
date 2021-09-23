@@ -38,16 +38,41 @@ while True:
                 filename= 'ex_ko.mp3'
                 tts.save(filename) 
                 os.system('sudo mpg321 -q '+filename)
-            if text == '날씨' or text == '오늘 날씨 알려줘':
-                # database = pymysql.connect(host=str(config.host),user=str(config.user),db=str(config.database),password=str(config.password), charset='utf8')
-                # curs=database.cursor()
-                # sql = '''SELECT * FROM current_weather ORDER BY id DESC LIMIT 11'''
-                # curs.execute(sql)
-                # result = cursor.fetchall()
+            if text == '현재 날씨' or text == '현재 날씨 알려줘' or text == '현재날씨':
+                database = pymysql.connect(host=str(config.host),user=str(config.user),db=str(config.database),password=str(config.password), charset='utf8')
+                curs=database.cursor()
+                sql = 'SELECT * FROM current_weather ORDER BY date_time DESC LIMIT 1;'
+                curs.execute(sql)
+                result = curs.fetchall()
+                weather = ''
+                if result[0][3] == 0:
+                    weather = '맑은 날씨입니다.'
+                elif result[0][3] == 1:
+                    weather = '비가 오고 있고,'
+                elif result[0][3] == 2:
+                    weather = '눈이나 비가 오고 있고,'
+                elif result[0][3] == 3:
+                    weather = '눈이 오고 있고,'
+                elif result[0][3] == 4:
+                    weather = '소나기가 오고 있고,'
+                elif result[0][3] == 5:
+                    weather = '빗방울이 떨어지고 있습니다.'
+                elif result[0][3] == 6:
+                    weather = '빗방울이나 눈날림이 있습니다.'
+                elif result[0][3] == 7:
+                    weather = '눈이 날리고 있습니다.'
+
+                voice_text = '현재 날씨는 ' + weather + ' 온도는 ' +  str(result[0][1]) + ', 습도는 ' +  str(result[0][2]) +'입니다.'
+                print(voice_text)
 
                 database.commit()
                 database.close()    
-                tts = gTTS( text='안녕하세요. 반가워요.', lang='ko', slow=False )
+
+                tts = gTTS( text=voice_text, lang='ko', slow=False )
+                filename= 'weather_now.mp3'
+                tts.save(filename) 
+                os.system('sudo mpg321 -q '+filename)
+
             if text.find('온도') != -1:
                 database = pymysql.connect(host=str(config.host),user=str(config.user),db=str(config.database),password=str(config.password), charset='utf8')
                 curs=database.cursor()
