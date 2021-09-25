@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_margin="5dp"
+    android:orientation="vertical"
+    card_view:cardCornerRadius="12dp"
+    card_view:cardElevation="3dp"
+    card_view:contentPadding="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:gravity="right">
+
+        <ImageView
+            android:id="@+id/alarmCancel"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:gravity="right"
+            android:src="@drawable/alarm_cancle"></ImageView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="제목 :  "></TextView>
+
+            <TextView
+                android:id="@+id/cardview_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="시작 시간 :  "></TextView>
+
+            <TextView
+                android:id="@+id/cardview_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="종료 시간 :  "></TextView>
+
+            <TextView
+                android:id="@+id/cardview_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="할거 :  "></TextView>
+
+            <TextView
+                android:id="@+id/cardview_descrption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

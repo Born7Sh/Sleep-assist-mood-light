@@ -25,21 +25,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-       android:orientation="vertical">
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/calendar_start"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="시작"></EditText>
+            android:layout_height="150dp">
 
-        <EditText
-            android:id="@+id/calendar_end"
+            <TextView
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="시작"></TextView>
+
+            <TimePicker
+                android:id="@+id/calendar_start"
+                android:layout_weight="3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:timePickerMode="spinner"></TimePicker>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="종료"></EditText>
+            android:layout_height="150dp">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="종료"></TextView>
+
+            <TimePicker
+                android:id="@+id/calendar_end"
+                android:layout_weight="3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:timePickerMode="spinner"></TimePicker>
+
+
+        </LinearLayout>
 
     </LinearLayout>
 

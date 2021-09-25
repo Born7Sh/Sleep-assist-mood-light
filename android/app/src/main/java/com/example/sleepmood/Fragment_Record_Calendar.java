@@ -1,6 +1,7 @@
 package com.example.sleepmood;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,6 +56,12 @@ public class Fragment_Record_Calendar extends Fragment {
     private SharedPreferences pref;
     private String checkFirst;
 
+    // 리사이클러뷰 용도
+    private Context mContext;
+    private RecyclerView recyclerView;
+    LinearLayoutManager layoutManager;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,28 +94,29 @@ public class Fragment_Record_Calendar extends Fragment {
 
 
 
-//        materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
-//            @Override
-//            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-//                int Year = date.getYear();
-//                int Month = date.getMonth() + 1;
-//                int Day = date.getDay();
-//
-//                String shot_Day = Year + "-" + Month + "-" + Day;
-//                if (Month < 10) {
-//                    shot_Day = Year + "-0" + Month + "-" + Day;
-//                }
-//                for (int i = 0; i < cd.size(); i++) {
-//                    String a = cd.get(i).start.substring(0, 10);
-//                    if (a.equals(shot_Day)) {
-//                        Log.i("알림", "이떄 할일은? " + cd.get(i).description);
-//                    }
-//                }
-//
-//
-//                Toast.makeText(getContext(), shot_Day, Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                int Year = date.getYear();
+                int Month = date.getMonth() + 1;
+                int Day = date.getDay();
+
+                String shot_Day = Year + "-" + Month + "-" + Day;
+                if (Month < 10) {
+                    shot_Day = Year + "-0" + Month + "-" + Day;
+                }
+                for (int i = 0; i < cd.size(); i++) {
+                    String a = cd.get(i).start.substring(0, 10);
+                    if (a.equals(shot_Day)) {
+                        Log.i("알림", "이떄 할일은? " + cd.get(i).description);
+                    }
+                }
+
+
+                Toast.makeText(getContext(), shot_Day, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         calendar_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,6 +183,13 @@ public class Fragment_Record_Calendar extends Fragment {
 
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        cd.clear();
+        getCalendarData();
     }
 
 

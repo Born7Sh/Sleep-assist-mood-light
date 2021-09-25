@@ -52,7 +52,7 @@ public class Fragment_Home_SleepStart extends Fragment {
     private int awakeC = 0;
     private int toiletC = 0;
 
-    private int grade;
+    private int grade = 0;
 
     private int id; // 멈추기 위한 id
 
@@ -124,26 +124,25 @@ public class Fragment_Home_SleepStart extends Fragment {
             }
         };
 
-        timer.schedule(TT, 0, 100000); //Timer 실행
+        timer.schedule(TT, 0, 600000); //Timer 실행
 //        timer.cancel();//타이머 종료
 
 
 
-//        Timer timer2 = new Timer();
-//
-//        TimerTask TT2 = new TimerTask() {
-//            @Override
-//            public void run() {
-//                // 반복실행할 구문
-//                Log.v("알림", String.valueOf(pitch));
-//                Log.v("알림", String.valueOf(roll));
-//
-//            }
-//
-//
-//        };
-//
-//        timer2.schedule(TT2, 0, 1000); //Timer 실행
+        Timer timer2 = new Timer();
+
+        TimerTask TT2 = new TimerTask() {
+            @Override
+            public void run() {
+                // 반복실행할 구문
+                if(pitch > 1 || roll >1) {
+                    Log.v("알림", "grade 1 증가");
+                    grade++;
+                }
+            }
+        };
+
+        timer2.schedule(TT2, 0, 1000); //Timer 실행
 
         tv_roll = (TextView) view.findViewById(R.id.tv_roll);
         tv_pitch = (TextView) view.findViewById(R.id.tv_pitch);
@@ -359,7 +358,7 @@ public class Fragment_Home_SleepStart extends Fragment {
 
         Date curDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        SleepData d2 = new SleepData(a, b, 4, id, dateFormat.format(curDate));
+        SleepData d2 = new SleepData(a, b, grade, id, dateFormat.format(curDate));
         Call<SleepData> call2 = retro.service.provideSleepData(d2,"Bearer " + checkFirst);
 
         call2.enqueue(new Callback<SleepData>() {

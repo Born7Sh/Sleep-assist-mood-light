@@ -2,6 +2,7 @@ package com.example.sleepmood;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -110,7 +111,8 @@ public class Fragment_Record_Diary extends Fragment {
         diaryAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.onFragmentChange("diaryAdd");
+                Intent intent = new Intent(getActivity(), Activity_Diary_add.class);
+                startActivity(intent);
             }
         });
 
@@ -142,5 +144,12 @@ public class Fragment_Record_Diary extends Fragment {
             }
         });
 
+
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        diaryData.clear();
+        callDiaryData();
     }
 }
