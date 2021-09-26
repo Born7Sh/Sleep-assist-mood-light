@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,9 +50,9 @@ public class Fragment_Record_Calendar extends Fragment {
     private ArrayList<CalendarData> cd = new ArrayList<>();
     List<CalendarDay> dates = new ArrayList<>();
 
-    Button calendar_add;
+    private ArrayList<CalendarData> today_cd = new ArrayList<>();
 
-    TextView calendar_list;
+    Button calendar_add;
 
     private SharedPreferences pref;
     private String checkFirst;
@@ -80,7 +81,20 @@ public class Fragment_Record_Calendar extends Fragment {
         materialCalendarView = (MaterialCalendarView) view.findViewById(R.id.calendarView);
         calendar_add = (Button) view.findViewById(R.id.calendar_add);
 
-        calendar_list = (TextView) view.findViewById(R.id.calendar_list);
+
+        mContext = view.getContext();
+        recyclerView = view.findViewById(R.id.recycler_view);
+
+        layoutManager = new LinearLayoutManager(mContext);
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+//        LinearLayoutManager manager = new LinearLayoutManager(mContext);
+//        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setHasFixedSize(true);
+
 
         materialCalendarView.state().edit()
                 .setFirstDayOfWeek(Calendar.SUNDAY)
@@ -92,11 +106,10 @@ public class Fragment_Record_Calendar extends Fragment {
         getCalendarData();
 
 
-
-
         materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                today_cd.clear();
                 int Year = date.getYear();
                 int Month = date.getMonth() + 1;
                 int Day = date.getDay();
@@ -108,11 +121,13 @@ public class Fragment_Record_Calendar extends Fragment {
                 for (int i = 0; i < cd.size(); i++) {
                     String a = cd.get(i).start.substring(0, 10);
                     if (a.equals(shot_Day)) {
+                        today_cd.add(cd.get(i));
                         Log.i("알림", "이떄 할일은? " + cd.get(i).description);
                     }
                 }
 
-
+                CalendarAdapter adapter = new CalendarAdapter(mContext, today_cd);
+                recyclerView.setAdapter(adapter);
                 Toast.makeText(getContext(), shot_Day, Toast.LENGTH_SHORT).show();
             }
         });
@@ -177,7 +192,7 @@ public class Fragment_Record_Calendar extends Fragment {
     void addCalendarDot() {
         for (int i = 0; i < cd.size(); i++) {
             String[] array = cd.get(i).start.split("-");
-            Log.i("알림", "날짜 : " +  String.valueOf(Integer.parseInt(array[0]))+  String.valueOf(Integer.parseInt(array[1])-1)+  String.valueOf(Integer.parseInt(array[2].substring(0,2))));
+            Log.i("알림", "날짜 : " + String.valueOf(Integer.parseInt(array[0])) + String.valueOf(Integer.parseInt(array[1]) - 1) + String.valueOf(Integer.parseInt(array[2].substring(0, 2))));
             dates.add(CalendarDay.from(Integer.parseInt(array[0]), Integer.parseInt(array[1]) - 1, Integer.parseInt(array[2].substring(0, 2))));
 
 
