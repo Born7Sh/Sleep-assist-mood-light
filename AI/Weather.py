@@ -33,18 +33,26 @@ class Weather:
     def getDust25(self):
         return 15
     
-    def getWeather(self,db,cursor):
+    def getWeather(self,db,cursor,date):
         sql = """select * from current_weather where date_time = %s"""
-        now = datetime.datetime.now()
-        del_now = datetime.timedelta(hours = 1)
-        now = now-del_now
+        if date =="":
+            now = datetime.datetime.now()
+        else:
+            now = date
         #nowstr = now.strftime('%Y-05-11 %H:00:00')
-        nowstr = now.strftime('%Y-09-27 08:00:00')
+        nowstr = now.strftime('%Y-%m-%d 08:00:00')
         dt = nowstr.split()
         cursor.execute(sql,(dt[0]))
         self.weather = list(cursor.fetchall())
         db.commit()
         
-        print(self.weather)
+        if len(self.weather) == 0:
+            nowstr = now.strftime('%Y-09-25 08:00:00')
+            dt = nowstr.split()
+            cursor.execute(sql,(dt[0]))
+            self.weather = list(cursor.fetchall())
+            db.commit()
+        
+        #print(self.weather)
         self.setWeather(self.weather)
         
