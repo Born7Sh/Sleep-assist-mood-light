@@ -163,7 +163,7 @@ class TextRank:
                 if pmi: pairness[k, l] = pmi
  
         for (k, l) in sorted(pairness, key=pairness.get, reverse=True):
-            print(k[0], l[0], pairness[k, l])
+            #print(k[0], l[0], pairness[k, l])
             if k not in startOf: startOf[k] = (k, l)
  
         for (k, l), v in pairness.items():
@@ -199,7 +199,7 @@ class TextRank:
     
     
     
-    
+    """
 tr = TextRank()
 print('Load...')
 from konlpy.tag import Komoran
@@ -209,12 +209,11 @@ tr.loadSents(RawSentenceReader('original.txt'), lambda sent: filter(lambda x:x n
 print('Build...')
 tr.build()
 ranks = tr.rank()
-for k in sorted(ranks, key=ranks.get, reverse=True)[:100]:
-   print("\t".join([str(k), str(ranks[k]), str(tr.dictCount[k])]))
+#for k in sorted(ranks, key=ranks.get, reverse=True)[:100]:
+ #  print("\t".join([str(k), str(ranks[k]), str(tr.dictCount[k])]))
 print(tr.summarize(0.2))
-
-
-
+"""
+"""
 tr = TextRank(window=5, coef=1)
 print('Load...')
 stopword = set([('있', 'VV'), ('하', 'VV'), ('되', 'VV'), ('없', 'VV') ])
@@ -223,4 +222,6 @@ print('Build...')
 tr.build()
 kw = tr.extract(0.1)
 for k in sorted(kw, key=kw.get, reverse=True):
-    print("%s\t%g" % (k, kw[k]))
+    #print("%s\t%g" % (k, kw[k]))
+    print(kw[k])
+    """
