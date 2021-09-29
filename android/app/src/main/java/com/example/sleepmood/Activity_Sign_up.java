@@ -80,11 +80,11 @@ public class Activity_Sign_up extends AppCompatActivity {
       }
 
       void callFunction(){ // call function
-          UserData ud = new UserData(signup_Id.getText().toString(),signup_Email.getText().toString(),signup_Address.getText().toString(),signup_Job.getText().toString(),signup_Phone.getText().toString(),signup_Pwd.getText().toString(),signup_Birth.getText().toString());
+//          UserData ud = new UserData(signup_Id.getText().toString(),signup_Email.getText().toString(),signup_Address.getText().toString(),signup_Job.getText().toString(),signup_Phone.getText().toString(),signup_Pwd.getText().toString(),signup_Birth.getText().toString());
 
 
           RetroBuilder retro = new RetroBuilder();
-          // UserData ud = new UserData("homing12", "hhoo123@naver.com","경기도" ,"학생", "010-1234-1243", "pwde1234", "1997-12-12");
+           UserData ud = new UserData("homing12@naver.com","경기도" ,"학생", "010-1234-1243", "pwde1234", "1997-12-12");
           //  Call<DiaryData2> call = retro.service.provideDiaryDay("json","born7sh@gmail.com","2021-08-26","posttestright?");
 //        Call<DiaryData> call = retro.service.provideDiaryDay(d2,"Bearer " +checkFirst);
           Call<UserData> call = retro.service.provideUserData(ud);

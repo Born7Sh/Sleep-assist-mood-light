@@ -26,6 +26,9 @@ public class Activity_Diary_add extends AppCompatActivity {
     private SharedPreferences pref;
     private String checkFirst;
 
+    private SharedPreferences pref_id;
+    private String user_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,9 @@ public class Activity_Diary_add extends AppCompatActivity {
 
         pref = getSharedPreferences("token", Activity.MODE_PRIVATE);
         checkFirst = pref.getString("token", "NULL");
+
+        pref_id = getSharedPreferences("id", Activity.MODE_PRIVATE);
+        user_id = pref_id.getString("id","NULL");
 
         diary_description = (EditText) findViewById(R.id.diary_description);
         diary_cancel = (Button) findViewById(R.id.diaryCancel);
@@ -61,7 +67,7 @@ public class Activity_Diary_add extends AppCompatActivity {
         dateFormat.format(curDate);
 
         RetroBuilder retro = new RetroBuilder();
-        DiaryData d2 = new DiaryData("born7sh@gmail.com", dateFormat.format(curDate), diary_description.getText().toString());
+        DiaryData d2 = new DiaryData(user_id, dateFormat.format(curDate), diary_description.getText().toString());
 
         Log.v("알림", "날짜 : " + dateFormat.format(curDate));
         Log.v("알림", "데이터 날라가기 : " + diary_description.getText().toString());

@@ -4,20 +4,18 @@ import java.util.ArrayList;
 
 public class UserData {
     String username;
-    String email;
     String address;
     String job;
     String phone;
     String password;
-    String birth;
+    String birthday;
 
-    public UserData(String username, String email, String address,String job, String phone, String password, String birth) {
+    public UserData(String username, String address,String job, String phone, String password, String birthday) {
         this.username = username;
-        this.email = email;
         this.address = address;
         this.job = job;
         this.phone = phone;
         this.password = password;
-        this.birth = birth;
+        this.birthday = birthday;
     }
 }

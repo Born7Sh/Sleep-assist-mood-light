@@ -46,6 +46,9 @@ public class Fragment_Record_Diary extends Fragment {
     private SharedPreferences pref;
     private String checkFirst;
 
+    private SharedPreferences pref_id;
+    private String user_id;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -72,6 +75,9 @@ public class Fragment_Record_Diary extends Fragment {
 
         pref = getActivity().getSharedPreferences("token", Activity.MODE_PRIVATE);
         checkFirst = pref.getString("token", "NULL");
+
+        pref_id = getActivity().getSharedPreferences("id", Activity.MODE_PRIVATE);
+        user_id = pref_id.getString("id","NULL");
 
 
         // 디이어리 데이터 가져오는 부분.
@@ -120,7 +126,7 @@ public class Fragment_Record_Diary extends Fragment {
 
     private void callDiaryData(){
         RetroBuilder retro = new RetroBuilder();
-        Call<List<DiaryData>> call2 = retro.service.getDiaryAll("born7sh@gmail.com", "Bearer " + checkFirst);
+        Call<List<DiaryData>> call2 = retro.service.getDiaryAll(user_id, "Bearer " + checkFirst);
         call2.enqueue(new Callback<List<DiaryData>>() {
             @Override
             public void onResponse(Call<List<DiaryData>> call, Response<List<DiaryData>> response) {
@@ -141,6 +147,9 @@ public class Fragment_Record_Diary extends Fragment {
             @Override
             public void onFailure(Call<List<DiaryData>> call, Throwable t) {
                 Log.e("알림", "실패" + t.getMessage());
+
+                DiaryAdapter adapter = new DiaryAdapter(mContext, diaryData);
+                recyclerView.setAdapter(adapter);
             }
         });
 

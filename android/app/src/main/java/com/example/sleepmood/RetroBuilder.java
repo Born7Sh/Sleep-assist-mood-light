@@ -20,7 +20,7 @@ public class RetroBuilder {
             .connectTimeout(100, TimeUnit.SECONDS)
             .readTimeout(100, TimeUnit.SECONDS).build();
 
-    Retrofit retrofit = new Retrofit.Builder().baseUrl("http://www.hanium-sleep.kro.kr/sleepapp/").client(client)
+    Retrofit retrofit = new Retrofit.Builder().baseUrl("http://3.38.38.168/sleepapp/").client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 

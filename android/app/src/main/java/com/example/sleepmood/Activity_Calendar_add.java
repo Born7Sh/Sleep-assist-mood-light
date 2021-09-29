@@ -3,6 +3,7 @@ package com.example.sleepmood;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,9 +33,14 @@ public class Activity_Calendar_add extends AppCompatActivity {
     private SharedPreferences pref;
     private String checkFirst;
 
+    private SharedPreferences pref_id;
+    private String user_id;
+
     private String calendar_today;
     private String calendar_start_string;
     private String calendar_end_string;
+
+    String shot_day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,9 @@ public class Activity_Calendar_add extends AppCompatActivity {
         pref = getSharedPreferences("token", Activity.MODE_PRIVATE);
         checkFirst = pref.getString("token", "NULL");
 
+        pref_id = getSharedPreferences("id", Activity.MODE_PRIVATE);
+        user_id = pref_id.getString("id","NULL");
+
         setContentView(R.layout.activity_calendar_add);
         calendar_title = findViewById(R.id.calendar_title);
         calendar_start = findViewById(R.id.calendar_start);
@@ -50,10 +59,8 @@ public class Activity_Calendar_add extends AppCompatActivity {
         calendar_description = findViewById(R.id.calendar_description);
 
         // 오늘 날짜 설정
-        Date curDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        calendar_today = dateFormat.format(curDate);
-
+        Intent intent = getIntent() ;
+        calendar_today = intent.getStringExtra("shot_Day");
 
         calendar_cancel = findViewById(R.id.calendarCancel);
         calendar_register = findViewById(R.id.calendarRegister);
@@ -108,7 +115,7 @@ public class Activity_Calendar_add extends AppCompatActivity {
 
     void postCalendarData() {
         //CalendarData cd = new CalendarData(calendar_start.getText().toString(), calendar_title.getText().toString(), calendar_description.getText().toString(), calendar_end.getText().toString(), "born7sh@gmail.com");
-        CalendarData cd = new CalendarData(calendar_start_string, calendar_title.getText().toString(), calendar_description.getText().toString(), calendar_end_string, "born7sh@gmail.com");
+        CalendarData cd = new CalendarData(calendar_start_string, calendar_title.getText().toString(), calendar_description.getText().toString(), calendar_end_string, user_id);
         RetroBuilder retro = new RetroBuilder();
         Call<CalendarData> call = retro.service.provideCalendarData(cd, "Bearer " + checkFirst);
 

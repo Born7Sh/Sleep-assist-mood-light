@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_image"
     android:orientation="vertical"
-    tools:context=".Fragment_Home_SleepStart">
+    tools:context=".Fragment_Home_SleepStart"
+    android:keepScreenOn="true"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -81,6 +81,9 @@ public class Fragment_Home_SleepStart extends Fragment {
     private SharedPreferences pref;
     private String checkFirst;
 
+    private SharedPreferences pref_id;
+    private String user_id;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,6 +101,8 @@ public class Fragment_Home_SleepStart extends Fragment {
         pref = getActivity().getSharedPreferences("token", Activity.MODE_PRIVATE);
         checkFirst = pref.getString("token", "NULL");
 
+        pref_id = getActivity().getSharedPreferences("id", Activity.MODE_PRIVATE);
+        user_id = pref_id.getString("id","NULL");
 
         tv_timeAfter = (TextView) view.findViewById(R.id.timeAfter);
         tv_timeNow = (TextView) view.findViewById(R.id.timeAfter);
@@ -116,33 +121,6 @@ public class Fragment_Home_SleepStart extends Fragment {
         tv_timeAfter.setText(Long.toString(timeNow));
 
         /// 지금은 여기서 10초에 한번씩 실행
-        Timer timer = new Timer();
-        TimerTask TT = new TimerTask() {
-            @Override
-            public void run() {
-                callStatus();
-            }
-        };
-
-        timer.schedule(TT, 0, 600000); //Timer 실행
-//        timer.cancel();//타이머 종료
-
-
-
-        Timer timer2 = new Timer();
-
-        TimerTask TT2 = new TimerTask() {
-            @Override
-            public void run() {
-                // 반복실행할 구문
-                if(pitch > 1 || roll >1) {
-                    Log.v("알림", "grade 1 증가");
-                    grade++;
-                }
-            }
-        };
-
-        timer2.schedule(TT2, 0, 1000); //Timer 실행
 
         tv_roll = (TextView) view.findViewById(R.id.tv_roll);
         tv_pitch = (TextView) view.findViewById(R.id.tv_pitch);
@@ -204,28 +182,6 @@ public class Fragment_Home_SleepStart extends Fragment {
             public void onClick(View v) {
 
                 callUpdate();
-
-//                grade = waterC + awakeC + toiletC + grade; // 점수
-//                tv_grade.setText("grade : " + grade);
-//
-//                Date curDate2 = new Date();
-//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm"); // 시간 차이 용
-//                SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd"); // 날짜 구하는 용
-//
-//                //요청시간을 Date로 parsing 후 time가져오기
-//                try {
-//                    curDate2 = dateFormat.parse(dateFormat.format(curDate2));
-//
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                timeAfter = curDate2.getTime(); // 분 차이
-//                tv_timeAfter.setText(Long.toString((timeAfter - timeNow) / 60000));
-//                dateNow = dateFormat2.format(curDate2); // 현재 날짜
-//                Toast.makeText(getContext(), dateNow, Toast.LENGTH_SHORT).show();
-//
-
 
             }
         });
@@ -328,7 +284,7 @@ public class Fragment_Home_SleepStart extends Fragment {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 시간 차이 용
 
         RetroBuilder retro = new RetroBuilder();
-        SleepTime st = new SleepTime(dateFormat.format(curDate), 1, "1");
+        SleepTime st = new SleepTime(dateFormat.format(curDate), 1, user_id);
         Call<Integer> call = retro.service.provideSleepTime(st, "Bearer " + checkFirst);
 
         call.enqueue(new Callback<Integer>() {
@@ -340,7 +296,7 @@ public class Fragment_Home_SleepStart extends Fragment {
                              }
                              id = response.body();
                              Log.v("알림", "id는 : "+ id);
-
+                             startTimer();
                          }
 
                          @Override
@@ -404,6 +360,36 @@ public class Fragment_Home_SleepStart extends Fragment {
                          }
                      }
         );
-    }
 
+    }
+    public void startTimer(){
+        Timer timer = new Timer();
+        TimerTask TT = new TimerTask() {
+            @Override
+            public void run() {
+                callStatus();
+            }
+        };
+
+        timer.schedule(TT, 0, 600000); //Timer 실행
+//        timer.cancel();//타이머 종료
+
+
+
+        Timer timer2 = new Timer();
+
+        TimerTask TT2 = new TimerTask() {
+            @Override
+            public void run() {
+                // 반복실행할 구문
+                if(pitch > 1 || roll >1) {
+                    Log.v("알림", "grade 1 증가");
+                    grade++;
+                }
+            }
+        };
+
+        timer2.schedule(TT2, 0, 1000); //Timer 실행
+
+    }
 }

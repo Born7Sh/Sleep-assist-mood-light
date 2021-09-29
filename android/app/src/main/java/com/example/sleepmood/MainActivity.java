@@ -14,10 +14,15 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     Context mainContext;
@@ -57,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("token", Activity.MODE_PRIVATE);
         String checkFirst = pref.getString("token","NULL");
 
+//        SharedPreferences pref2 = getSharedPreferences("id", Activity.MODE_PRIVATE);
+//        String userid = pref2.getString("id","NULL");
+//
         Intent passedIntent = getIntent();
         processCommand(passedIntent);
 
@@ -72,9 +80,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // 최초 실행이 아닐때 진행할 작업
         }
-
-
-
 
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -229,6 +234,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
 
 
 }

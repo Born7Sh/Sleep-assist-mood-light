@@ -62,6 +62,11 @@ public class Fragment_Record_Calendar extends Fragment {
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
 
+    // 오늘 날짜 보내기용
+    String shot_Day;
+
+    private SharedPreferences pref_id;
+    private String user_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,6 +82,9 @@ public class Fragment_Record_Calendar extends Fragment {
 
         pref = getActivity().getSharedPreferences("token", Activity.MODE_PRIVATE);
         checkFirst = pref.getString("token", "NULL");
+
+        pref_id = getActivity().getSharedPreferences("id", Activity.MODE_PRIVATE);
+        user_id = pref_id.getString("id","NULL");
 
         materialCalendarView = (MaterialCalendarView) view.findViewById(R.id.calendarView);
         calendar_add = (Button) view.findViewById(R.id.calendar_add);
@@ -105,6 +113,9 @@ public class Fragment_Record_Calendar extends Fragment {
 
         getCalendarData();
 
+        Date mDate = new Date();
+        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
+        shot_Day = simpleDate.format(mDate);
 
         materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
@@ -114,7 +125,7 @@ public class Fragment_Record_Calendar extends Fragment {
                 int Month = date.getMonth() + 1;
                 int Day = date.getDay();
 
-                String shot_Day = Year + "-" + Month + "-" + Day;
+                shot_Day = Year + "-" + Month + "-" + Day;
                 if (Month < 10) {
                     shot_Day = Year + "-0" + Month + "-" + Day;
                 }
@@ -135,7 +146,9 @@ public class Fragment_Record_Calendar extends Fragment {
         calendar_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(getActivity(), Activity_Calendar_add.class);
+                intent.putExtra("shot_Day", shot_Day);
                 startActivity(intent);
             }
         });
@@ -143,14 +156,8 @@ public class Fragment_Record_Calendar extends Fragment {
 
     void getCalendarData() {
 
-//        CalendarData c = new CalendarData("2021-09-26 15:30:30", "일정1", "일해야지", "2021-09-21", "ddd@gmail.com");
-//        CalendarData c2 = new CalendarData("2021-09-23 16:30:30", "일정2", "잠자야지", "2021-09-21", "ddd@gmail.com");
-//
-//        cd.add(c);
-//        cd.add(c2);
-        // Call 들어갈꺼
         RetroBuilder retro = new RetroBuilder();
-        Call<List<CalendarData>> call2 = retro.service.getCalendarAll("born7sh@gmail.com", "Bearer " + checkFirst);
+        Call<List<CalendarData>> call2 = retro.service.getCalendarAll(user_id, "Bearer " + checkFirst);
         call2.enqueue(new Callback<List<CalendarData>>() {
             @Override
             public void onResponse(Call<List<CalendarData>> call, Response<List<CalendarData>> response) {
@@ -158,16 +165,8 @@ public class Fragment_Record_Calendar extends Fragment {
                     Log.v("알림", "드가자");
                     ld = response.body();
                     cd.addAll(ld);
-
-                    Log.e("알림", "들어온거 확실하냐? " + cd.size());
-
                     setCalendarList();
-                    addCalendarDot();
-                    materialCalendarView.addDecorators(
-                            new EventDecorator(Color.RED, dates),
-                            new SundayDecorator(),
-                            new SaturdayDecorator(),
-                            new OneDayDecorator());
+                    Log.e("알림", "들어온거 확실하냐? " + cd.size());
 
                 }
 
@@ -176,17 +175,21 @@ public class Fragment_Record_Calendar extends Fragment {
             @Override
             public void onFailure(Call<List<CalendarData>> call, Throwable t) {
                 Log.e("알림", "실패" + t.getMessage());
+                setCalendarList();
+
             }
         });
+
 
     }
 
     void setCalendarList() {
-//        for (int i = 0; i < cd.size(); i++) {
-//
-//            Log.i("알림", "문자열 : " +  cd.get(i).title);
-//
-//        }
+        addCalendarDot();
+        materialCalendarView.addDecorators(
+                new EventDecorator(Color.RED, dates),
+                new SundayDecorator(),
+                new SaturdayDecorator(),
+                new OneDayDecorator());
     }
 
     void addCalendarDot() {
