@@ -150,7 +150,7 @@ public class WeatherServiceImpl implements WeatherService {
 		}
 	}
 	
-	@Scheduled(cron = "0 11 2,5,8,11,14,17,20,23 * * ?", zone = "Asia/Seoul")
+	@Scheduled(cron = "0 11 02,05,08,11,14,17,20,23 * * ?", zone = "Asia/Seoul")
 	public void getTomWeather() throws Exception {
 		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
 
