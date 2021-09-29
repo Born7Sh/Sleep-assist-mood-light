@@ -1,7 +1,6 @@
 package org.kpu.mood.domain;
 
 public class UserVO {
-	private String email;
 	private String rolename = "ROLE_USER";
 	private String birthday;
 	private String address;
@@ -33,12 +32,6 @@ public class UserVO {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
 	}
 	public String getRolename() {
 		return rolename;

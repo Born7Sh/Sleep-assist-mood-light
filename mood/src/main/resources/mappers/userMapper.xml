@@ -11,7 +11,7 @@
 	 </select>
 
 	 <select id="insert">
-	 	insert into user(username, email, address, phone, job, rolename, password, birthday) values(#{username}, #{email}, #{address}, #{phone}, #{job}, #{rolename}, #{password}, #{birthday})
+	 	insert into user(username, address, phone, job, rolename, password, birthday) values(#{username}, #{address}, #{phone}, #{job}, #{rolename}, #{password}, #{birthday})
 	 </select>
 
 </mapper>
