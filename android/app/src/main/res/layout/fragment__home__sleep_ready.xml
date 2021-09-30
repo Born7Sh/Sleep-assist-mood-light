@@ -108,6 +108,13 @@
                 android:textSize="35dp"></TextView>
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/recommendText"
+            android:textSize="20dp"
+            android:text="온도 낮춰라"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></TextView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -118,33 +125,88 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:text="기상 정보"></TextView>
+                android:text="내일 기상 예보"></TextView>
 
             <ImageView
+                android:id="@+id/weather"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:src="@drawable/weather_rain"></ImageView>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:gravity="center"
-                android:text="내일의 기상 상태는 [비] \n 실내 온도는 [내려]주시고 \n 실내 습도는 [유지]시켜주시기 바랍니다. \n창문 닫는 것을 추천 드립니다."></TextView>
+                android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="내일의 날씨 : "></TextView>
+
+                    <TextView
+                        android:id="@+id/tomorrow_weather"
+                        android:text=" 비 "
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"></TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="온도는  : "></TextView>
+
+                    <TextView
+                        android:id="@+id/tomorrow_temp"
+                        android:text=" 평소보다 덥습니다. "
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"></TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="습도는 : "></TextView>
+
+                    <TextView
+                        android:id="@+id/tomorrow_hum"
+                        android:text=" 평소보다 덥습니다. "
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"></TextView>
+                </LinearLayout>
+
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
     <Button
-        android:layout_margin="30dp"
         android:id="@+id/sleepStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="30dp"
         android:background="#1CA8D4"
         android:text="수면 시작"></Button>
 

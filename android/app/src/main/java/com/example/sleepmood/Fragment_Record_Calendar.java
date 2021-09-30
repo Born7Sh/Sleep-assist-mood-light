@@ -206,6 +206,7 @@ public class Fragment_Record_Calendar extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        ld.clear();
         cd.clear();
         getCalendarData();
     }

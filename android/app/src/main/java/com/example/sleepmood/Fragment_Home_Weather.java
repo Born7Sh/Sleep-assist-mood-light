@@ -192,6 +192,7 @@ public class Fragment_Home_Weather extends Fragment {
 
     public void setForecastData() throws ParseException {
         for (int i = 0 ; i<lwd.size(); i ++ ){
+            if(lwd.get(i).datetime == null){continue;}
             String time = lwd.get(i).datetime.substring(11,19);
 
             if(time.equals("12:00:00")){

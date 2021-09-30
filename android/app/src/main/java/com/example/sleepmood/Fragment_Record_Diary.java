@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,7 +78,7 @@ public class Fragment_Record_Diary extends Fragment {
         checkFirst = pref.getString("token", "NULL");
 
         pref_id = getActivity().getSharedPreferences("id", Activity.MODE_PRIVATE);
-        user_id = pref_id.getString("id","NULL");
+        user_id = pref_id.getString("id", "NULL");
 
 
         // 디이어리 데이터 가져오는 부분.
@@ -111,9 +112,8 @@ public class Fragment_Record_Diary extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        callDiaryData();
 
-        ImageView diaryAdd = (ImageView)view.findViewById(R.id.diaryAdd);
+        ImageView diaryAdd = (ImageView) view.findViewById(R.id.diaryAdd);
         diaryAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,7 +124,7 @@ public class Fragment_Record_Diary extends Fragment {
 
     }
 
-    private void callDiaryData(){
+    private void callDiaryData() {
         RetroBuilder retro = new RetroBuilder();
         Call<List<DiaryData>> call2 = retro.service.getDiaryAll(user_id, "Bearer " + checkFirst);
         call2.enqueue(new Callback<List<DiaryData>>() {
@@ -132,7 +132,10 @@ public class Fragment_Record_Diary extends Fragment {
             public void onResponse(Call<List<DiaryData>> call, Response<List<DiaryData>> response) {
                 Log.v("알림", "일단 응답옴");
                 if (response.isSuccessful()) {
-                    Log.v("알림","성공");
+                    if (result != null) {
+                        result.clear();
+                    }
+                    Log.v("알림", "성공");
                     result = response.body();
                     diaryData.addAll(result);
 
@@ -140,25 +143,33 @@ public class Fragment_Record_Diary extends Fragment {
                     recyclerView.setAdapter(adapter);
 
                 } else {
-                    Log.v("알림", "실패");
+                    Log.v("알림", "onsponse에서의 실패");
                 }
             }
 
             @Override
             public void onFailure(Call<List<DiaryData>> call, Throwable t) {
-                Log.e("알림", "실패" + t.getMessage());
+                Log.e("알림", "진짜 실패");
 
-                DiaryAdapter adapter = new DiaryAdapter(mContext, diaryData);
-                recyclerView.setAdapter(adapter);
             }
         });
 
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        diaryData.clear();
-        callDiaryData();
+
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            public void run() {
+                diaryData.clear();
+                callDiaryData();
+            }
+        }, 500);
+
+
+
     }
 }
