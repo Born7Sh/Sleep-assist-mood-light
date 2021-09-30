@@ -111,7 +111,6 @@ public class Fragment_Record_Calendar extends Fragment {
                 .setCalendarDisplayMode(CalendarMode.MONTHS)
                 .commit();
 
-        getCalendarData();
 
         Date mDate = new Date();
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -121,16 +120,25 @@ public class Fragment_Record_Calendar extends Fragment {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 today_cd.clear();
-                int Year = date.getYear();
-                int Month = date.getMonth() + 1;
-                int Day = date.getDay();
 
-                shot_Day = Year + "-" + Month + "-" + Day;
-                if (Month < 10) {
-                    shot_Day = Year + "-0" + Month + "-" + Day;
+                String Year = Integer.toString(date.getYear());
+                String Month = "-"+Integer.toString(date.getMonth() + 1);
+                String Day = "-"+Integer.toString(date.getDay());
+
+
+                if (date.getMonth() + 1 < 10) {
+                    Month = "-0"+Integer.toString(date.getMonth() + 1);
                 }
+                if(date.getDay() < 10){
+                    Day = "-0"+Integer.toString(date.getDay());
+                }
+
+                shot_Day = Year + Month + Day;
+                Log.i("알림", "이떄 할일은? " + shot_Day);
+
                 for (int i = 0; i < cd.size(); i++) {
                     String a = cd.get(i).start.substring(0, 10);
+                    Log.i("알림", "a = " + a);
                     if (a.equals(shot_Day)) {
                         today_cd.add(cd.get(i));
                         Log.i("알림", "이떄 할일은? " + cd.get(i).description);
@@ -206,7 +214,6 @@ public class Fragment_Record_Calendar extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ld.clear();
         cd.clear();
         getCalendarData();
     }
