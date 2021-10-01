@@ -14,5 +14,8 @@
 	 	insert into user(username, address, phone, job, rolename, password, birthday) values(#{username}, #{address}, #{phone}, #{job}, #{rolename}, #{password}, #{birthday})
 	 </select>
 
+	 <select id="deleteUser">
+	 	delete from user where email = #{email}
+	 </select>
 </mapper>
 

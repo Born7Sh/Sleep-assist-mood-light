@@ -16,4 +16,8 @@ public class UserServiceImpl implements UserService{
 	public void signup(UserVO userVO) throws Exception {
 		userDAO.insertUser(userVO);
 	}
+	
+	public void deleteUser(String email) throws Exception {
+		userDAO.deleteUser(email);
+	}
 }

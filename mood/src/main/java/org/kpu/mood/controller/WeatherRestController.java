@@ -44,6 +44,21 @@ public class WeatherRestController {
 		return new ResponseEntity<>(list, headers, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/forecasttest", method = RequestMethod.GET)
+	public int insertWeather() throws Exception {
+		//report에 필요한 값 저장 후 서비스 레이어에서 처리 요청
+		weatherService.getTomWeather();
+		// 로그 생성
+		logger.info(" /weather/forecast REST-API GET method called. then method executed.");
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+		headers.set("My-Header", "MyHeaderValue");
+		//return new ResponseEntity<SleepReportVO>(report, headers, HttpStatus.OK);
+		// 이거와 차이를 좀 알았으면 좋겠음.
+		return 1;
+	}
+	
 	@RequestMapping(value = "/now", method = RequestMethod.GET)
 	public ResponseEntity<WeatherVO> readNowWeather() throws Exception {
 		//report에 필요한 값 저장 후 서비스 레이어에서 처리 요청
