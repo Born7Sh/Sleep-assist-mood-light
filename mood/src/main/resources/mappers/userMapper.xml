@@ -15,7 +15,7 @@
 	 </select>
 
 	 <select id="deleteUser">
-	 	delete from user where email = #{email}
+	 	delete from user where username = #{email}
 	 </select>
 </mapper>
 
