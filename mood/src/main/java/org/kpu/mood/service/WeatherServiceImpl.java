@@ -150,7 +150,7 @@ public class WeatherServiceImpl implements WeatherService {
 		}
 	}
 	
-	@Scheduled(cron = "0 11 2,5,8,11,14,17,20,23 * * ?", zone = "Asia/Seoul")
+	@Scheduled(cron = "0 11 02,05,08,11,14,17,20,23 * * ?", zone = "Asia/Seoul")
 	public void getTomWeather() throws Exception {
 		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
 
@@ -170,11 +170,11 @@ public class WeatherServiceImpl implements WeatherService {
 		ServiceKey servicekey = new ServiceKey();
 		String serviceKey = servicekey.getWeatherAPI();
 		String pageNo = "1";
-		String numOfRows = "221"; // 한 페이지 결과 수
+		String numOfRows = "241"; // 한 페이지 결과 수
 		String data_type = "JSON"; // 타입 xml, json 등등 ..
 		String baseDate = tempDate; // "20200821"이런식으로 api에서 제공하는 형식 그대로 적으시면 됩니당.
 		
-		String baseTime = "11"+"00"; // API 제공 시간을 입력하면 됨
+		String baseTime = tempTime+"00"; // API 제공 시간을 입력하면 됨
 		System.out.println(baseTime);
 		String nx = "59"; // 위도
 		String ny = "125"; // 경도
@@ -242,7 +242,7 @@ public class WeatherServiceImpl implements WeatherService {
 		
 		for(int i=0; i<20; i++) {
 			WeatherVO weatherVO = new WeatherVO();
-			for(int k=0;k<11;k++) {
+			for(int k=0;k<=11;k++) {
 				weather = (JSONObject) parse_item.get(count);
 				fcstTime = weather.get("fcstTime");
 				category = weather.get("category");

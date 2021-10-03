@@ -23,4 +23,7 @@ public class UserDAOImpl implements UserDAO{
 		sqlSession.insert(namespace+".insert",userVO); 
 	}
 	
+	public void deleteUser(String email) throws Exception{
+		sqlSession.delete(namespace+".deleteUser",email); 
+	}
 }
