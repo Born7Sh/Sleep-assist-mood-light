@@ -9,7 +9,9 @@
 	 <select id="selectbyUserName" resultType="UserVO">
 	 	select * from user where username = #{username};
 	 </select>
-
+	 <select id="selectbyEmail" resultType="String">
+	 	select ip from user where username = #{email};
+	 </select>
 	 <select id="insert">
 	 	insert into user(username, address, phone, job, rolename, password, birthday) values(#{username}, #{address}, #{phone}, #{job}, #{rolename}, #{password}, #{birthday})
 	 </select>
