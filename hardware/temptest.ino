@@ -85,7 +85,6 @@ void loop(){
       strip.show();
     }
 
-
     h = dht.readHumidity();     //습도
     t = dht.readTemperature();  //온도
     Serial.print(h);

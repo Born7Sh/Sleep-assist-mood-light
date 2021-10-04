@@ -124,6 +124,15 @@ def warmwhite():
     arduino.close()
     return 'ok'
 
+@app.route('/warmwhite')
+def warmwhite():
+    arduino = serial.Serial('/dev/ttyACM0',9600)
+    var = 'E'
+    var = var.encode('utf-8')
+    arduino.write(var)
+    arduino.close()
+    return 'ok'
+
 @app.route('/yellow')
 def yellow():
     arduino = serial.Serial('/dev/ttyACM0',9600)
