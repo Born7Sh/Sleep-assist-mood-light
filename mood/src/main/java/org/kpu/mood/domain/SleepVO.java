@@ -6,7 +6,14 @@ public class SleepVO {
 	private String end;
 	private int elements;
 	private String email;
+	private String alarm_time;
 	
+	public String getAlarm_time() {
+		return alarm_time;
+	}
+	public void setAlarm_time(String alarm_time) {
+		this.alarm_time = alarm_time;
+	}
 	public int getId() {
 		return id;
 	}

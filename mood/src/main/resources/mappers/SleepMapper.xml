@@ -7,7 +7,7 @@
 <mapper namespace="org.kpu.sleepapp.mapper.SleepMapper">
 
      <select id="insert">
- 		insert into sleep(start,elements,email) values(#{start}, #{elements},#{email})
+ 		insert into sleep(start,elements,email, alarm_time) values(#{start}, #{elements},#{email},#{alarm_time})
      </select>
      
 	 <select id="selectId" resultType = "Integer">
