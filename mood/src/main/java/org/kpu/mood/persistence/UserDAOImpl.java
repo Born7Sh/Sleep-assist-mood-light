@@ -17,7 +17,9 @@ public class UserDAOImpl implements UserDAO{
 		userVO = sqlSession.selectOne(namespace+".selectbyUserName",username);
 		return userVO;
 	}
-	
+	public String readIP(String email) throws Exception{
+		return sqlSession.selectOne(namespace+".selectbyEmail",email);
+	}
 	public void insertUser(UserVO userVO) throws Exception{
 		userVO.setPassword("{noop}" + userVO.getPassword());
 		sqlSession.insert(namespace+".insert",userVO); 
