@@ -13,7 +13,7 @@ class UserList:
     
     
     def setUserList(self,db):
-        sql = "select email from user;"
+        sql = "select username from user;"
         db.getCursor().execute(sql)
         db.getDB().commit()
         

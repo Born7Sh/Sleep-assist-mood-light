@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Jul 29 13:17:58 2021
 
-@author: HSJ
-"""
 #networkx 설치
 #java & python 버전에 맞는 jpype
 #jpype 이후 knolpy pip install
@@ -199,13 +194,13 @@ class TextRank:
     
     
     
-    """
+"""
 tr = TextRank()
 print('Load...')
 from konlpy.tag import Komoran
 tagger = Komoran()
 stopword = set([('있', 'VV'), ('하', 'VV'), ('되', 'VV') ])
-tr.loadSents(RawSentenceReader('original.txt'), lambda sent: filter(lambda x:x not in stopword and x[1] in ('NNG', 'NNP', 'VV', 'VA'), tagger.pos(sent)))
+tr.loadSents(RawSentenceReader('DayDiary.txt'), lambda sent: filter(lambda x:x not in stopword and x[1] in ('NNG', 'NNP', 'VV', 'VA'), tagger.pos(sent)))
 print('Build...')
 tr.build()
 ranks = tr.rank()
@@ -213,15 +208,15 @@ ranks = tr.rank()
  #  print("\t".join([str(k), str(ranks[k]), str(tr.dictCount[k])]))
 print(tr.summarize(0.2))
 """
-"""
+
 tr = TextRank(window=5, coef=1)
 print('Load...')
 stopword = set([('있', 'VV'), ('하', 'VV'), ('되', 'VV'), ('없', 'VV') ])
-tr.load(RawTaggerReader('original.txt'), lambda w: w not in stopword and (w[1] in ('NNG', 'NNP', 'VV', 'VA')))
+tr.load(RawTaggerReader('DayDiary.txt'), lambda w: w not in stopword and (w[1] in ('NNG', 'NNP', 'VV', 'VA')))
 print('Build...')
 tr.build()
 kw = tr.extract(0.1)
 for k in sorted(kw, key=kw.get, reverse=True):
     #print("%s\t%g" % (k, kw[k]))
-    print(kw[k])
-    """
+    print(k[0])
+    

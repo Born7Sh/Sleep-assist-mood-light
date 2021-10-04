@@ -85,7 +85,7 @@ class SleepScore:
                 self.gyroToScore()
                 self.CalendarToScore(email, k[1])
                 
-            self.insertScore(id)
+            self.insertScore(email,k[1])
             #self.sleep_repo_list.append()
             
     def setSleepStatus(self,id):
@@ -164,7 +164,7 @@ class SleepScore:
             self.score = self.score - 3
             
     def gyroToScore(self):
-        self.score = self.score - 3*(self.sleep_status.getGyro())
+        self.score = self.score - 0.03*(self.sleep_status.getGyro())
         
     def elementToScore(self,elements):
         self.score = self.score
@@ -177,9 +177,13 @@ class SleepScore:
         
         self.score = self.score - cl.getScore()
         
-    def insertScore(self,id):
+    def insertScore(self,email,date):
         if self.score<3 :
             self.score = 3
+        sql = "insert into sleep_report(email,score,sleeping_time,date) values(%s,%s,%s,%s)"
+        self.db.getCursor().execute(sql,(email,self.score,int(self.sleep_time/3600),date))
+        self.db.getDB().commit()
+        
         
         
     def makeScore(self,email):
@@ -202,8 +206,7 @@ ul.setUserList(sd.getDB())
 user_list = ul.getUserList()
 for i in range(len(user_list)):
     sd.makeScore(user_list[i])
-    
-sd.getSleepCount("born7sh@gmail.com")
+
 #sd.getSleep("born7sh@gmail.com")
 #sd.makeScore("born7sh@gmail.com")
 #sd.getSleep("born7sh@gmail.com")

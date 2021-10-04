@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Jul 29 13:18:21 2021
 
-@author: HSJ
-"""
 import textrank
 
 tr = textrank()

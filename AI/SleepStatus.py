@@ -28,6 +28,8 @@ class SleepStatus:
     
     def setGyro(self,gyro):
         self.gyro_sensor = gyro
+        if self.gyro_sensor > 2000:
+            self.gyro_sensor = 2000
         
     def getGyro(self):
         return self.gyro_sensor
