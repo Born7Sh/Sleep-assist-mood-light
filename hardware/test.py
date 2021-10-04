@@ -4,7 +4,7 @@ import speech_recognition as sr
 import os
 import pymysql
 import config
-import datetime
+from datetime import datetime
 from mpyg321.mpyg321 import MPyg321Player
 from gtts import gTTS
 
@@ -44,6 +44,7 @@ while True:
     result = curs.fetchall()
 
     if (result[0][0] != None) and (result[0][1] == 0):
+        #기상 시 오늘의 날씨를 알려주는 기능
         sql = 'select * from todays_weather where date_time >= now() order by insert_time desc, id limit 12;'
         curs.execute(sql)
         result1 = curs.fetchall()
@@ -52,7 +53,24 @@ while True:
             if result1[i][4] != 0:     #맑음이 아니면
                 text = '오늘은 비가 올 수 있으니 날씨를 확인하시기 바랍니다.'
                 break
-        voice_text = config.nickname + '님 좋은 아침입니다. ' + text + '오늘도 좋은 하루 보내세요.'
+
+        # 캘린더에 있는 내용을 아침에 일어났을 때 알려주는 기능
+        sql = '''SELECT title from calendar where email = %s and start between %s and %s '''
+        text1 = str(datetime.today())
+        text1 = text1[0:10] + " 00:00:00"
+        text2 = text1[0:10] + " 23:59:59"
+        curs.execute(sql,(config.email,text1,text2))
+        result2 = curs.fetchall()
+
+        calendar = ''
+        if result2[0] != None:
+            calendar = '오늘의 일정으로는 '
+            for i in range(0, len(result2)):
+                calendar = calendar + str(result2[i][0]) + ', '
+            calendar = calendar + '있습니다.'
+
+
+        voice_text = config.nickname + '님 좋은 아침입니다. ' + text + calendar + '오늘도 좋은 하루 보내세요.'
         tts = gTTS( text=voice_text, lang='ko', slow=False )
         filename= 'ex_wakeup.mp3'
         tts.save(filename) 
@@ -203,3 +221,4 @@ while True:
     except:
         print('Canceled')        
  
+
