@@ -23,7 +23,7 @@ void setup(){
   Wire.begin();
   lightMeter.begin();
   strip.begin(); //네오픽셀을 초기화하기 위해 모든LED를 off시킨다
-  strip.show(); 
+  strip.show();
 }
 
 
@@ -35,8 +35,14 @@ void loop(){
     
     data = Serial.read();
     Serial.print(data);
+    if(data == 69){ //WarmWhite
+      colorWipe(strip.Color(255, 100, 0), 40);
+      strip.setBrightness(50);
+      strip.show();
+    }
     if(data == 82){ //RED
       colorWipe(strip.Color(255, 0, 0), 50);
+      
     }
     if(data == 66){ //BLUE
       colorWipe(strip.Color(0, 0, 255), 50);
@@ -70,15 +76,18 @@ void loop(){
       strip.clear();
       strip.show();
     }
-    if(data == 85){ //Bright UP
-      strip.setBrightness(strip.getBrightness()+3);
+    if(data == 77){ //Bright255
+      strip.setBrightness(255);
+      strip.show();
     }
-    if(data == 68){ //Bright DOWN
-      strip.setBrightness(strip.getBrightness()-3);
+    if(data == 48){ //Bright100
+      strip.setBrightness(100);
+      strip.show();
     }
-    
-    h = dht.readHumidity();     //온도
-    t = dht.readTemperature();  //습도
+
+
+    h = dht.readHumidity();     //습도
+    t = dht.readTemperature();  //온도
     Serial.print(h);
     Serial.print(" ");
     Serial.print(t);
