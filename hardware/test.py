@@ -73,7 +73,6 @@ while True:
         text = r.recognize_google(audio_text, language = "ko-KR")
         print(text)
 
-
         if text == '라즈베리' or text == '라즈배리':
             tts = gTTS( text='부르셨어요?', lang='ko', slow=False )
             filename= 'ex_ko.mp3'
@@ -87,6 +86,29 @@ while True:
                 audio_text = r.record(source)
             text = r.recognize_google(audio_text, language = "ko-KR")
             print(text)
+            if text == '일기':
+                tts = gTTS( text='일기장에 기록할 내용을 15초 이내로 말해주세요.', lang='ko', slow=False )
+                filename= 'ex_diary.mp3'
+                tts.save(filename) 
+                os.system('sudo mpg321 -q '+filename)
+
+                os.system('arecord -d 15 -f cd -Dhw:1 test.wav')
+                r = sr.Recognizer()
+
+                with sr.AudioFile("test.wav")as source:
+                    audio_text = r.record(source)
+                text = r.recognize_google(audio_text, language = "ko-KR")
+                print(text)
+                database = pymysql.connect(host=str(config.host),user=str(config.user),db=str(config.database),password=str(config.password), charset='utf8')
+                curs=database.cursor()
+                sql = '''insert into diary(description, email) values(%s, %s);'''
+                curs.execute(sql,(text, config.email))
+                database.commit()
+                database.close()
+                tts = gTTS( text='저장했습니다.', lang='ko', slow=False )
+                filename= 'ex_save.mp3'
+                tts.save(filename) 
+                os.system('sudo mpg321 -q '+filename)
 
             if text == '안녕하세요':
                 tts = gTTS( text='안녕하세요. 반가워요.', lang='ko', slow=False )
