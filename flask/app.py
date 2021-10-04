@@ -25,7 +25,7 @@ def temp():
         #if i == 2:    #온습도 센서가 2초 정도의 딜레이 후에 정상적으로 반응하는데 3번째 정도면 값을 받을 수 있음.
     string = str(data)
     string = string.split()     
-    string[0] = string[0][2:]   #쓰레기 값 제거
+    string[0] = string[0][4:]   #쓰레기 값 제거
     string[2] = string[2][:-5]  #쓰레기 값 제거
     print(string)
     humidity = int(string[0])
@@ -45,6 +45,37 @@ def temp():
     print(temperature)
     print(humidity)    
     print(lux)  
+    arduino.close()
+    return 'ok'
+
+@app.route('/light')
+def light():
+    arduino = serial.Serial('/dev/ttyACM0',9600)
+    database = pymysql.connect(host=str(config.host),user=str(config.user),db=str(config.database),password=str(config.password), charset='utf8')
+    curs=database.cursor()
+    sql = '''select alarm_time from sleep where email = %s order by start desc limit 1'''
+    curs.execute(sql,(str(config.email)))
+    result = curs.fetchall()
+    hour1 = str(result[0])
+    min1 = int(hour1[14:16])
+    hour1 = int(hour1[11:13])
+    now = time.strftime('%H%M%S')
+    hour2 = int(now[0:2])
+    min2 = int(now[2:4])
+    if hour2 + 1 >= hour1:
+        if min2 >= min1:
+            var = 'M'
+            var = var.encode('utf-8')
+            arduino.write(var)
+            arduino.close()
+            return 'ok'
+    if hour2 + 2 == hour1:
+        var = '0'
+        var = var.encode('utf-8')
+        arduino.write(var)
+        arduino.close()
+        return 'ok'
+
     arduino.close()
     return 'ok'
 
@@ -84,14 +115,14 @@ def pink():
     arduino.close()
     return 'ok'
 
-# @app.route('/white')
-# def white():
-#     arduino = serial.Serial('/dev/ttyACM0',9600)
-#     var = 'W'
-#     var = var.encode('utf-8')
-#     arduino.write(var)
-#     arduino.close()
-#     return 'ok'
+@app.route('/warmwhite')
+def warmwhite():
+    arduino = serial.Serial('/dev/ttyACM0',9600)
+    var = 'E'
+    var = var.encode('utf-8')
+    arduino.write(var)
+    arduino.close()
+    return 'ok'
 
 @app.route('/yellow')
 def yellow():
@@ -138,19 +169,19 @@ def poweroff():
     arduino.close()
     return 'ok'
 
-@app.route('/bright10')
-def bright10():
+@app.route('/brightup')
+def brightup():
     arduino = serial.Serial('/dev/ttyACM0',9600)
-    var = '1'
+    var = 'U'
     var = var.encode('utf-8')
     arduino.write(var)
     arduino.close()
     return 'ok'
 
-@app.route('/bright25')
-def bright25():
+@app.route('/brightdown')
+def brightdown():
     arduino = serial.Serial('/dev/ttyACM0',9600)
-    var = '2'
+    var = 'D'
     var = var.encode('utf-8')
     arduino.write(var)
     arduino.close()
