@@ -180,7 +180,7 @@ public class Fragment_Home_Weather extends Fragment {
 
         setDustImg(home_dust, cwd.fine_dust2_5);
         setDustImg(home_Very_dust, cwd.fine_dust10);
-        setWeatherImg(home_now_Image,cwd.precipitation_type);
+        setWeatherImg(home_now_Image, cwd.precipitation_type);
 
     }
 
@@ -191,39 +191,43 @@ public class Fragment_Home_Weather extends Fragment {
     }
 
     public void setForecastData() throws ParseException {
-        for (int i = 0 ; i<lwd.size(); i ++ ){
-            if(lwd.get(i).datetime == null){continue;}
-            String time = lwd.get(i).datetime.substring(11,19);
 
-            if(time.equals("12:00:00")){
-                home_12_Temp.setText(lwd.get(i).temperature.toString()+ "℃");
-                home_12_Hum.setText(Integer.toString(lwd.get(i).humidity)+ "%");
-                setWeatherImg(home_12_Img,lwd.get(i).precipitation_type);
-                Log.v("알림", lwd.get(i).datetime);
-            }else if(time.equals("15:00:00")){
-                home_15_Temp.setText(lwd.get(i).temperature.toString()+ "℃");
-                home_15_Hum.setText(Integer.toString(lwd.get(i).humidity)+ "%");
-                setWeatherImg(home_15_Img,lwd.get(i).precipitation_type);
-                Log.v("알림", lwd.get(i).datetime);
-            }else if(time.equals("18:00:00")){
-                home_18_Temp.setText(lwd.get(i).temperature.toString()+ "℃");
-                home_18_Hum.setText(Integer.toString(lwd.get(i).humidity)+ "%");
-                setWeatherImg(home_18_Img,lwd.get(i).precipitation_type);
-                Log.v("알림", lwd.get(i).datetime);
-            }else if(time.equals("21:00:00")){
-                home_21_Temp.setText(lwd.get(i).temperature.toString()+ "℃");
-                home_21_Hum.setText(Integer.toString(lwd.get(i).humidity)+ "%");
-                setWeatherImg(home_21_Img,lwd.get(i).precipitation_type);
-                Log.v("알림", lwd.get(i).datetime);
-            }else if(time.equals("07:00:00")){
-                home_9_Temp.setText(lwd.get(i).temperature.toString()+ "℃");
-                home_9_Hum.setText(Integer.toString(lwd.get(i).humidity)+ "%");
-                setWeatherImg(home_9_Img,lwd.get(i).precipitation_type);
-                Log.v("알림", lwd.get(i).datetime);
-            }else{
-                continue;
+        if (lwd != null) {
+            for (int i = 0; i < lwd.size(); i++) {
+                if (lwd.get(i).datetime == null) {
+                    continue;
+                }
+                String time = lwd.get(i).datetime.substring(11, 19);
+
+                if (time.equals("12:00:00")) {
+                    home_12_Temp.setText(lwd.get(i).temperature.toString() + "℃");
+                    home_12_Hum.setText(Integer.toString(lwd.get(i).humidity) + "%");
+                    setWeatherImg(home_12_Img, lwd.get(i).precipitation_type);
+                    Log.v("알림", lwd.get(i).datetime);
+                } else if (time.equals("15:00:00")) {
+                    home_15_Temp.setText(lwd.get(i).temperature.toString() + "℃");
+                    home_15_Hum.setText(Integer.toString(lwd.get(i).humidity) + "%");
+                    setWeatherImg(home_15_Img, lwd.get(i).precipitation_type);
+                    Log.v("알림", lwd.get(i).datetime);
+                } else if (time.equals("18:00:00")) {
+                    home_18_Temp.setText(lwd.get(i).temperature.toString() + "℃");
+                    home_18_Hum.setText(Integer.toString(lwd.get(i).humidity) + "%");
+                    setWeatherImg(home_18_Img, lwd.get(i).precipitation_type);
+                    Log.v("알림", lwd.get(i).datetime);
+                } else if (time.equals("21:00:00")) {
+                    home_21_Temp.setText(lwd.get(i).temperature.toString() + "℃");
+                    home_21_Hum.setText(Integer.toString(lwd.get(i).humidity) + "%");
+                    setWeatherImg(home_21_Img, lwd.get(i).precipitation_type);
+                    Log.v("알림", lwd.get(i).datetime);
+                } else if (time.equals("07:00:00")) {
+                    home_9_Temp.setText(lwd.get(i).temperature.toString() + "℃");
+                    home_9_Hum.setText(Integer.toString(lwd.get(i).humidity) + "%");
+                    setWeatherImg(home_9_Img, lwd.get(i).precipitation_type);
+                    Log.v("알림", lwd.get(i).datetime);
+                } else {
+                    continue;
+                }
             }
-
         }
     }
 
@@ -309,14 +313,6 @@ public class Fragment_Home_Weather extends Fragment {
     }
 
 
-
-
-
-
-
-
-
-
     public void callWeatherData() {
 
         RetroBuilder retro = new RetroBuilder();
@@ -333,9 +329,9 @@ public class Fragment_Home_Weather extends Fragment {
                     Log.v("알림", "미세먼지 2 : " + cwd.fine_dust2_5);
                     Log.v("알림", "미세먼지 10 : " + cwd.fine_dust10);
 
-                }else {
+                } else {
                     Log.v("알림", "오류! 데이터를 못받아옴");
-                    cwd = new WeatherData("0", (float) 0.0,0,0,0,0);
+                    cwd = new WeatherData("0", (float) 0.0, 0, 0, 0, 0);
                 }
                 setCurrentWeather();
             }
@@ -365,9 +361,9 @@ public class Fragment_Home_Weather extends Fragment {
                     Log.v("알림", "type : " + lwd.get(0).precipitation_type);
                     Log.v("알림", "lwd 크기 : " + lwd.size());
 
-                }else {
+                } else {
                     Log.v("알림", "오류! 데이터를 못받아옴");
-                    cwd = new WeatherData("0", (float) 0.0,0,0,0,0);
+                    cwd = new WeatherData("0", (float) 0.0, 0, 0, 0, 0);
                 }
                 try {
                     setForecast();
@@ -381,7 +377,6 @@ public class Fragment_Home_Weather extends Fragment {
                 Log.v("알림", "안됨1");
             }
         });
-
 
 
     }

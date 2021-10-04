@@ -1,6 +1,7 @@
 package com.example.sleepmood;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,11 +31,15 @@ import retrofit2.Response;
 
 public class Fragment_Home_SleepReady extends Fragment {
 
+    MainActivity activity;
 
     private SharedPreferences pref;
     private String checkFirst;
     private SharedPreferences pref_id;
     private String user_id;
+    private SharedPreferences pref_element;
+
+
     private SensorData sd;
     private List<WeatherData> lwd;
 
@@ -47,6 +54,24 @@ public class Fragment_Home_SleepReady extends Fragment {
     TextView tomorrow_temperature;
     TextView tomorrow_humidity;
     TextView tomorrow_weather;
+
+    Button sleep_start;
+    CheckBox checkBox_cold;
+    CheckBox checkBox_smoke;
+    CheckBox checkBox_not_home;
+
+    int checkBox_num;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (MainActivity) getActivity();
+    }
+
+    public void onDetach() {
+        super.onDetach();
+        activity = null;
+    }
 
 
     @Override
@@ -64,8 +89,11 @@ public class Fragment_Home_SleepReady extends Fragment {
 
         pref = getActivity().getSharedPreferences("token", Activity.MODE_PRIVATE);
         checkFirst = pref.getString("token", "NULL");
+
         pref_id = getActivity().getSharedPreferences("id", Activity.MODE_PRIVATE);
         user_id = pref_id.getString("id", "NULL");
+
+        pref_element = getActivity().getSharedPreferences("element", Activity.MODE_PRIVATE);
 
         current_temperature = view.findViewById(R.id.currentTemp);
         current_humidity = view.findViewById(R.id.currentHum);
@@ -78,6 +106,35 @@ public class Fragment_Home_SleepReady extends Fragment {
         tomorrow_humidity = view.findViewById(R.id.tomorrow_hum);
         tomorrow_temperature = view.findViewById(R.id.tomorrow_temp);
         tomorrow_weather = view.findViewById(R.id.tomorrow_weather);
+
+        checkBox_cold = view.findViewById(R.id.check_element_cold);
+        checkBox_smoke = view.findViewById(R.id.check_element_smoke);
+        checkBox_not_home= view.findViewById(R.id.check_element_isNotHome);
+
+        sleep_start = view.findViewById(R.id.sleepStart);
+
+        sleep_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkBox_cold.isChecked()){
+                    checkBox_num = 100 + checkBox_num;
+                }
+                if(checkBox_smoke.isChecked()){
+                    checkBox_num = 20 + checkBox_num;
+                }
+                if(checkBox_not_home.isChecked()){
+                    checkBox_num = 3 +checkBox_num;
+                }
+                Log.v("알림" ,"checkbox 값 : " + checkBox_num);
+
+                SharedPreferences.Editor editor = pref_element.edit();
+                editor.putInt("element", checkBox_num);
+                editor.commit();
+
+                activity.onFragmentChange("sleepStart");
+
+            }
+        });
 
         getSensorData();
 
@@ -146,7 +203,7 @@ public class Fragment_Home_SleepReady extends Fragment {
                 }
             } else {
                 if (sd.humidity >= 40 && sd.humidity <= 70) {
-                    recommend_Text.setText("현재 방은 적정 습도입니다만,\n 온도는 조정 바랍니다.");
+                    recommend_Text.setText("현재 방은 적정 습도입니다만, \n 온도는 조정 바랍니다.");
                 } else {
                     recommend_Text.setText("현재 방의 온도와 습도 모두 조정 바랍니다.");
                 }

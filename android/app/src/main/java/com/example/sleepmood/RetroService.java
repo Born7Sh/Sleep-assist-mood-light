@@ -45,6 +45,11 @@ public interface RetroService {
     @GET("{email}/sensor")
     Call<SensorData> getSensor (@Path("email") String email, @Header("Authorization") String auth);
 
+    @GET("user/{email}/delete")
+    Call<Void> deleteUser(
+            @Path("email") String email, @Header("Authorization") String auth
+    );
+
 /*
     @FormUrlEncoded
     @POST("diary/")
@@ -94,6 +99,7 @@ public interface RetroService {
     Call<UserData> provideUserData(
             @Body UserData ud
     );
+
 
 
 

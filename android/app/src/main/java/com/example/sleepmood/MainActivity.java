@@ -62,23 +62,20 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("token", Activity.MODE_PRIVATE);
         String checkFirst = pref.getString("token","NULL");
 
-//        SharedPreferences pref2 = getSharedPreferences("id", Activity.MODE_PRIVATE);
-//        String userid = pref2.getString("id","NULL");
-//
-        Intent passedIntent = getIntent();
-        processCommand(passedIntent);
+//        Intent passedIntent = getIntent();
+//        processCommand(passedIntent);
+
+        Log.v("알림", "Main token 확인 : " + checkFirst);
 
         if (checkFirst == "NULL") {
-            // @######구글 로그인 세션까지 조건 작업 할것######@
-            // 앱 최초 실행시 하고 싶은 작업
-//            SharedPreferences.Editor editor = pref.edit();
-//            editor.putBoolean("checkFirst", true);
-//            editor.commit();
+
             Intent intent = new Intent(MainActivity.this, Activity_Log_in.class);
             startActivity(intent);
             finish();
+
         } else {
             // 최초 실행이 아닐때 진행할 작업
+            getKeyData();
         }
 
 
@@ -235,7 +232,38 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void getKeyData(){
 
+        SharedPreferences pref2 = getSharedPreferences("id", Activity.MODE_PRIVATE);
+        String savedId = pref2.getString("id", "no");
+
+        SharedPreferences pref3 = getSharedPreferences("pw", Activity.MODE_PRIVATE);
+        String savedPw = pref3.getString("pw", "no");
+
+        LoginData ld = new LoginData(savedId,savedPw);
+        RetroBuilder retro = new RetroBuilder();
+        Call<String> call = retro.service.tryLogin(ld);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                String token = response.body();
+                Log.v("알림", "Main token 받아오기 성공 : "+ token);
+
+                SharedPreferences pref = getSharedPreferences("token", Activity.MODE_PRIVATE);
+                String checkFirst = pref.getString("token", token);
+
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("token", token);
+                editor.commit();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.v("알림", "Main token 받아오기 실패");
+            }
+        });
+    }
 
 
 }

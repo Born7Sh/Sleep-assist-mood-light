@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,7 +85,7 @@ public class Fragment_Record_Calendar extends Fragment {
         checkFirst = pref.getString("token", "NULL");
 
         pref_id = getActivity().getSharedPreferences("id", Activity.MODE_PRIVATE);
-        user_id = pref_id.getString("id","NULL");
+        user_id = pref_id.getString("id", "NULL");
 
         materialCalendarView = (MaterialCalendarView) view.findViewById(R.id.calendarView);
         calendar_add = (Button) view.findViewById(R.id.calendar_add);
@@ -122,15 +123,15 @@ public class Fragment_Record_Calendar extends Fragment {
                 today_cd.clear();
 
                 String Year = Integer.toString(date.getYear());
-                String Month = "-"+Integer.toString(date.getMonth() + 1);
-                String Day = "-"+Integer.toString(date.getDay());
+                String Month = "-" + Integer.toString(date.getMonth() + 1);
+                String Day = "-" + Integer.toString(date.getDay());
 
 
                 if (date.getMonth() + 1 < 10) {
-                    Month = "-0"+Integer.toString(date.getMonth() + 1);
+                    Month = "-0" + Integer.toString(date.getMonth() + 1);
                 }
-                if(date.getDay() < 10){
-                    Day = "-0"+Integer.toString(date.getDay());
+                if (date.getDay() < 10) {
+                    Day = "-0" + Integer.toString(date.getDay());
                 }
 
                 shot_Day = Year + Month + Day;
@@ -214,8 +215,14 @@ public class Fragment_Record_Calendar extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        cd.clear();
-        getCalendarData();
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            public void run() {
+                cd.clear();
+                getCalendarData();
+            }
+        }, 200);
+
     }
 
 

@@ -84,6 +84,9 @@ public class Fragment_Home_SleepStart extends Fragment {
     private SharedPreferences pref_id;
     private String user_id;
 
+    private SharedPreferences pref_element;
+    private int user_element;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -103,6 +106,11 @@ public class Fragment_Home_SleepStart extends Fragment {
 
         pref_id = getActivity().getSharedPreferences("id", Activity.MODE_PRIVATE);
         user_id = pref_id.getString("id","NULL");
+
+        pref_element = getActivity().getSharedPreferences("element", Activity.MODE_PRIVATE);
+        user_element = pref_element.getInt("element",0);
+
+        Log.v("알림" ,"user_element 값 : " + user_element);
 
         tv_timeAfter = (TextView) view.findViewById(R.id.timeAfter);
         tv_timeNow = (TextView) view.findViewById(R.id.timeAfter);
@@ -284,15 +292,20 @@ public class Fragment_Home_SleepStart extends Fragment {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 시간 차이 용
 
         RetroBuilder retro = new RetroBuilder();
-        SleepTime st = new SleepTime(dateFormat.format(curDate), 1, user_id);
+        SleepTime st = new SleepTime(dateFormat.format(curDate), user_element, user_id);
+
+        Log.v("알림", "데이터 이메일"+st.email);
+        Log.v("알림", "데이터 시간"+st.start);
+
         Call<Integer> call = retro.service.provideSleepTime(st, "Bearer " + checkFirst);
 
         call.enqueue(new Callback<Integer>() {
                          @Override
                          public void onResponse(Call<Integer> call, Response<Integer> response) {
                              Log.v("알림", "callSleep 돌입");
-                             if (response.isSuccessful()) {
-                                 Log.v("알림", "callSleep 돌입 값 받아오기 성공");
+                             if (!response.isSuccessful()) {
+                                 Log.v("알림", "response : " + response.code());
+                                 return;
                              }
                              id = response.body();
                              Log.v("알림", "id는 : "+ id);
