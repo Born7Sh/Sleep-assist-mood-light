@@ -14,6 +14,7 @@ public class SleepDAOImpl implements SleepDAO{
 	
 	public int insert(SleepVO sleepVO) throws Exception {
 		sqlSession.insert(namespace+".insert", sleepVO);
+		System.out.println("check1");
 		return sqlSession.selectOne(namespace+".selectId", sleepVO);
 	}
 	

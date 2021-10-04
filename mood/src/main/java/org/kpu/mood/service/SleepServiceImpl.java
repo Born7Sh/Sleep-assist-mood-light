@@ -1,6 +1,7 @@
 package org.kpu.mood.service;
 
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 
 import org.kpu.mood.domain.SleepVO;
@@ -22,13 +23,21 @@ public class SleepServiceImpl implements SleepService {
 	
 	public int insertSleep(SleepVO sleepVO) throws Exception {
 		String ip = userDAO.readIP(sleepVO.getEmail());
-		URL url = new URL("http://"+ip+"/warmwhite");
-		System.out.println(url);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		System.out.println("응답코드 : " + conn.getResponseCode());
+	
+		try {
+			URL url = new URL("http://"+ip+"/warmwhite");
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setConnectTimeout(2);
+			conn.setReadTimeout(3);
+			conn.setRequestMethod("GET");
+			System.out.println("응답코드 : " + conn.getResponseCode());
+			conn.disconnect();
+		}catch (SocketTimeoutException e){
+			System.out.println(ip+" mood light is off now");
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
 
-		conn.disconnect();
 		return sleepDAO.insert(sleepVO);
 	}
 	public void updateSleep(SleepVO sleepVO) throws Exception {
