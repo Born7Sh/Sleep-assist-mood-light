@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 import speech_recognition as sr
 import os
 import pymysql
@@ -31,8 +33,35 @@ def google_tts(voice_text,filename):
     tts.save(filename) 
     os.system('sudo mpg321 -q '+filename)
 
+
+
 # 녹음을 3초동안 계속 반복하고 원하는 단어가 나오면 4초간 명령을 받아들임.
 while True:
+    database = pymysql.connect(host=str(config.host),user=str(config.user),db=str(config.database),password=str(config.password), charset='utf8')
+    curs=database.cursor()
+    sql = '''SELECT end, alarm FROM sleep where email = %s ORDER BY start DESC LIMIT 1 '''
+    curs.execute(sql,(config.email))
+    result = curs.fetchall()
+
+    if (result[0][0] != None) and (result[0][1] == 0):
+        sql = 'select * from todays_weather where date_time >= now() order by insert_time desc, id limit 12;'
+        curs.execute(sql)
+        result1 = curs.fetchall()
+        text = '오늘은 비가 오지 않을 것으로 예상됩니다.'
+        for i in range(0,len(result1)):
+            if result1[i][4] != 0:     #맑음이 아니면
+                text = '오늘은 비가 올 수 있으니 날씨를 확인하시기 바랍니다.'
+                break
+        voice_text = config.nickname + '님 좋은 아침입니다. ' + text + '오늘도 좋은 하루 보내세요.'
+        tts = gTTS( text=voice_text, lang='ko', slow=False )
+        filename= 'ex_wakeup.mp3'
+        tts.save(filename) 
+        os.system('sudo mpg321 -q '+filename)
+        sql = '''update sleep set alarm = 1  where end = %s and email = %s'''
+        curs.execute(sql,(str(result[0][0]),config.email))
+        database.commit()
+    
+    database.close() 
     os.system('arecord -d 3 -f cd -Dhw:1 test.wav')
     r = sr.Recognizer()
 
@@ -43,6 +72,7 @@ while True:
     try:
         text = r.recognize_google(audio_text, language = "ko-KR")
         print(text)
+
         if text == '라즈베리' or text == '라즈배리':
             tts = gTTS( text='부르셨어요?', lang='ko', slow=False )
             filename= 'ex_ko.mp3'
@@ -56,6 +86,29 @@ while True:
                 audio_text = r.record(source)
             text = r.recognize_google(audio_text, language = "ko-KR")
             print(text)
+            if text == '일기':
+                tts = gTTS( text='일기장에 기록할 내용을 15초 이내로 말해주세요.', lang='ko', slow=False )
+                filename= 'ex_diary.mp3'
+                tts.save(filename) 
+                os.system('sudo mpg321 -q '+filename)
+
+                os.system('arecord -d 15 -f cd -Dhw:1 test.wav')
+                r = sr.Recognizer()
+
+                with sr.AudioFile("test.wav")as source:
+                    audio_text = r.record(source)
+                text = r.recognize_google(audio_text, language = "ko-KR")
+                print(text)
+                database = pymysql.connect(host=str(config.host),user=str(config.user),db=str(config.database),password=str(config.password), charset='utf8')
+                curs=database.cursor()
+                sql = '''insert into diary(description, email) values(%s, %s);'''
+                curs.execute(sql,(text, config.email))
+                database.commit()
+                database.close()
+                tts = gTTS( text='저장했습니다.', lang='ko', slow=False )
+                filename= 'ex_save.mp3'
+                tts.save(filename) 
+                os.system('sudo mpg321 -q '+filename)
 
             if text == '안녕하세요':
                 tts = gTTS( text='안녕하세요. 반가워요.', lang='ko', slow=False )
@@ -73,7 +126,7 @@ while True:
                 voice_text = '현재 날씨는 ' + weather + ' 계속되고 있고, 온도는 ' +  str(int(result[0][1])) + ', 습도는 ' +  str(result[0][2]) +'입니다.'
                 print(voice_text)
 
-                database.commit()
+                #database.commit()
                 database.close()    
 
                 google_tts(voice_text,'weather_now.mp3')
@@ -120,6 +173,7 @@ while True:
 
                 print(voice_text)
                 google_tts(voice_text,'todays_weather.mp3')
+                database.close() 
 
             if text.find('온도') != -1:
                 database = pymysql.connect(host=str(config.host),user=str(config.user),db=str(config.database),password=str(config.password), charset='utf8')
@@ -128,7 +182,7 @@ while True:
                 curs.execute(sql,(config.email))
                 result = curs.fetchall()
                 voice_text = '현재 방 온도는 ' + str(int(result[0][0])) + '도, 습도는 ' +  str(result[0][1]) + ', 조도는 ' +  str(result[0][2]) + '입니다. '
-                database.commit()
+                #database.commit()
                 database.close()    
                 google_tts(voice_text,'temperature.mp3')
 
