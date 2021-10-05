@@ -176,7 +176,6 @@ public class Fragment_Home_SleepReady extends Fragment {
             @Override
             public void onFailure(Call<SensorData> call, Throwable t) {
                 Log.e("알림", "실패" + t.getMessage());
-
             }
         });
     }

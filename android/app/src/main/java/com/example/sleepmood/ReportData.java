@@ -1,26 +1,18 @@
 package com.example.sleepmood;
 
 public class ReportData {
-    private String email;
     private int score;
     private double sleeping_time;
-    private String elements;
-    private String date;
+    private int sleepid;
 
-    public ReportData(String email, int score, double sleeping_time, String elements, String date){
-        this.email = email;
+    public ReportData(int score, double sleeping_time, int sleepid) {
         this.score = score;
         this.sleeping_time = sleeping_time;
-        this.elements = elements;
-        this.date = date;
+        this.sleepid = sleepid;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public int getScore() {
+        return score;
     }
 
     public void setScore(int score) {
@@ -35,23 +27,11 @@ public class ReportData {
         this.sleeping_time = sleeping_time;
     }
 
-    public String getElements() {
-        return elements;
+    public int getSleepid() {
+        return sleepid;
     }
 
-    public void setElements(String elements) {
-        this.elements = elements;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public int getScore(){
-        return this.score;
+    public void setSleepid(int sleepid) {
+        this.sleepid = sleepid;
     }
 }

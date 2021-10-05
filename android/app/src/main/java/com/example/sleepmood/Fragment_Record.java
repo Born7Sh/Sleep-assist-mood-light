@@ -49,9 +49,6 @@ public class Fragment_Record extends Fragment {
     ViewGroup view;
 
     private ReportData dayData;
-    private ArrayList<ReportData> weekData = new ArrayList<>();
-    private ArrayList<ReportData> monthData = new ArrayList<>();
-
     private List<ReportData> rd;
 
     private SharedPreferences pref;
@@ -85,7 +82,7 @@ public class Fragment_Record extends Fragment {
         user_id = pref_id.getString("id", "NULL");
 
         getReportAll();
-//        getReportDataWeek();
+//        getReportDataDay();
         createFragment();
         createViewpager();
         settingTabLayout();
@@ -170,62 +167,35 @@ public class Fragment_Record extends Fragment {
 
     private void getReportAll() {
         RetroBuilder retro = new RetroBuilder();
-        Call<List<ReportData>> call2 = retro.service.getReportAll(user_id, "Bearer " + checkFirst);
+        Call<List<ReportData>> call2 = retro.service.getReportAll("born7sh@gmail.com", "Bearer " + checkFirst);
         call2.enqueue(new Callback<List<ReportData>>() {
             @Override
             public void onResponse(Call<List<ReportData>> call, Response<List<ReportData>> response) {
                 Log.v("알림", "일단 응답옴");
                 if (response.isSuccessful()) {
 
-                    rd = response.body();
-                    Log.v("알림", "성공 + " + rd.size());
 
+                    Log.v("알림", "성공");
+                    rd = response.body();
+
+
+                } else {
+                    Log.v("알림", "onsponse에서의 실패");
                 }
             }
 
             @Override
             public void onFailure(Call<List<ReportData>> call, Throwable t) {
-                Log.e("알림", "진짜 실패: " + t);
+                Log.e("알림", "진짜 실패");
 
             }
         });
     }
 
-    public void getReportDataWeek() {
-        RetroBuilder retro = new RetroBuilder();
-        Call<List<ReportData>> call2 = retro.service.getReportDates("born7sh@gmail.com", "2021-10-03", "2021-10-04", "Bearer " + checkFirst);
-        call2.enqueue(new Callback<List<ReportData>>() {
-            @Override
-            public void onResponse(Call<List<ReportData>> call, Response<List<ReportData>> response) {
-
-                if (!response.isSuccessful()) {
-                    Log.v("알림", "response : " + response.code());
-                    return;
-                }
-
-
-                if (response.isSuccessful()) {
-                    Log.v("알림", "드가자");
-                    rd = response.body();
-                    Log.v("알림", "사이즈 : " + String.valueOf(rd.size()));
-                    Log.v("알림", "날짜 : " + String.valueOf(rd.get(0).getDate()));
-                    Log.v("알림", "스커어 : " + String.valueOf(rd.get(0).getScore()));
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<ReportData>> call, Throwable t) {
-                Log.e("알림", "실패" + t.getMessage());
-
-            }
-        });
-    }
 
     public void getReportDataDay() {
         RetroBuilder retro = new RetroBuilder();
-        Call<ReportData> call2 = retro.service.getReportDate("born7sh@gmail.com", "2021-10-03", "Bearer " + checkFirst);
+        Call<ReportData> call2 = retro.service.getReportToday("born7sh@gmail.com", "Bearer " + checkFirst);
         call2.enqueue(new Callback<ReportData>() {
             @Override
             public void onResponse(Call<ReportData> call, Response<ReportData> response) {
@@ -239,9 +209,9 @@ public class Fragment_Record extends Fragment {
                 if (response.isSuccessful()) {
                     Log.v("알림", "드가자");
                     dayData = response.body();
-                    Log.v("알림", "사이즈 : " + String.valueOf(rd.size()));
-                    Log.v("알림", "날짜 : " + String.valueOf(rd.get(0).getDate()));
-                    Log.v("알림", "스커어 : " + String.valueOf(rd.get(0).getScore()));
+                    Log.v("알림", "dayTime : " + dayData.getSleeping_time());
+                    Log.v("알림", "스코어 : " + dayData.getScore());
+                    Log.v("알림", "ID  : " + dayData.getSleepid());
 
                 }
 

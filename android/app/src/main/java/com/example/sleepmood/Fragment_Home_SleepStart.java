@@ -95,6 +95,10 @@ public class Fragment_Home_SleepStart extends Fragment {
     private Button btn_play;
     private Button btn_stop;
 
+    MainActivity activity;
+
+    Timer timer = new Timer();
+    Timer timer2 = new Timer();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,6 +107,17 @@ public class Fragment_Home_SleepStart extends Fragment {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment__home__sleep_start, container, false);
         return rootView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (MainActivity) getActivity();
+    }
+
+    public void onDetach() {
+        super.onDetach();
+        activity = null;
     }
 
 
@@ -223,6 +238,11 @@ public class Fragment_Home_SleepStart extends Fragment {
 
                 callUpdate();
 
+                timer.cancel();
+                timer2.cancel();
+
+                activity.onFragmentChange("home");
+
             }
         });
 
@@ -325,12 +345,17 @@ public class Fragment_Home_SleepStart extends Fragment {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 시간 차이 용
 
         RetroBuilder retro = new RetroBuilder();
-        SleepTime st = new SleepTime(dateFormat.format(curDate), user_element, user_id, alarm_time);
+        SleepTime st = new SleepTime(dateFormat.format(curDate), user_element, user_id);
+
+        if(!(alarm_time == null)){
+            st.setAlarm_time(alarm_time);
+        }
 
         Log.v("알림", "데이터 이메일 " + st.email);
         Log.v("알림", "데이터 시간 " + st.start);
         Log.v("알림", "알람 시간 " + st.alarm_time);
         Log.v("알림", "데이터 요소 " + st.elements);
+
 
         Call<Integer> call = retro.service.provideSleepTime(st, "Bearer " + checkFirst);
 
@@ -412,7 +437,6 @@ public class Fragment_Home_SleepStart extends Fragment {
     }
 
     public void startTimer() {
-        Timer timer = new Timer();
         TimerTask TT = new TimerTask() {
             @Override
             public void run() {
@@ -423,8 +447,6 @@ public class Fragment_Home_SleepStart extends Fragment {
         timer.schedule(TT, 0, 600000); //Timer 실행
 //        timer.cancel();//타이머 종료
 
-
-        Timer timer2 = new Timer();
 
         TimerTask TT2 = new TimerTask() {
             @Override
@@ -453,7 +475,7 @@ public class Fragment_Home_SleepStart extends Fragment {
         }
         ;
         if (items.size() <= 0) {
-            alarm_time = "2001-01-01 01:01:01";
+
         } else {
             String date = items.get(0).getAlarmDate();
             String[] replaceDate = date.split("/");
