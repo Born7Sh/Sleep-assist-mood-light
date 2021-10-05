@@ -125,25 +125,25 @@ public class Fragment_Home_Weather extends Fragment {
         home_21_Hum = (TextView) view.findViewById(R.id.home_21_Hum);
 
 
-        location_9_Img = (ImageView) view.findViewById(R.id.location_9_Img);
-        location_9_Temp = (TextView) view.findViewById(R.id.location_9_Temp);
-        location_9_Hum = (TextView) view.findViewById(R.id.location_9_Hum);
-
-        location_12_Img = (ImageView) view.findViewById(R.id.location_12_Img);
-        location_12_Temp = (TextView) view.findViewById(R.id.location_12_Temp);
-        location_12_Hum = (TextView) view.findViewById(R.id.location_12_Hum);
-
-        location_15_Img = (ImageView) view.findViewById(R.id.location_15_Img);
-        location_15_Temp = (TextView) view.findViewById(R.id.location_15_Temp);
-        location_15_Hum = (TextView) view.findViewById(R.id.location_15_Hum);
-
-        location_18_Img = (ImageView) view.findViewById(R.id.location_18_Img);
-        location_18_Temp = (TextView) view.findViewById(R.id.location_18_Temp);
-        location_18_Hum = (TextView) view.findViewById(R.id.location_18_Hum);
-
-        location_21_Img = (ImageView) view.findViewById(R.id.location_21_Img);
-        location_21_Temp = (TextView) view.findViewById(R.id.location_21_Temp);
-        location_21_Hum = (TextView) view.findViewById(R.id.location_21_Hum);
+//        location_9_Img = (ImageView) view.findViewById(R.id.location_9_Img);
+//        location_9_Temp = (TextView) view.findViewById(R.id.location_9_Temp);
+//        location_9_Hum = (TextView) view.findViewById(R.id.location_9_Hum);
+//
+//        location_12_Img = (ImageView) view.findViewById(R.id.location_12_Img);
+//        location_12_Temp = (TextView) view.findViewById(R.id.location_12_Temp);
+//        location_12_Hum = (TextView) view.findViewById(R.id.location_12_Hum);
+//
+//        location_15_Img = (ImageView) view.findViewById(R.id.location_15_Img);
+//        location_15_Temp = (TextView) view.findViewById(R.id.location_15_Temp);
+//        location_15_Hum = (TextView) view.findViewById(R.id.location_15_Hum);
+//
+//        location_18_Img = (ImageView) view.findViewById(R.id.location_18_Img);
+//        location_18_Temp = (TextView) view.findViewById(R.id.location_18_Temp);
+//        location_18_Hum = (TextView) view.findViewById(R.id.location_18_Hum);
+//
+//        location_21_Img = (ImageView) view.findViewById(R.id.location_21_Img);
+//        location_21_Temp = (TextView) view.findViewById(R.id.location_21_Temp);
+//        location_21_Hum = (TextView) view.findViewById(R.id.location_21_Hum);
 
         home_dust = (ImageView) view.findViewById(R.id.home_dust);
         home_dust_String = (TextView) view.findViewById(R.id.home_dust_String);

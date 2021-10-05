@@ -7,6 +7,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,15 +21,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -85,7 +88,13 @@ public class Fragment_Home_SleepStart extends Fragment {
     private String user_id;
 
     private SharedPreferences pref_element;
-    private int user_element;
+    private String user_element;
+    private String alarm_time;
+
+    private MediaPlayer mediaPlayer;
+    private Button btn_play;
+    private Button btn_stop;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -105,15 +114,14 @@ public class Fragment_Home_SleepStart extends Fragment {
         checkFirst = pref.getString("token", "NULL");
 
         pref_id = getActivity().getSharedPreferences("id", Activity.MODE_PRIVATE);
-        user_id = pref_id.getString("id","NULL");
+        user_id = pref_id.getString("id", "NULL");
 
         pref_element = getActivity().getSharedPreferences("element", Activity.MODE_PRIVATE);
-        user_element = pref_element.getInt("element",0);
+        user_element = pref_element.getString("element", "없음");
 
-        Log.v("알림" ,"user_element 값 : " + user_element);
 
-        tv_timeAfter = (TextView) view.findViewById(R.id.timeAfter);
-        tv_timeNow = (TextView) view.findViewById(R.id.timeAfter);
+        Log.v("알림", "user_element 값 : " + user_element);
+
 
         Date curDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
@@ -123,10 +131,6 @@ public class Fragment_Home_SleepStart extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        timeNow = curDate.getTime();
-
-        tv_timeAfter.setText(Long.toString(timeNow));
 
         /// 지금은 여기서 10초에 한번씩 실행
 
@@ -158,6 +162,34 @@ public class Fragment_Home_SleepStart extends Fragment {
         TextView toiletCount = (TextView) view.findViewById(R.id.toiletCount);
 
         Button sleep_Stop = (Button) view.findViewById(R.id.sleep_Stop);
+
+        btn_play = view.findViewById(R.id.btn_play);
+        btn_stop = view.findViewById(R.id.btn_stop);
+
+        // 재생버튼 눌렀을때..
+        btn_play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediaPlayer = MediaPlayer.create(getActivity(), R.raw.lemon);
+                mediaPlayer.start();
+            }
+        });
+
+
+        // 정지버튼 눌렀을때..
+        btn_stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                    mediaPlayer.reset();
+                }
+            }
+        });
+
+
+
+
 
         water.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,6 +226,7 @@ public class Fragment_Home_SleepStart extends Fragment {
             }
         });
 
+        getAlarmData();
         callSleep();
 
 
@@ -292,10 +325,12 @@ public class Fragment_Home_SleepStart extends Fragment {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 시간 차이 용
 
         RetroBuilder retro = new RetroBuilder();
-        SleepTime st = new SleepTime(dateFormat.format(curDate), user_element, user_id);
+        SleepTime st = new SleepTime(dateFormat.format(curDate), user_element, user_id, alarm_time);
 
-        Log.v("알림", "데이터 이메일"+st.email);
-        Log.v("알림", "데이터 시간"+st.start);
+        Log.v("알림", "데이터 이메일 " + st.email);
+        Log.v("알림", "데이터 시간 " + st.start);
+        Log.v("알림", "알람 시간 " + st.alarm_time);
+        Log.v("알림", "데이터 요소 " + st.elements);
 
         Call<Integer> call = retro.service.provideSleepTime(st, "Bearer " + checkFirst);
 
@@ -308,7 +343,7 @@ public class Fragment_Home_SleepStart extends Fragment {
                                  return;
                              }
                              id = response.body();
-                             Log.v("알림", "id는 : "+ id);
+                             Log.v("알림", "id는 : " + id);
                              startTimer();
                          }
 
@@ -328,23 +363,23 @@ public class Fragment_Home_SleepStart extends Fragment {
         Date curDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         SleepData d2 = new SleepData(a, b, grade, id, dateFormat.format(curDate));
-        Call<SleepData> call2 = retro.service.provideSleepData(d2,"Bearer " + checkFirst);
+        Call<SleepData> call2 = retro.service.provideSleepData(d2, "Bearer " + checkFirst);
 
         call2.enqueue(new Callback<SleepData>() {
-                         @Override
-                         public void onResponse(Call<SleepData> call, Response<SleepData> response) {
-                             Log.v("알림", "callStatus 돌입");
-                             if (response.isSuccessful()) {
-                                 Log.v("알림", "값 받아오기 성공");
-                             }
-                             Log.v("알림", "roll : " + a + "/ pitch : " + b);
-                         }
+                          @Override
+                          public void onResponse(Call<SleepData> call, Response<SleepData> response) {
+                              Log.v("알림", "callStatus 돌입");
+                              if (response.isSuccessful()) {
+                                  Log.v("알림", "값 받아오기 성공");
+                              }
+                              Log.v("알림", "roll : " + a + "/ pitch : " + b);
+                          }
 
-                         @Override
-                         public void onFailure(Call<SleepData> call, Throwable t) {
-                             Log.v("알림", "callStatus 실패");
-                         }
-                     }
+                          @Override
+                          public void onFailure(Call<SleepData> call, Throwable t) {
+                              Log.v("알림", "callStatus 실패");
+                          }
+                      }
         );
 
     }
@@ -359,23 +394,24 @@ public class Fragment_Home_SleepStart extends Fragment {
         Call<SleepTimeUpdate> call3 = retro.service.provideSleepTimeUpdate(stu, "Bearer " + checkFirst);
 
         call3.enqueue(new Callback<SleepTimeUpdate>() {
-                         @Override
-                         public void onResponse(Call<SleepTimeUpdate> call, Response<SleepTimeUpdate> response) {
-                             Log.v("알림", "callUpdate 돌입");
-                             if (response.isSuccessful()) {
-                                 Log.v("알림", "업데이트 성공");
-                             }
-                         }
+                          @Override
+                          public void onResponse(Call<SleepTimeUpdate> call, Response<SleepTimeUpdate> response) {
+                              Log.v("알림", "callUpdate 돌입");
+                              if (response.isSuccessful()) {
+                                  Log.v("알림", "업데이트 성공");
+                              }
+                          }
 
-                         @Override
-                         public void onFailure(Call<SleepTimeUpdate> call, Throwable t) {
-                             Log.v("알림", "callUpdate 실패" + t);
-                         }
-                     }
+                          @Override
+                          public void onFailure(Call<SleepTimeUpdate> call, Throwable t) {
+                              Log.v("알림", "callUpdate 실패" + t);
+                          }
+                      }
         );
 
     }
-    public void startTimer(){
+
+    public void startTimer() {
         Timer timer = new Timer();
         TimerTask TT = new TimerTask() {
             @Override
@@ -388,14 +424,13 @@ public class Fragment_Home_SleepStart extends Fragment {
 //        timer.cancel();//타이머 종료
 
 
-
         Timer timer2 = new Timer();
 
         TimerTask TT2 = new TimerTask() {
             @Override
             public void run() {
                 // 반복실행할 구문
-                if(pitch > 1 || roll >1) {
+                if (pitch > 1 || roll > 1) {
                     Log.v("알림", "grade 1 증가");
                     grade++;
                 }
@@ -405,4 +440,64 @@ public class Fragment_Home_SleepStart extends Fragment {
         timer2.schedule(TT2, 0, 1000); //Timer 실행
 
     }
+
+    public void getAlarmData() {
+        ArrayList<AlarmData> items = new ArrayList<>();
+        SharedPreferences sp = getActivity().getSharedPreferences("AlarmData", Context.MODE_PRIVATE);
+        Gson gson = new GsonBuilder().create();
+        Collection<?> values = sp.getAll().values();
+
+        for (Object value : values) {
+            String json = (String) value;
+            items.add(gson.fromJson(json, AlarmData.class));
+        }
+        ;
+        if (items.size() <= 0) {
+            alarm_time = "2001-01-01 01:01:01";
+        } else {
+            String date = items.get(0).getAlarmDate();
+            String[] replaceDate = date.split("/");
+            if (Integer.parseInt(replaceDate[1]) < 10) {
+                replaceDate[1] = "0" + replaceDate[1];
+            }
+            if (Integer.parseInt(replaceDate[2]) < 10) {
+                replaceDate[2] = "0" + replaceDate[2];
+            }
+
+            String makeString = replaceDate[0] + "-" + replaceDate[1] + "-" + replaceDate[2];
+
+            String b = items.get(0).getAlarmTime();
+            String[] c = b.split(" ");
+            String makeTime;
+
+            if (c[0].equals("PM")) {
+
+                if ((Integer.parseInt(c[1].substring(0, 2)) + 12) == 24) {
+                    makeTime = "00";
+                } else {
+                    makeTime = Integer.toString((Integer.parseInt(c[1].substring(0, 2)) + 12));
+                }
+            } else {
+                makeTime = c[1];
+            }
+
+
+            alarm_time = makeString + " " + makeTime + ":" + c[2] + ":00";
+            Log.v("알림", "알람 데이터 시간!! " + alarm_time);
+            //items.get(0).getAlarmDate();
+
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+
+    }
+
+
 }

@@ -26,8 +26,10 @@ import com.github.mikephil.charting.utils.Utils;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
@@ -35,7 +37,8 @@ public class Fragment_Record_Day extends Fragment {
 
     LineChart chart;
 
-    List<String> xAxisValues = new ArrayList<>(Arrays.asList("24", "01", "02", "03", "04", "05","06","07"));
+    List<String> xAxisValues = new ArrayList<>(Arrays.asList("24", "01", "02", "03", "04", "05", "06", "07"));
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,6 +52,21 @@ public class Fragment_Record_Day extends Fragment {
 
         chart = view.findViewById(R.id.chart);
         // background color
+
+        setOurChart();
+
+    }
+
+    public void getUserdata(){
+        // 오늘 날짜 출력
+
+    }
+
+    public void setAxisList(){
+
+    }
+
+    public void setOurChart() {
         chart.setBackgroundColor(Color.WHITE);
         // disable description text
         chart.getDescription().setEnabled(false);
@@ -90,10 +108,7 @@ public class Fragment_Record_Day extends Fragment {
         }
 
 
-
         setData(8, 100);
-
-
     }
 
     private void setData(int count, float range) {

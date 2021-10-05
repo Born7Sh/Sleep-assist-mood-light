@@ -8,12 +8,9 @@
     tools:context=".Fragment_Home_SleepReady">
 
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_opaque_white"
         android:orientation="vertical">
 
         <LinearLayout
@@ -287,14 +284,15 @@
             </LinearLayout>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/sleepStart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="30dp"
-            android:background="#1CA8D4"
-            android:text="수면 시작"></Button>
-
     </LinearLayout>
+
+    <Button
+        android:id="@+id/sleepStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="30dp"
+        android:background="#1CA8D4"
+        android:text="수면 시작"></Button>
+
 </LinearLayout>

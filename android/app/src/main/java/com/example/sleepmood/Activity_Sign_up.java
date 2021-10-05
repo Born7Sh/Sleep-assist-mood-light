@@ -70,52 +70,50 @@ public class Activity_Sign_up extends AppCompatActivity {
 
     }
 
-      void checkIsPwd(){ // 비번 설정
-        if(!signup_Pwd.getText().toString().equals(signup_Pwd_Check.getText().toString())){
+    void checkIsPwd() { // 비번 설정
+        if (!signup_Pwd.getText().toString().equals(signup_Pwd_Check.getText().toString())) {
             Toast.makeText(getApplicationContext(), "비번 불일치! ", Toast.LENGTH_LONG).show();
         } else {
             Log.v("알림", "일단 비번 설정까지는 들어옴");
             callFunction();
         }
-      }
-
-      void callFunction(){ // call function
-//          UserData ud = new UserData(signup_Id.getText().toString(),signup_Email.getText().toString(),signup_Address.getText().toString(),signup_Job.getText().toString(),signup_Phone.getText().toString(),signup_Pwd.getText().toString(),signup_Birth.getText().toString());
-
-
-          RetroBuilder retro = new RetroBuilder();
-           UserData ud = new UserData("homing12@naver.com","경기도" ,"학생", "010-1234-1243", "pwde1234", "1997-12-12");
-          //  Call<DiaryData2> call = retro.service.provideDiaryDay("json","born7sh@gmail.com","2021-08-26","posttestright?");
-//        Call<DiaryData> call = retro.service.provideDiaryDay(d2,"Bearer " +checkFirst);
-          Call<UserData> call = retro.service.provideUserData(ud);
-
-          call.enqueue(new Callback<UserData>() {
-                           @Override
-                           public void onResponse(Call<UserData> call, Response<UserData> response) {
-                               Log.v("알림", "확인");
-                               if (response.isSuccessful()) {
-                                   Log.v("알림", "성공1");
-                               }
-                               moveToLogin();
-                           }
-
-                           @Override
-                           public void onFailure(Call<UserData> call, Throwable t) {
-                               Log.v("알림", "실패1");
-                               callFunction();
-                           }
-                       }
-          );
-
-      }
-
-      void moveToLogin(){ // 이동
-          Log.v("알림", "로그인화면으로 이동");
-          Intent intent = new Intent(Activity_Sign_up.this, Activity_Log_in.class);
-          startActivity(intent);
-          finish();
     }
 
+    void callFunction() { // call function
+        UserData ud = new UserData(signup_Id.getText().toString(), signup_Address.getText().toString(), signup_Job.getText().toString(), signup_Phone.getText().toString(), signup_Pwd.getText().toString(), signup_Birth.getText().toString());
+
+        RetroBuilder retro = new RetroBuilder();
+        //    UserData ud = new UserData("homing12@naver.com","경기도" ,"학생", "010-1234-1243", "pwde1234", "1997-12-12");
+        //  Call<DiaryData2> call = retro.service.provideDiaryDay("json","born7sh@gmail.com","2021-08-26","posttestright?");
+//        Call<DiaryData> call = retro.service.provideDiaryDay(d2,"Bearer " +checkFirst);
+        Call<UserData> call = retro.service.provideUserData(ud);
+
+        call.enqueue(new Callback<UserData>() {
+                         @Override
+                         public void onResponse(Call<UserData> call, Response<UserData> response) {
+                             Log.v("알림", "확인");
+                             if (response.isSuccessful()) {
+                                 Log.v("알림", "성공1");
+                             }
+                             moveToLogin();
+                         }
+
+                         @Override
+                         public void onFailure(Call<UserData> call, Throwable t) {
+                             Log.v("알림", "실패1");
+                             callFunction();
+                         }
+                     }
+        );
+
+    }
+
+    void moveToLogin() { // 이동
+        Log.v("알림", "로그인화면으로 이동");
+        Intent intent = new Intent(Activity_Sign_up.this, Activity_Log_in.class);
+        startActivity(intent);
+        finish();
+    }
 
 
 //    void checkIsEnable(EditText sign) {

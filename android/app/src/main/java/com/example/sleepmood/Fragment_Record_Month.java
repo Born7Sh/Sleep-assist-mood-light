@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,15 +27,19 @@ import com.github.mikephil.charting.utils.Utils;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
 public class Fragment_Record_Month extends Fragment {
+    String startMonth;
+    String endMonth;
 
     LineChart chart;
-
     List<String> xAxisValues = new ArrayList<>(Arrays.asList("1주", "2주", "3주", "4주", "5주"));
 
     @Override
@@ -49,6 +54,46 @@ public class Fragment_Record_Month extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         chart = view.findViewById(R.id.chart);
         // background color
+
+    }
+
+    public void getUserdata() {
+        Date curDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.format(curDate);
+
+        startMonth = dateFormat.format(curDate);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(curDate);
+        cal.add(Calendar.MONTH, -3);
+
+        endMonth = dateFormat.format(cal.getTime());
+
+        Log.v("알림", "지금 시간은? : " + startMonth);
+        Log.v("알림", "7일 전의 시간은? " + endMonth);
+    }
+
+    public void setAxisList() {
+
+        Date curDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(curDate);
+
+        for (int i = 0; i < 7; i++) {
+
+            cal = Calendar.getInstance();
+            cal.setTime(curDate);
+            cal.add(Calendar.DATE, -i);
+//            xAxisValues.set(i, endDate = dateFormat.format(cal.getTime()));
+
+        }
+    }
+
+
+    public void ourMonthData(){
         chart.setBackgroundColor(Color.WHITE);
         // disable description text
         chart.getDescription().setEnabled(false);

@@ -27,6 +27,9 @@ public interface RetroService {
     @GET("report/{email}/{date}/selection")
     Call<ReportData> getReportDate(@Path("email") String email, @Path("date") String date, @Header("Authorization") String auth);
 
+    @GET("report/{email}/{start}/{end}/selection")
+    Call<List<ReportData>> getReportDates(@Path("email") String email, @Path("start") String start, @Path("end") String end, @Header("Authorization") String auth);
+
     @GET("report/{email}/all")
     Call<List<ReportData>> getReportAll(@Path("email") String email, @Header("Authorization") String auth);
 

@@ -2,12 +2,12 @@ package com.example.sleepmood;
 
 public class DiaryData {
     private String email;
-    private String date;
+    private String datetime;
     private String description;
 
-    public DiaryData(String email, String date, String description) {
+    public DiaryData(String email, String datetime, String description) {
         this.email = email;
-        this.date = date;
+        this.datetime = datetime;
         this.description = description;
     }
 
@@ -20,11 +20,11 @@ public class DiaryData {
     }
 
     public String getDate() {
-        return date;
+        return datetime;
     }
 
     public void setDate(String date) {
-        this.date = date;
+        this.datetime = date;
     }
 
     public String getDescription() {

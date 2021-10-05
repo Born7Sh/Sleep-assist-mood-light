@@ -1,6 +1,8 @@
 package com.example.sleepmood;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -32,6 +34,19 @@ public class Fragment_UserInfo_Drop extends Fragment {
     private SharedPreferences pref_id;
     private String user_id;
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (MainActivity) getActivity();
+    }
+
+    public void onDetach() {
+        super.onDetach();
+        activity = null;
+    }
+
+    MainActivity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,6 +94,9 @@ public class Fragment_UserInfo_Drop extends Fragment {
                              SharedPreferences.Editor editor = pref.edit();
                              editor.putString("token", "NULL");
                              editor.commit();
+
+                             Intent intent = new Intent(getActivity(), MainActivity.class);
+                             startActivity(intent);
                          }
 
                          @Override

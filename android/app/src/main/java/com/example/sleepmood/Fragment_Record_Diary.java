@@ -167,7 +167,7 @@ public class Fragment_Record_Diary extends Fragment {
                 diaryData.clear();
                 callDiaryData();
             }
-        }, 500);
+        }, 200);
 
 
 

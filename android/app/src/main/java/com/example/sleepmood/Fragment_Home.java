@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import retrofit2.Call;
@@ -66,7 +67,7 @@ public class Fragment_Home extends Fragment {
 
         ArrayList<Integer> alarmWeek = new ArrayList<Integer>(0);
         SharedPreferences pref = getActivity().getSharedPreferences("token", Activity.MODE_PRIVATE);
-        String checkFirst = pref.getString("token","NULL");
+        String checkFirst = pref.getString("token", "NULL");
 //        AlarmData a = new AlarmData(1,"ho", "ho", alarmWeek);
 //        AlarmData b = new AlarmData(2,"no", "no", alarmWeek);
 //        sharedViewModel.addLiveAlarmData(a);
@@ -90,7 +91,6 @@ public class Fragment_Home extends Fragment {
 
         Button sleepReady = (Button) view.findViewById(R.id.sleepReady);
         Button sleepStart = (Button) view.findViewById(R.id.sleepStart);
-
 
 
 //        RetroBuilder retro = new RetroBuilder();
@@ -178,7 +178,6 @@ public class Fragment_Home extends Fragment {
 //        );
 
 
-
 //        Call<List<DiaryData>> call2 = retro.service.getDiaryToday("born7sh@gmail.com","all");
 //        call2.enqueue(new Callback<List<DiaryData>>() {
 //            @Override
@@ -201,11 +200,10 @@ public class Fragment_Home extends Fragment {
 //        });
 
 
-
         alramSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                  String a = result.get(0).getDescription();
+//                  String a = result.get(0).getDescription();
 //                ArrayList<Integer> alarmWeek = new ArrayList<Integer>(0);
 
 //                AlarmData b = new AlarmData("no","no", alarmWeek);
@@ -218,6 +216,7 @@ public class Fragment_Home extends Fragment {
 
             }
         });
+
 
         weatherInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,5 +247,6 @@ public class Fragment_Home extends Fragment {
             }
         });
     }
+
 
 }

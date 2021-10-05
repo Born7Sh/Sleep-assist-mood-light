@@ -35,6 +35,9 @@ public class Fragment_Record_Diary_Add extends Fragment {
     private SharedPreferences pref;
     private String checkFirst;
 
+    private SharedPreferences pref_id;
+    private String user_id;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,6 +52,9 @@ public class Fragment_Record_Diary_Add extends Fragment {
         pref = getActivity().getSharedPreferences("token", Activity.MODE_PRIVATE);
         checkFirst = pref.getString("token", "NULL");
 
+        pref_id = getActivity().getSharedPreferences("id", Activity.MODE_PRIVATE);
+        user_id = pref_id.getString("id", "NULL");
+
         diary_description = (EditText) view.findViewById(R.id.diary_description);
         diary_cancel = (Button) view.findViewById(R.id.diaryCancel);
         diary_register = (Button) view.findViewById(R.id.diaryRegister);
@@ -58,11 +64,11 @@ public class Fragment_Record_Diary_Add extends Fragment {
             public void onClick(View v) {
 
                 Date curDate = new Date();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                dateFormat.format(curDate);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 시간 차이 용
 
                 RetroBuilder retro = new RetroBuilder();
-                DiaryData d2 = new DiaryData("born7sh@gmail.com", dateFormat.format(curDate), diary_description.getText().toString());
+
+                DiaryData d2 = new DiaryData(user_id, dateFormat.format(curDate), diary_description.getText().toString());
 
                 Log.v("알림", "날짜 : " + dateFormat.format(curDate));
                 Log.v("알림", "데이터 날라가기 : " + diary_description.getText().toString());

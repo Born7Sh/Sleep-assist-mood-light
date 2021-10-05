@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import org.jetbrains.annotations.NotNull;
@@ -60,7 +61,7 @@ public class Fragment_Home_SleepReady extends Fragment {
     CheckBox checkBox_smoke;
     CheckBox checkBox_not_home;
 
-    int checkBox_num;
+    String checkBox_element = " ";
 
     @Override
     public void onAttach(Context context) {
@@ -107,6 +108,7 @@ public class Fragment_Home_SleepReady extends Fragment {
         tomorrow_temperature = view.findViewById(R.id.tomorrow_temp);
         tomorrow_weather = view.findViewById(R.id.tomorrow_weather);
 
+        sleep_start = view.findViewById(R.id.sleepStart);
         checkBox_cold = view.findViewById(R.id.check_element_cold);
         checkBox_smoke = view.findViewById(R.id.check_element_smoke);
         checkBox_not_home= view.findViewById(R.id.check_element_isNotHome);
@@ -117,18 +119,18 @@ public class Fragment_Home_SleepReady extends Fragment {
             @Override
             public void onClick(View v) {
                 if(checkBox_cold.isChecked()){
-                    checkBox_num = 100 + checkBox_num;
-                }
+                    checkBox_element = checkBox_element +" 감기기운 ";
+               }
                 if(checkBox_smoke.isChecked()){
-                    checkBox_num = 20 + checkBox_num;
+                    checkBox_element = checkBox_element + " 담배 ";
                 }
                 if(checkBox_not_home.isChecked()){
-                    checkBox_num = 3 +checkBox_num;
+                    checkBox_element = checkBox_element + " 집아님 ";
                 }
-                Log.v("알림" ,"checkbox 값 : " + checkBox_num);
+                Log.v("알림" ,"checkbox 값 : " + checkBox_element);
 
                 SharedPreferences.Editor editor = pref_element.edit();
-                editor.putInt("element", checkBox_num);
+                editor.putString("element", checkBox_element);
                 editor.commit();
 
                 activity.onFragmentChange("sleepStart");

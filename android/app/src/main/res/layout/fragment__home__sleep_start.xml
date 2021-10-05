@@ -4,10 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_image"
-    android:orientation="vertical"
-    tools:context=".Fragment_Home_SleepStart"
     android:keepScreenOn="true"
-    >
+    android:orientation="vertical"
+    tools:context=".Fragment_Home_SleepStart">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,22 +37,45 @@
         android:src="@drawable/home_clock"></ImageView>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="150dp">
-        <TextView
-            android:id="@+id/timeNow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="time"
-            android:textSize="20dp" />
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-        <TextView
-            android:id="@+id/timeAfter"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="time2"
-            android:textSize="20dp" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btn_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#1CA8D4"
+                android:text="재생" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btn_stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#CC1763"
+                android:text="정지" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -92,13 +114,13 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/awake"
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:src="@drawable/sleepstart_awake"></ImageView>
+            <ImageView
+                android:id="@+id/awake"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:src="@drawable/sleepstart_awake"></ImageView>
 
             <TextView
                 android:id="@+id/awakeCount"
@@ -114,13 +136,13 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/toilet"
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="12dp"
-            android:src="@drawable/sleepstart_toilet"></ImageView>
+            <ImageView
+                android:id="@+id/toilet"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/sleepstart_toilet"></ImageView>
 
             <TextView
                 android:id="@+id/toiletCount"
