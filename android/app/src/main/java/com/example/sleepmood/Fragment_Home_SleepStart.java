@@ -187,6 +187,7 @@ public class Fragment_Home_SleepStart extends Fragment {
             public void onClick(View v) {
                 mediaPlayer = MediaPlayer.create(getActivity(), R.raw.lemon);
                 mediaPlayer.start();
+                mediaPlayer.setLooping(true);
             }
         });
 
@@ -241,6 +242,11 @@ public class Fragment_Home_SleepStart extends Fragment {
                 timer.cancel();
                 timer2.cancel();
 
+                if(mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                    mediaPlayer.reset();
+                }
+                
                 activity.onFragmentChange("home");
 
             }
