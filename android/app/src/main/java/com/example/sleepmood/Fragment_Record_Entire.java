@@ -1,5 +1,7 @@
 package com.example.sleepmood;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -9,9 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.eazegraph.lib.models.PieModel;
 import org.jetbrains.annotations.NotNull;
@@ -37,10 +41,20 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.utils.Utils;
 import com.google.android.material.transition.MaterialSharedAxis;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Fragment_Record_Entire extends Fragment {
@@ -50,25 +64,33 @@ public class Fragment_Record_Entire extends Fragment {
     private int TotalTime;
     private int DB;
 
-    LineChart chart;
+    private TextView entire_SleepTime;
+    private TextView sleepScore;
+    private TextView sleepCount;
 
-    List<String> xAxisValues = new ArrayList<>(Arrays.asList("일","주", "월"));
+    private ReportData dayData;
+    private List<ReportData> rd;
+
+    private SharedPreferences pref;
+    private String checkFirst;
+
+    private SharedPreferences pref_id;
+    private String user_id;
+
+    private int averageData;
+    private int averageSleepTime;
+
+    LineChart chart;
+    org.eazegraph.lib.charts.PieChart mPieChart;
+
+    List<String> xAxisValues = new ArrayList<>(Arrays.asList("일", "일", "일", "일", "일", "일", "일"));
     // 시간 설정
+
+    ArrayList<ReportData> items = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        StartTime = 0100;
-        EndTime = 0700;
-
-        if (StartTime >= 1200 && EndTime < 1200){ // 그날 저녁에 자서 다음날 아침에 일어난거
-            TotalTime =  ((2400 - StartTime) * -1) + EndTime;
-            setXAxisLabel(0);
-        }else {
-            TotalTime = EndTime-StartTime;
-            setXAxisLabel(1);
-        }
 
         return inflater.inflate(R.layout.fragment__record__entire, container, false);
     }
@@ -79,6 +101,58 @@ public class Fragment_Record_Entire extends Fragment {
 
         chart = view.findViewById(R.id.chart);
         // background color
+        mPieChart = (org.eazegraph.lib.charts.PieChart) view.findViewById(R.id.chart_pie);
+
+        entire_SleepTime = view.findViewById(R.id.entire_SleepTime);
+        sleepScore = view.findViewById(R.id.sleepScore);
+        sleepCount = view.findViewById(R.id.entire_SleepCount);
+        getReportAll();
+
+    }
+
+    private void getReportAll() {
+
+        SharedPreferences sp = getActivity().getSharedPreferences("reportAll", Context.MODE_PRIVATE);
+        Gson gson = new GsonBuilder().create();
+        Collection<?> values = sp.getAll().values();
+
+        for (Object value : values) {
+            String json = (String) value;
+            items.add(gson.fromJson(json, ReportData.class));
+        }
+
+        Log.v("알림", "데이터 사이즈" + items.size());
+        setAppText();
+
+        // 데이터가 7개 이하면 다 보여주기
+        // 데이터가 7개 - 30 사이면 / 4개마다 대푯값 넣어서 보여주기
+        // 데이터 30개 이상이면
+    }
+
+    public void setAppText() {
+        entire_SleepTime.setText(Integer.toString((int) items.get(0).getSleeping_time()));
+        sleepScore.setText(Integer.toString(items.get(0).getScore()));
+        sleepCount.setText(Integer.toString(items.size()) + "개");
+        setGrp();
+
+    }
+
+
+    private void setPieGrp() {
+        // 파이차트
+
+        mPieChart.clearChart();
+        // 점수를 value에 넣고
+        // 아래 value에는 점수 - 100 하면 될거같음
+        mPieChart.addPieSlice(new PieModel("수면 점수",
+                averageData, Color.parseColor("#4376FE")));
+        mPieChart.addPieSlice(new PieModel("",
+                averageData, Color.parseColor("#7FE7FE")));
+
+        mPieChart.startAnimation();
+    }
+
+    private void setGrp() {
         chart.setBackgroundColor(Color.WHITE);
         // disable description text
         chart.getDescription().setEnabled(false);
@@ -94,6 +168,27 @@ public class Fragment_Record_Entire extends Fragment {
         // chart.setScaleYEnabled(true);
         // force pinch zoom along both axis
         chart.setPinchZoom(true);
+
+        if (items.size() <= 7) { // 일별로
+
+            for (int i = 0; i < items.size(); i++) {
+                String a = Integer.toString(i + 1);
+                xAxisValues.set(i, a + "일");
+            }
+
+        } else if (7 < items.size() || items.size() <= 30) { // 주차별로
+
+            for (int i = 0; i <= items.size() / 7; i++) {
+                String a = Integer.toString(i + 1);
+                xAxisValues.set(i, a + "주");
+            }
+
+        } else { // 월별로
+            for (int i = 0; i <= items.size() / 30; i++) {
+                String a = Integer.toString(i + 1);
+                xAxisValues.set(i, a + "월");
+            }
+        }
 
         XAxis xAxis;
         {   // // X-Axis Style // //
@@ -118,23 +213,18 @@ public class Fragment_Record_Entire extends Fragment {
             yAxis.setAxisMaximum(100f);
             yAxis.setAxisMinimum(0);
         }
+        if (items.size() <= 7) { // 일별로
+
+            setData(items.size(), 100);
 
 
+        } else if (7 < items.size() || items.size() <= 30) { // 주차별로
 
-        setData(3, 100);
-        // 파이차트
-        org.eazegraph.lib.charts.PieChart mPieChart =
-                (org.eazegraph.lib.charts.PieChart)
-                        view.findViewById(R.id.chart_pie);
-        mPieChart.clearChart();
-        // 점수를 value에 넣고
-        // 아래 value에는 점수 - 100 하면 될거같음
-        mPieChart.addPieSlice(new PieModel("수면 효율",
-                60, Color.parseColor("#4376FE")));
-        mPieChart.addPieSlice(new PieModel("",
-                40, Color.parseColor("#7FE7FE")));
+            setData(items.size() / 7 + 1, 100);
 
-        mPieChart.startAnimation();
+        } else { // 월별로
+            setData(items.size() / 30 + 1, 100);
+        }
 
 
     }
@@ -143,11 +233,50 @@ public class Fragment_Record_Entire extends Fragment {
 
         ArrayList<Entry> values = new ArrayList<>();
 
+        ArrayList<Integer> WeekValues = new ArrayList<>();
+        ArrayList<Integer> MonthValues = new ArrayList<>();
+
+        int average = 0;
+
         for (int i = 0; i < count; i++) {
 
-            float val = (float) (Math.random() * range) - 30;
-            values.add(new Entry(i, val, getResources().getDrawable(R.drawable.alarm_else)));
+            int val = items.get(i).getScore();
+            averageData = val + averageData;
+            average = average + val;
+            averageSleepTime = (int) (items.get(i).getSleeping_time() + averageSleepTime);
+
+            if ((i % 7) == 0) {
+                WeekValues.add(average / 7);
+                average = 0;
+
+            }
+            if (i == count - 1) {
+                average = average / (average % 7);
+                WeekValues.add(average);
+            }
+
         }
+
+        averageSleepTime = averageSleepTime / items.size();
+        entire_SleepTime.setText(Integer.toString(averageSleepTime) + "시간");
+        averageData = averageData / items.size();
+        sleepScore.setText(Integer.toString(averageData));
+
+        if (items.size() <= 7) {
+            for (int i = 0; i < count; i++) {
+                int val = items.get(i).getScore();
+                values.add(new Entry(i, val, getResources().getDrawable(R.drawable.alarm_else)));
+            }
+        } else if (7 < items.size() || items.size() <= 30) { // 주차별로
+            for (int i = 0; i < WeekValues.size(); i++) {
+                int val = WeekValues.get(i);
+                values.add(new Entry(i, val, getResources().getDrawable(R.drawable.alarm_else)));
+            }
+
+        } else { // 월별로
+            // 월별도 같으면 진행하겠음
+        }
+
 
         LineDataSet set1;
 
@@ -213,6 +342,7 @@ public class Fragment_Record_Entire extends Fragment {
 
             // set data
             chart.setData(data);
+            setPieGrp();
         }
     }
 
@@ -220,7 +350,7 @@ public class Fragment_Record_Entire extends Fragment {
 
     }
 
-    void setGraValue(){
+    void setGraValue() {
 
     }
 }

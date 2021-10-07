@@ -21,6 +21,8 @@ import android.widget.TableLayout;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -30,6 +32,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class Fragment_Record extends Fragment {
 
@@ -57,6 +61,13 @@ public class Fragment_Record extends Fragment {
     private SharedPreferences pref_id;
     private String user_id;
 
+    private SharedPreferences pref_reportAll;
+    private String json_All;
+
+    private SharedPreferences pref_reportDay;
+    private String json_Day;
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -81,7 +92,7 @@ public class Fragment_Record extends Fragment {
         pref_id = getActivity().getSharedPreferences("id", Activity.MODE_PRIVATE);
         user_id = pref_id.getString("id", "NULL");
 
-        getReportAll();
+//        getReportAll();
 //        getReportDataDay();
         createFragment();
         createViewpager();
@@ -93,8 +104,8 @@ public class Fragment_Record extends Fragment {
     public void createFragment() {
         fragment_record_entire = new Fragment_Record_Entire();
         fragment_record_day = new Fragment_Record_Day();
-        fragment_record_week = new Fragment_Record_Week();
-        fragment_record_month = new Fragment_Record_Month();
+//        fragment_record_week = new Fragment_Record_Week();
+//        fragment_record_month = new Fragment_Record_Month();
         fragment_record_calendar = new Fragment_Record_Calendar();
         fragment_record_diary = new Fragment_Record_Diary();
 
@@ -108,13 +119,15 @@ public class Fragment_Record extends Fragment {
 
         viewPagerAdapter.addFragment(fragment_record_entire);
         viewPagerAdapter.addFragment(fragment_record_day);
-        viewPagerAdapter.addFragment(fragment_record_week);
-        viewPagerAdapter.addFragment(fragment_record_month);
+//        viewPagerAdapter.addFragment(fragment_record_week);
+//        viewPagerAdapter.addFragment(fragment_record_month);
         viewPagerAdapter.addFragment(fragment_record_calendar);
         viewPagerAdapter.addFragment(fragment_record_diary);
 
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setUserInputEnabled(false);//터치 스크롤 막음
+        getReportAll();
+
     }
 
     //tablayout - viewpager 연결
@@ -141,12 +154,12 @@ public class Fragment_Record extends Fragment {
                     case 3:
                         viewPager.setCurrentItem(3);
                         break;
-                    case 4:
-                        viewPager.setCurrentItem(4);
-                        break;
-                    case 5:
-                        viewPager.setCurrentItem(5);
-                        break;
+//                    case 4:
+//                        viewPager.setCurrentItem(4);
+//                        break;
+//                    case 5:
+//                        viewPager.setCurrentItem(5);
+//                        break;
                 }
             }
 
@@ -167,7 +180,7 @@ public class Fragment_Record extends Fragment {
 
     private void getReportAll() {
         RetroBuilder retro = new RetroBuilder();
-        Call<List<ReportData>> call2 = retro.service.getReportAll("born7sh@gmail.com", "Bearer " + checkFirst);
+        Call<List<ReportData>> call2 = retro.service.getReportAll(user_id, "Bearer " + checkFirst);
         call2.enqueue(new Callback<List<ReportData>>() {
             @Override
             public void onResponse(Call<List<ReportData>> call, Response<List<ReportData>> response) {
@@ -177,7 +190,23 @@ public class Fragment_Record extends Fragment {
 
                     Log.v("알림", "성공");
                     rd = response.body();
+                    Log.v("알림", "크기: " + rd.size());
+                    Log.v("알림", "스코어: " + rd.get(0).getScore());
+                    Log.v("알림", "수면 시간: " + rd.get(0).getSleeping_time());
+                    Log.v("알림", "element: " + rd.get(0).getElements());
 
+                    pref_reportAll = getContext().getSharedPreferences("reportAll", MODE_PRIVATE);
+                    Gson gson = new Gson();
+
+                    for (int i = 0; i < rd.size(); i++) {
+
+                        json_All = gson.toJson(rd.get(i), ReportData.class);
+                        SharedPreferences.Editor editor = pref_reportAll.edit();
+                        editor.putString(String.valueOf(i), json_All);
+                        editor.apply();
+
+                    }
+                    getReportDataDay();
 
                 } else {
                     Log.v("알림", "onsponse에서의 실패");
@@ -195,7 +224,7 @@ public class Fragment_Record extends Fragment {
 
     public void getReportDataDay() {
         RetroBuilder retro = new RetroBuilder();
-        Call<ReportData> call2 = retro.service.getReportToday("born7sh@gmail.com", "Bearer " + checkFirst);
+        Call<ReportData> call2 = retro.service.getReportToday(user_id, "Bearer " + checkFirst);
         call2.enqueue(new Callback<ReportData>() {
             @Override
             public void onResponse(Call<ReportData> call, Response<ReportData> response) {
@@ -213,6 +242,13 @@ public class Fragment_Record extends Fragment {
                     Log.v("알림", "스코어 : " + dayData.getScore());
                     Log.v("알림", "ID  : " + dayData.getSleepid());
 
+                    pref_reportDay = getContext().getSharedPreferences("reportDay", MODE_PRIVATE);
+                    Gson gson = new Gson();
+                    json_Day = gson.toJson(dayData, ReportData.class);
+                    SharedPreferences.Editor editor = pref_reportDay.edit();
+                    editor.putString(String.valueOf(0), json_Day);
+                    editor.apply();
+
                 }
 
             }
@@ -224,6 +260,5 @@ public class Fragment_Record extends Fragment {
             }
         });
     }
-
 
 }

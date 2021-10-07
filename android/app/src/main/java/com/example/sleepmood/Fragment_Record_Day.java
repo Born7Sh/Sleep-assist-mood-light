@@ -1,5 +1,8 @@
 package com.example.sleepmood;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -9,9 +12,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -23,14 +28,22 @@ import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import org.eazegraph.lib.models.PieModel;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Fragment_Record_Day extends Fragment {
@@ -38,6 +51,26 @@ public class Fragment_Record_Day extends Fragment {
     LineChart chart;
 
     List<String> xAxisValues = new ArrayList<>(Arrays.asList("24", "01", "02", "03", "04", "05", "06", "07"));
+
+    private TextView sleepDate;
+    private TextView sleepElement;
+    private TextView sleepScore;
+    private TextView sleepTime;
+    private TextView sleepRecommend;
+
+
+    private ReportData dayData;
+    private List<ReportData> rd;
+
+    private SharedPreferences pref;
+    private String checkFirst;
+
+    private SharedPreferences pref_id;
+    private String user_id;
+
+    ArrayList<ReportData> items = new ArrayList<>();
+
+    org.eazegraph.lib.charts.PieChart mPieChart;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,20 +83,63 @@ public class Fragment_Record_Day extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        sleepDate = view.findViewById(R.id.sleepDate);
+        sleepElement = view.findViewById(R.id.sleepElement);
+        sleepScore = view.findViewById(R.id.sleepScore);
+        sleepTime = view.findViewById(R.id.sleepTime);
+        sleepRecommend = view.findViewById(R.id.sleepRecommend);
+
+        mPieChart = (org.eazegraph.lib.charts.PieChart) view.findViewById(R.id.chart_pie);
+
         chart = view.findViewById(R.id.chart);
+        pref = getActivity().getSharedPreferences("token", Activity.MODE_PRIVATE);
+        checkFirst = pref.getString("token", "NULL");
+
+        pref_id = getActivity().getSharedPreferences("id", Activity.MODE_PRIVATE);
+        user_id = pref_id.getString("id", "NULL");
         // background color
 
+        getReportDataDay();
+
+    }
+
+    public void getReportDataDay() {
+
+        SharedPreferences sp = getActivity().getSharedPreferences("reportAll", Context.MODE_PRIVATE);
+        Gson gson = new GsonBuilder().create();
+        Collection<?> values = sp.getAll().values();
+
+        for (Object value : values) {
+            String json = (String) value;
+            items.add(gson.fromJson(json, ReportData.class));
+        }
+        setAppText();
+    }
+
+    public void setAppText() {
+        Date curDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // 시간 차이 용
+        sleepDate.setText(dateFormat.format(curDate));
+        sleepElement.setText(items.get(0).getElements());
+        sleepScore.setText(Integer.toString(items.get(0).getScore()) + "점");
+        sleepTime.setText(Integer.toString((int) items.get(0).getSleeping_time()) + "시간");
+    }
+
+
+    private void setPieGrp() {
+        // 파이차트
+
+        mPieChart.clearChart();
+        // 점수를 value에 넣고
+        // 아래 value에는 점수 - 100 하면 될거같음
+        mPieChart.addPieSlice(new PieModel("수면 점수",
+                items.get(0).getScore(), Color.parseColor("#4376FE")));
+        mPieChart.addPieSlice(new PieModel("",
+                (100 - items.get(0).getScore()), Color.parseColor("#7FE7FE")));
+
+        mPieChart.startAnimation();
         setOurChart();
-
-    }
-
-    public void getUserdata(){
-        // 오늘 날짜 출력
-
-    }
-
-    public void setAxisList(){
-
+        
     }
 
     public void setOurChart() {
@@ -185,6 +261,7 @@ public class Fragment_Record_Day extends Fragment {
 
             // set data
             chart.setData(data);
+            setPieGrp();
         }
     }
 

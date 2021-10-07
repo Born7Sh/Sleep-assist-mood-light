@@ -24,7 +24,7 @@ public interface RetroService {
     @GET("diary/{email}/all")
     Call<List<DiaryData>> getDiaryAll(@Path("email") String email, @Header("Authorization") String auth);
 
-    @GET("report/{email}/all")
+    @GET("report/{email}/all/")
     Call<List<ReportData>> getReportAll(@Path("email") String email, @Header("Authorization") String auth);
 
     @GET("report/{email}/today")

@@ -73,10 +73,17 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="130dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="@drawable/background_opaque_black">
+            android:background="@android:color/background_dark">
+
+            <org.eazegraph.lib.charts.PieChart
+                android:id="@+id/chart_pie"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:background="@android:color/background_dark"></org.eazegraph.lib.charts.PieChart>
 
         </LinearLayout>
 
@@ -138,15 +145,17 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="기간"
-                        android:textSize="15dp"></TextView>
+                        android:text="수면 시간"
+                        android:textSize="20dp"></TextView>
 
 
                     <TextView
+                        android:id="@+id/sleepTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="수면 시작"
-                        android:textSize="20dp"></TextView>
+                        android:gravity="center"
+                        android:text="6시간"
+                        android:textSize="25dp"></TextView>
 
                 </LinearLayout>
             </LinearLayout>
@@ -189,15 +198,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="기간"
-                        android:textSize="15dp"></TextView>
-
+                        android:text="수면 추천"
+                        android:textSize="20dp"></TextView>
 
                     <TextView
+                        android:id="@+id/sleepRecommend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="수면 시작"
-                        android:textSize="20dp"></TextView>
+                        android:text="수면 추천"
+                        android:textSize="25dp"></TextView>
 
                 </LinearLayout>
             </LinearLayout>

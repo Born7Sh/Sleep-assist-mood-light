@@ -246,7 +246,7 @@ public class Fragment_Home_SleepStart extends Fragment {
                     mediaPlayer.stop();
                     mediaPlayer.reset();
                 }
-                
+
                 activity.onFragmentChange("home");
 
             }
@@ -479,7 +479,7 @@ public class Fragment_Home_SleepStart extends Fragment {
             String json = (String) value;
             items.add(gson.fromJson(json, AlarmData.class));
         }
-        ;
+
         if (items.size() <= 0) {
 
         } else {
