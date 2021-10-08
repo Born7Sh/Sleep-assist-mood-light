@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -32,6 +33,8 @@ import retrofit2.Response;
 
 public class Fragment_Home extends Fragment {
     MainActivity activity;
+
+    TextView alarmTime;
 
     // 사용자의 모든 정보 21.08.01
     // 앱 켜지자 마자 데이터 DB에서 다 받아오면 좋을거 같은데
@@ -88,6 +91,7 @@ public class Fragment_Home extends Fragment {
         ImageView weatherInfo = (ImageView) view.findViewById(R.id.weatherInfo);
         ImageView tema = (ImageView) view.findViewById(R.id.tema);
         ImageView alramSetting = (ImageView) view.findViewById(R.id.alramSetting);
+        alarmTime = (TextView) view.findViewById(R.id.alarm_time);
 
         Button sleepReady = (Button) view.findViewById(R.id.sleepReady);
         Button sleepStart = (Button) view.findViewById(R.id.sleepStart);
@@ -246,7 +250,27 @@ public class Fragment_Home extends Fragment {
                 activity.onFragmentChange("sleepStart");
             }
         });
+
+        getAlarmData();
     }
 
 
+    public void getAlarmData() {
+        ArrayList<AlarmData> items = new ArrayList<>();
+        SharedPreferences sp = getActivity().getSharedPreferences("AlarmData", Context.MODE_PRIVATE);
+        Gson gson = new GsonBuilder().create();
+        Collection<?> values = sp.getAll().values();
+
+        for (Object value : values) {
+            String json = (String) value;
+            items.add(gson.fromJson(json, AlarmData.class));
+        }
+
+        if (items.size() <= 0) {
+            alarmTime.setText("설정된 알람이 없습니다.");
+        } else {
+
+            alarmTime.setText(items.get(0).getAlarmTime());
+        }
+    }
 }

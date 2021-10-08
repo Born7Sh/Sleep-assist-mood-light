@@ -132,14 +132,20 @@ public class Fragment_Record_Day extends Fragment {
         mPieChart.clearChart();
         // 점수를 value에 넣고
         // 아래 value에는 점수 - 100 하면 될거같음
+//        mPieChart.addPieSlice(new PieModel("수면 점수",
+//                items.get(0).getScore(), Color.parseColor("#4376FE")));
+//        mPieChart.addPieSlice(new PieModel("",
+//                (100 - items.get(0).getScore()), Color.parseColor("#7FE7FE")));
+
         mPieChart.addPieSlice(new PieModel("수면 점수",
-                items.get(0).getScore(), Color.parseColor("#4376FE")));
+                50, Color.parseColor("#4376FE")));
         mPieChart.addPieSlice(new PieModel("",
-                (100 - items.get(0).getScore()), Color.parseColor("#7FE7FE")));
+               50, Color.parseColor("#7FE7FE")));
+
 
         mPieChart.startAnimation();
         setOurChart();
-        
+
     }
 
     public void setOurChart() {
