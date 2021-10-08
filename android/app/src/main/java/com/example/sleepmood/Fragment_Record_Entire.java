@@ -65,6 +65,8 @@ public class Fragment_Record_Entire extends Fragment {
     private int DB;
 
     private TextView entire_SleepTime;
+    private TextView entire_Element;
+    private TextView entire_Date;
     private TextView sleepScore;
     private TextView sleepCount;
 
@@ -104,6 +106,8 @@ public class Fragment_Record_Entire extends Fragment {
         mPieChart = (org.eazegraph.lib.charts.PieChart) view.findViewById(R.id.chart_pie);
 
         entire_SleepTime = view.findViewById(R.id.entire_SleepTime);
+        entire_Element = view.findViewById(R.id.entire_Element);
+        entire_Date = view.findViewById(R.id.entire_Date);
         sleepScore = view.findViewById(R.id.sleepScore);
         sleepCount = view.findViewById(R.id.entire_SleepCount);
         getReportAll();
@@ -122,7 +126,17 @@ public class Fragment_Record_Entire extends Fragment {
         }
 
         Log.v("알림", "데이터 사이즈" + items.size());
-        setAppText();
+        if(items.size()<=0){
+            entire_SleepTime.setText("없음");
+            entire_Date.setText("데이터가 존재하지 않습니다.");
+            entire_Element.setText("수면데이터를 쌓아주세요");
+            sleepScore.setText("없음");
+            sleepCount.setText("없음");
+
+        }else{
+            setAppText();
+        }
+
 
         // 데이터가 7개 이하면 다 보여주기
         // 데이터가 7개 - 30 사이면 / 4개마다 대푯값 넣어서 보여주기
@@ -250,7 +264,7 @@ public class Fragment_Record_Entire extends Fragment {
                 average = 0;
 
             }
-            if (i == count - 1) {
+            if (i == count - 1 && (items.size() >30 || items.size() > 7)) {
                 average = average / (average % 7);
                 WeekValues.add(average);
             }

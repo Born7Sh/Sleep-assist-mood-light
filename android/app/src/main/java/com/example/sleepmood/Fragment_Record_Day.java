@@ -113,7 +113,15 @@ public class Fragment_Record_Day extends Fragment {
             String json = (String) value;
             items.add(gson.fromJson(json, ReportData.class));
         }
-        setAppText();
+        if(items.size()<=0){
+            sleepTime.setText("없음");
+            sleepDate.setText("데이터가 존재하지 않습니다.");
+            sleepElement.setText("수면데이터를 쌓아주세요");
+            sleepScore.setText("없음");
+
+        }else{
+            setAppText();
+        }
     }
 
     public void setAppText() {
@@ -123,6 +131,7 @@ public class Fragment_Record_Day extends Fragment {
         sleepElement.setText(items.get(0).getElements());
         sleepScore.setText(Integer.toString(items.get(0).getScore()) + "점");
         sleepTime.setText(Integer.toString((int) items.get(0).getSleeping_time()) + "시간");
+        setOurChart();
     }
 
 
@@ -138,13 +147,12 @@ public class Fragment_Record_Day extends Fragment {
 //                (100 - items.get(0).getScore()), Color.parseColor("#7FE7FE")));
 
         mPieChart.addPieSlice(new PieModel("수면 점수",
-                50, Color.parseColor("#4376FE")));
+                (items.get(0).getScore()), Color.parseColor("#4376FE")));
         mPieChart.addPieSlice(new PieModel("",
-               50, Color.parseColor("#7FE7FE")));
+                (items.get(0).getScore()), Color.parseColor("#7FE7FE")));
 
 
         mPieChart.startAnimation();
-        setOurChart();
 
     }
 

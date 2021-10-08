@@ -119,13 +119,13 @@ public class Fragment_Home_SleepReady extends Fragment {
             @Override
             public void onClick(View v) {
                 if(checkBox_cold.isChecked()){
-                    checkBox_element = checkBox_element +" 감기기운 ";
+                    checkBox_element = checkBox_element +"감기기운 ";
                }
                 if(checkBox_smoke.isChecked()){
-                    checkBox_element = checkBox_element + " 담배 ";
+                    checkBox_element = checkBox_element + "담배 ";
                 }
                 if(checkBox_not_home.isChecked()){
-                    checkBox_element = checkBox_element + " 집아님 ";
+                    checkBox_element = checkBox_element + "집아님 ";
                 }
                 Log.v("알림" ,"checkbox 값 : " + checkBox_element);
 

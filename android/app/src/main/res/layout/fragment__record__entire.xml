@@ -50,6 +50,7 @@
                         android:text="날짜"></TextView>
 
                     <TextView
+                        android:id="@+id/entire_Date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -67,6 +68,7 @@
                         android:text="요소"></TextView>
 
                     <TextView
+                        android:id="@+id/entire_Element"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -221,107 +223,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:weightSum="2">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="6dp"
-                android:layout_weight="1"
-                android:background="@drawable/background_opaque_black"
-                android:text="@string/hello_blank_fragment">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center"
-                    android:weightSum="10">
-
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:layout_margin="10dp"
-                        android:layout_weight="0.5"
-                        android:src="@drawable/point_dot"></ImageView>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="9.5"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="일어난 시간"
-                            android:textSize="15dp"></TextView>
-
-
-                        <TextView
-                            android:id="@+id/entire_WakeupTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="오전 7 : 45 분"
-                            android:textSize="20dp"></TextView>
-
-                    </LinearLayout>
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="12dp"
-                android:layout_weight="1"
-                android:background="@drawable/background_opaque_black"
-                android:text="@string/hello_blank_fragment">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center"
-                    android:weightSum="10">
-
-                    <ImageView
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:layout_margin="10dp"
-                        android:layout_weight="0.5"
-                        android:src="@drawable/point_dot"></ImageView>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="9.5"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="최고 DB"
-                            android:textSize="15dp"></TextView>
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="20 dB"
-                            android:textSize="20dp"></TextView>
-
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>

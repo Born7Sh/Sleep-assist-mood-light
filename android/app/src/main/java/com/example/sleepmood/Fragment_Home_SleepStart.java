@@ -196,9 +196,12 @@ public class Fragment_Home_SleepStart extends Fragment {
         btn_stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mediaPlayer.isPlaying()) {
-                    mediaPlayer.stop();
-                    mediaPlayer.reset();
+                if (mediaPlayer != null) {
+
+                    if (mediaPlayer.isPlaying()) {
+                        mediaPlayer.stop();
+                        mediaPlayer.reset();
+                    }
                 }
             }
         });
@@ -242,10 +245,15 @@ public class Fragment_Home_SleepStart extends Fragment {
                 timer.cancel();
                 timer2.cancel();
 
-                if(mediaPlayer.isPlaying()) {
+
+                if(mediaPlayer != null) {
                     mediaPlayer.stop();
                     mediaPlayer.reset();
                 }
+
+                SharedPreferences.Editor editor = pref_element.edit();
+                editor.putString("element", "없음");
+                editor.commit();
 
                 activity.onFragmentChange("home");
 
