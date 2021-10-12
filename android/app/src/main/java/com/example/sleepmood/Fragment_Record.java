@@ -187,13 +187,7 @@ public class Fragment_Record extends Fragment {
                 Log.v("알림", "일단 응답옴");
                 if (response.isSuccessful()) {
 
-
-                    Log.v("알림", "성공");
                     rd = response.body();
-                    Log.v("알림", "크기: " + rd.size());
-                    Log.v("알림", "스코어: " + rd.get(0).getScore());
-                    Log.v("알림", "수면 시간: " + rd.get(0).getSleeping_time());
-                    Log.v("알림", "element: " + rd.get(0).getElements());
 
                     pref_reportAll = getContext().getSharedPreferences("reportAll", MODE_PRIVATE);
                     Gson gson = new Gson();

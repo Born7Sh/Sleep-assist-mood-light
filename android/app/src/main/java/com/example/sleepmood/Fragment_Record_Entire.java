@@ -264,7 +264,7 @@ public class Fragment_Record_Entire extends Fragment {
                 average = 0;
 
             }
-            if (i == count - 1 && (items.size() >30 || items.size() > 7)) {
+            if (i == count - 1 && (items.size() > 30 || items.size() > 7)) {
                 average = average / (average % 7);
                 WeekValues.add(average);
             }

@@ -10,10 +10,12 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -91,6 +94,9 @@ public class Fragment_Home_SleepStart extends Fragment {
     private String user_element;
     private String alarm_time;
 
+    private SharedPreferences pref_song;
+    private int user_song;
+
     private MediaPlayer mediaPlayer;
     private Button btn_play;
     private Button btn_stop;
@@ -134,8 +140,12 @@ public class Fragment_Home_SleepStart extends Fragment {
         pref_element = getActivity().getSharedPreferences("element", Activity.MODE_PRIVATE);
         user_element = pref_element.getString("element", "없음");
 
+        pref_song = getActivity().getSharedPreferences("song", Activity.MODE_PRIVATE);
+        user_song = pref_song.getInt("song", R.raw.wood);
+
 
         Log.v("알림", "user_element 값 : " + user_element);
+        Log.v("알림", "user_song 값 : " + user_song);
 
 
         Date curDate = new Date();
@@ -185,9 +195,8 @@ public class Fragment_Home_SleepStart extends Fragment {
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mediaPlayer = MediaPlayer.create(getActivity(), R.raw.lemon);
+                mediaPlayer = MediaPlayer.create(getActivity(), user_song);
                 mediaPlayer.start();
-                mediaPlayer.setLooping(true);
             }
         });
 
@@ -205,9 +214,6 @@ public class Fragment_Home_SleepStart extends Fragment {
                 }
             }
         });
-
-
-
 
 
         water.setOnClickListener(new View.OnClickListener() {
@@ -246,7 +252,7 @@ public class Fragment_Home_SleepStart extends Fragment {
                 timer2.cancel();
 
 
-                if(mediaPlayer != null) {
+                if (mediaPlayer != null) {
                     mediaPlayer.stop();
                     mediaPlayer.reset();
                 }
@@ -263,7 +269,35 @@ public class Fragment_Home_SleepStart extends Fragment {
         getAlarmData();
         callSleep();
 
+    }
 
+    @Override
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                callUpdate();
+
+                timer.cancel();
+                timer2.cancel();
+
+
+                if (mediaPlayer != null) {
+                    mediaPlayer.stop();
+                    mediaPlayer.reset();
+                }
+
+                SharedPreferences.Editor editor = pref_element.edit();
+                editor.putString("element", "없음");
+                editor.commit();
+
+                activity.onFragmentChange("home");
+
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     private void complementaty(double new_ts) {
@@ -361,7 +395,7 @@ public class Fragment_Home_SleepStart extends Fragment {
         RetroBuilder retro = new RetroBuilder();
         SleepTime st = new SleepTime(dateFormat.format(curDate), user_element, user_id);
 
-        if(!(alarm_time == null)){
+        if (!(alarm_time == null)) {
             st.setAlarm_time(alarm_time);
         }
 
@@ -379,11 +413,20 @@ public class Fragment_Home_SleepStart extends Fragment {
                              Log.v("알림", "callSleep 돌입");
                              if (!response.isSuccessful()) {
                                  Log.v("알림", "response : " + response.code());
+                                 Toast myToast = Toast.makeText(getActivity(),"에러코드 발생 !" + response.code(), Toast.LENGTH_SHORT);
+                                 myToast.show();
                                  return;
                              }
                              id = response.body();
                              Log.v("알림", "id는 : " + id);
-                             startTimer();
+
+                             Handler mHandler = new Handler();
+                             mHandler.postDelayed(new Runnable() {
+                                 public void run() {
+                                     startTimer();
+                                 }
+                             }, 500);
+
                          }
 
                          @Override
@@ -398,6 +441,9 @@ public class Fragment_Home_SleepStart extends Fragment {
         RetroBuilder retro = new RetroBuilder();
         float a = (float) pitch;
         float b = (float) roll;
+
+        Log.v("알림", "pitch : " + pitch);
+        Log.v("알림", "roll : " + roll);
 
         Date curDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
@@ -466,7 +512,7 @@ public class Fragment_Home_SleepStart extends Fragment {
             @Override
             public void run() {
                 // 반복실행할 구문
-                if (pitch > 1 || roll > 1) {
+                if (pitch > 2 || roll > 2) {
                     Log.v("알림", "grade 1 증가");
                     grade++;
                 }

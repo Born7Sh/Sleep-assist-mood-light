@@ -3,109 +3,136 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/background_image"
+    android:orientation="vertical"
     tools:context=".Fragment_Home_Tema_Song">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_margin="12dp"
-            android:weightSum="3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:textSize="25dp"
-                android:gravity="center"
-                android:text="백색소음"
-                android:layout_marginRight="6dp"
-                android:background="@drawable/background_opaque_black"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"></TextView>
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:weightSum="3">
 
             <TextView
-                android:textSize="25dp"
-                android:gravity="center"
-                android:text="비 소음"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:background="@drawable/background_opaque_black"
-                android:layout_weight="1"
+                android:id="@+id/songWood"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"></TextView>
+                android:layout_height="100dp"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_opaque_black"
+                android:gravity="center"
+                android:text="장작 소리"
+                android:textSize="25dp"></TextView>
 
             <TextView
-                android:textSize="25dp"
-                android:gravity="center"
-                android:text="매미 소음"
-                android:layout_marginLeft="6dp"
-                android:background="@drawable/background_opaque_black"
-                android:layout_weight="1"
+                android:id="@+id/songRain"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"></TextView>
+                android:layout_height="100dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_opaque_black"
+                android:gravity="center"
+                android:text="비 소리"
+                android:textSize="25dp"></TextView>
+
+            <TextView
+                android:id="@+id/songNewAge"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginLeft="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_opaque_black"
+                android:gravity="center"
+                android:text="뉴에이지"
+                android:textSize="25dp"></TextView>
 
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:background="@drawable/background_opaque_black"
-        android:weightSum="10"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@drawable/background_opaque_black"
+        android:weightSum="10">
 
         <TextView
-            android:layout_margin="12dp"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="절전 모드"
-            ></TextView>
-
-        <View
-            android:layout_weight="8"
-            android:layout_width="0dp"
-            android:layout_height="0dp"></View>
-
-        <Switch
-            android:id="@+id/song_Sw"
             android:layout_margin="12dp"
             android:layout_weight="1"
+            android:text="현재 설정된 소리 "></TextView>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="8"></View>
+        <TextView
+            android:id="@+id/currentSong"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Switch>
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:text=" "></TextView>
     </LinearLayout>
 
     <LinearLayout
-        android:background="@drawable/background_opaque_black"
-        android:weightSum="10"
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="50dp"
+        android:background="@drawable/background_opaque_black"
+        android:weightSum="10">
 
         <TextView
-            android:layout_margin="12dp"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="볼 륨"
-            ></TextView>
-
-        <View
-            android:layout_weight="8"
-            android:layout_width="0dp"
-            android:layout_height="0dp"></View>
-
-        <EditText
-            android:gravity="center"
-            android:id="@+id/song_Vol"
-            android:text="5"
             android:layout_margin="12dp"
             android:layout_weight="1"
+            android:text="절전 모드"></TextView>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="8"></View>
+
+        <Switch
+            android:id="@+id/song_Sw"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></EditText>
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_weight="1"></Switch>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/background_opaque_black"
+        android:weightSum="10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:text="볼 륨"></TextView>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="8"></View>
+
+        <EditText
+            android:id="@+id/song_Vol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="5"></EditText>
     </LinearLayout>
 
 </LinearLayout>
