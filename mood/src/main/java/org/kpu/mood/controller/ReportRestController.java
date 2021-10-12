@@ -2,7 +2,6 @@ package org.kpu.mood.controller;
 
 
 import java.nio.charset.Charset;
-import java.util.List;
 
 import org.kpu.mood.domain.SleepReportVO;
 import org.kpu.mood.domain.SleepReportVO2;
@@ -44,7 +43,7 @@ public class ReportRestController {
 		headers.set("My-Header", "MyHeaderValue");
 		return new ResponseEntity<SleepReportVO>(report, headers, HttpStatus.OK);
 	}
-	@RequestMapping(value = "/{email}/all1", method = RequestMethod.GET)
+	@RequestMapping(value = "/{email}/all", method = RequestMethod.GET)
 	public ResponseEntity<SleepReportVO> readAllReport(@PathVariable String email) throws Exception {
 		//report에 필요한 값 저장 후 서비스 레이어에서 처리 요청
 
@@ -58,26 +57,12 @@ public class ReportRestController {
 		return new ResponseEntity<SleepReportVO>(report, headers, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/{email}/all", method = RequestMethod.GET)
-	public ResponseEntity<List<SleepReportVO>> readAllReports(@PathVariable String email) throws Exception {
-		//report에 필요한 값 저장 후 서비스 레이어에서 처리 요청
-
-		List<SleepReportVO> report = reportService.readAllReports(email);
-		// 로그 생성
-		logger.info(" /report/{}/all REST-API GET method called. then method executed.",email);
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-		headers.set("My-Header", "MyHeaderValue");
-		return new ResponseEntity<>(report, headers, HttpStatus.OK);
-	}
-	
 	@RequestMapping(value = "/{email}/{date}/selection", method = RequestMethod.GET)
 	public ResponseEntity<SleepReportVO> readSelectReport(@ModelAttribute SleepReportVO reportVO) throws Exception {
 		
 		SleepReportVO report = reportService.readSelectReport(reportVO);
 		
-		//logger.info(" /{}/{}/selection REST-API GET method called. then method executed.",reportVO.getEmail(),reportVO.getDate());
+		logger.info(" /{}/{}/selection REST-API GET method called. then method executed.",reportVO.getEmail(),reportVO.getDate());
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));

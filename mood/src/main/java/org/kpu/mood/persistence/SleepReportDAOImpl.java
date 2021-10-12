@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.kpu.mood.domain.ElementsVO;
-import org.kpu.mood.domain.SleepReportTrans;
 import org.kpu.mood.domain.SleepReportVO;
 import org.kpu.mood.domain.SleepReportVO2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ public class SleepReportDAOImpl implements SleepReportDAO{
 	
 	private static final String namespace = "org.kpu.sleepapp.mapper.SRMapper";
 	
-	public SleepReportVO readToday(SleepReportTrans sleep_reportVO) throws Exception {
+	public SleepReportVO readToday(SleepReportVO sleep_reportVO) throws Exception {
 		SleepReportVO vo = sqlSession.selectOne(namespace+".selectByEmailToday", sleep_reportVO);
 		if(vo==null) {
 			vo = new SleepReportVO();
@@ -33,16 +32,8 @@ public class SleepReportDAOImpl implements SleepReportDAO{
 		if(list.isEmpty()) {
 			list = new ArrayList<SleepReportVO>();
 		}
-
 		return list;
 	}
-	
-	public List<String> readAllElement(String email) throws Exception{
-		List<String> string_list = new ArrayList<String>();
-		string_list = sqlSession.selectList(namespace + ".selectByEmailElement", email);
-		return string_list;
-	}
-
 	
 	public List<SleepReportVO> readPeriod(SleepReportVO2 reportVO) throws Exception{
 		List<SleepReportVO> list = new ArrayList<SleepReportVO>();

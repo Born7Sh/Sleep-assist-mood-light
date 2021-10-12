@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.kpu.mood.domain.ElementsVO;
-import org.kpu.mood.domain.SleepReportTrans;
 import org.kpu.mood.domain.SleepReportVO;
 import org.kpu.mood.domain.SleepReportVO2;
 import org.kpu.mood.persistence.SleepReportDAO;
@@ -24,15 +23,18 @@ public class SleepReportServiceImpl implements SleepReportService{
 	public SleepReportVO readTodayReport(String email) throws Exception {
 		//Value Object 생성
 		SleepReportVO reportVO = new SleepReportVO();
-		SleepReportTrans sleep = new SleepReportTrans();
 		//오늘 날짜 지정
 		Date nowDate = new Date();
 		SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd");
 		String date = format1.format(nowDate);
-		sleep.setEmail(email);
-		sleep.setDate(date);
-		reportVO = sleepreportDAO.readToday(sleep);
+		reportVO.setEmail(email);
+		reportVO.setDate(date);
 		
+		reportVO = sleepreportDAO.readToday(reportVO);
+		
+		List<ElementsVO> list = sleepreportDAO.readElements(reportVO);
+		String element = str(list);
+		reportVO.setElements(element);
 		
 		return reportVO;
 	}
@@ -45,34 +47,27 @@ public class SleepReportServiceImpl implements SleepReportService{
 		SleepReportVO sleepreportVO = new SleepReportVO();
 
 		sleepreportVO = average(sreportVO);
-		//sleepreportVO.setEmail(reportVO.getEmail());
+		sleepreportVO.setEmail(reportVO.getEmail());
 		
 		List<ElementsVO> elementslist = new ArrayList<ElementsVO>();
 		elementslist=sleepreportDAO.readElements(reportVO);
 		String elements = str(elementslist);
 		
-		//sleepreportVO.setElements(elements.toString());
+		sleepreportVO.setElements(elements.toString());
 		return sleepreportVO;
 	}
 	
 	public SleepReportVO readSelectReport(SleepReportVO reportVO) throws Exception {
 		SleepReportVO sleepreportVO = new SleepReportVO();
 		
-		//sleepreportVO = sleepreportDAO.readToday(reportVO);
+		sleepreportVO = sleepreportDAO.readToday(reportVO);
 		List<ElementsVO> list = sleepreportDAO.readElements(reportVO);
 		String element = str(list);
 		
-		//sleepreportVO.setElements(element);
+		sleepreportVO.setElements(element);
 		return sleepreportVO;
 	}
-	
-	public List<SleepReportVO> readAllReports(String email) throws Exception{
 		
-		List<SleepReportVO> list = sleepreportDAO.readAll(email);
-		
-		return list;
-	}
-	
 	public SleepReportVO readAllReport(String email) throws Exception{
 		//데이터 처리
 		SleepReportVO reportVO = new SleepReportVO();
@@ -82,38 +77,15 @@ public class SleepReportServiceImpl implements SleepReportService{
 			return reportVO;
 		}
 		reportVO = average(list);
-		reportVO.setElements("");
-		List<String> string_list = new ArrayList<String>();
-		string_list = sleepreportDAO.readAllElement(email);
-		for (String str : string_list) {
-			if(str.equals("없음")) {
-				reportVO.setElements("없음");
-				break;
-			}
-		}
-		int a=0,b=0,c=0; //요소 체크용
-		String text = "";
+		//요소 처리
+		List<ElementsVO> elementslist = new ArrayList<ElementsVO>();
+		elementslist=sleepreportDAO.readElements(email);
+
+		String elements = str(elementslist);
 		
-		String element = reportVO.getElements();
-		System.out.println(element);
-		if(!(element.equals("없음"))||element==null) {
-			for (String str : string_list) {
-				if(str.equals("흡연") && a==0) {
-					text += "흡연 ";
-					a = 1;
-				}
-				if(str.equals("감기") && b==0) {
-					text += "감기 ";
-					b = 1;
-				}
-				if(str.equals("내 집 아님") && c==0) {
-					text += "내 집 아님 ";
-					c = 1;
-				}
-				System.out.println(str);
-			}
-			reportVO.setElements(text);
-		}
+		reportVO.setElements(elements.toString());
+		reportVO.setEmail(email);
+
 		
 		return reportVO;
 	}
@@ -125,11 +97,7 @@ public class SleepReportServiceImpl implements SleepReportService{
 		for(SleepReportVO reportVO : list) {
 			score += reportVO.getScore();
 			sleeping_time += reportVO.getSleeping_time();
-			
 		}
-		System.out.println(score);
-		System.out.println(sleeping_time);
-		System.out.println(list.size());
 		report.setScore(score/ list.size());
 		report.setSleeping_time(sleeping_time/ list.size());
 		return report;
