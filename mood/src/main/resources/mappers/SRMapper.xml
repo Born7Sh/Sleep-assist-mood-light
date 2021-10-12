@@ -7,18 +7,22 @@
 <mapper namespace="org.kpu.sleepapp.mapper.SRMapper">
 
      <select id="selectByEmailToday" resultType="SleepReportVO">
-     	select * from sleep_report where email = #{email} and date = #{date}
+     	select score, sleeping_time, elements from sleep_report inner join sleep s where sleepid = (select id from sleep where s.email = #{email} and s.end >= #{date} order by s.id limit 1);
  		<!--  select email, score, sleeping_time, date, element from sleep_report left join elements e on sleep_report.id = e.reportid where email = #{email} and date = #{date};-->
      </select>
      
      <select id="selectByEmailAll" resultType="SleepReportVO">
      <![CDATA[
- 		select * from sleep_report where email = #{email}
+ 		select score, sleeping_time, Elements from sleep_report inner join sleep where sleepid in (select id from sleep where email = #{email})and sleepid = sleep.id ;
  	 ]]>
      </select>
      
      <select id="selectByEmailDateValue" resultType="SleepReportVO">
  		select * from sleep_report where email = #{email} and date between date(#{date}) and date(#{end})
+     </select>
+     
+     <select id="selectByEmailElement" resultType="String">
+ 		select distinct elements from sleep_report inner join sleep where sleepid in (select id from sleep where email = #{email}) and sleepid = sleep.id;
      </select>
      
      <select id="selectByEmailPeriodElements" resultType="ElementsVO">

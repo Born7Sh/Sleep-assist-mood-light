@@ -4,7 +4,7 @@ public class SleepVO {
 	private int id;
 	private String start;
 	private String end;
-	private int elements;
+	private String elements;
 	private String email;
 	private String alarm_time;
 	
@@ -38,10 +38,10 @@ public class SleepVO {
 	public void setEnd(String end) {
 		this.end = end;
 	}
-	public int getElements() {
+	public String getElements() {
 		return elements;
 	}
-	public void setElements(int elements) {
+	public void setElements(String elements) {
 		this.elements = elements;
 	}
 
