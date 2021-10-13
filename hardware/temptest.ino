@@ -36,8 +36,8 @@ void loop(){
     data = Serial.read();
     Serial.print(data);
     if(data == 69){ //WarmWhite
-      colorWipe(strip.Color(255, 100, 0), 40);
       strip.setBrightness(50);
+      colorWipe(strip.Color(255, 100, 0), 40);
       strip.show();
     }
     if(data == 82){ //RED
@@ -78,22 +78,27 @@ void loop(){
     }
     if(data == 77){ //Bright255
       strip.setBrightness(255);
+      colorWipe(strip.Color(255, 100, 0), 40);
       strip.show();
     }
     if(data == 48){ //Bright100
       strip.setBrightness(100);
+      colorWipe(strip.Color(255, 100, 0), 40);
       strip.show();
     }
 
-    h = dht.readHumidity();     //습도
-    t = dht.readTemperature();  //온도
-    Serial.print(h);
-    Serial.print(" ");
-    Serial.print(t);
-    Serial.print(" ");
-    int cdsValue = analogRead(A4);  
-    int lux = lightMeter.readLightLevel();
-    Serial.println(lux);        //조도
+    if(data == 84){
+      h = dht.readHumidity();     //습도
+      t = dht.readTemperature();  //온도
+      Serial.print(h);
+      Serial.print(" ");
+      Serial.print(t);
+      Serial.print(" ");
+      int cdsValue = analogRead(A4);  
+      int lux = lightMeter.readLightLevel();
+      Serial.println(lux);        //조도
+    }
+
   }
 }
 
