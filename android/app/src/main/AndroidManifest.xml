@@ -3,7 +3,8 @@
     package="com.example.sleepmood">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,8 +12,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".Activity_AlarmOff"></activity>
+        android:theme="@style/Theme.AppCompat.NoActionBar"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Activity_Diary_add"></activity>
+        <activity android:name=".Activity_Calendar_add"></activity>
+        <activity android:name=".Activity_AlarmOff" />
         <activity android:name=".Activity_Log_in" />
         <activity android:name=".Activity_Sign_up" />
         <activity android:name=".LoginActivity" />

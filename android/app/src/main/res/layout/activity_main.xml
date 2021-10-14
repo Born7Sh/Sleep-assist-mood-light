@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
 
     <!-- 21-07-23 탭레이아웃 -->
     <!-- 참고 : https://lcw126.tistory.com/330 -->
+
     <FrameLayout
         android:id="@+id/fragment_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_weight="1"></FrameLayout>
 
 
-    <!-- 21-07-22 하단 탭레이아웃 -->
-    <!--app:itemIconTint="@drawable/menu_selector_color" 눌렀을 때 아이콘 바뀌는 색깔 조정하는거
-        app:labelVisibilityMode="labeled" 이거 없으면 글씨 사라짐 -->
-    <!-- 참고 : https://lcw126.tistory.com/330 -->
+        <!-- 21-07-22 하단 탭레이아웃 -->
+        <!--app:itemIconTint="@drawable/menu_selector_color" 눌렀을 때 아이콘 바뀌는 색깔 조정하는거
+            app:labelVisibilityMode="labeled" 이거 없으면 글씨 사라짐 -->
+        <!-- 참고 : https://lcw126.tistory.com/330 -->
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:labelVisibilityMode="labeled"
-        android:background="?android:attr/windowBackground"
-        app:itemIconTint="@drawable/menu_selector_color"
-        app:itemTextColor="@drawable/menu_selector_color"
-        app:menu="@menu/bottom_navigation_menu" />
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:background="?android:attr/windowBackground"
+            app:itemIconTint="@drawable/menu_selector_color"
+            app:itemTextColor="@drawable/menu_selector_color"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_navigation_menu" />
 
-    </FrameLayout>
+
 </LinearLayout>

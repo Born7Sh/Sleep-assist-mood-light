@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +27,11 @@ import com.github.mikephil.charting.utils.Utils;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -35,7 +39,11 @@ public class Fragment_Record_Week extends Fragment {
 
     LineChart chart;
 
-    List<String> xAxisValues = new ArrayList<>(Arrays.asList("일", "월", "화", "수", "목", "금","토"));
+    String startDate;
+    String endDate;
+
+    List<String> xAxisValues = new ArrayList<>(Arrays.asList("10/12", "10/11", "10/10", "10/10", "10/10", "10/10", "10/10"));
+    //List<String> xAxisValues = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +57,48 @@ public class Fragment_Record_Week extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         chart = view.findViewById(R.id.chart);
         // background color
+        getUserdata();
+        setAxisList();
+        ourWeekData();
+
+    }
+
+    public void getUserdata() {
+        Date curDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.format(curDate);
+
+        startDate = dateFormat.format(curDate);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(curDate);
+        cal.add(Calendar.DATE, -7);
+
+        endDate = dateFormat.format(cal.getTime());
+
+        Log.v("알림", "지금 시간은? : " + startDate);
+        Log.v("알림", "7일 전의 시간은? " + endDate);
+    }
+
+    public void setAxisList() {
+
+        Date curDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(curDate);
+
+        for (int i = 0; i < 7; i++) {
+
+            cal = Calendar.getInstance();
+            cal.setTime(curDate);
+            cal.add(Calendar.DATE, -i);
+            xAxisValues.set(i, endDate = dateFormat.format(cal.getTime()));
+
+        }
+    }
+
+    public void ourWeekData() {
         chart.setBackgroundColor(Color.WHITE);
         // disable description text
         chart.getDescription().setEnabled(false);
@@ -88,7 +138,6 @@ public class Fragment_Record_Week extends Fragment {
             yAxis.setAxisMaximum(100f);
             yAxis.setAxisMinimum(0);
         }
-
 
 
         setData(7, 100);

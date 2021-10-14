@@ -289,7 +289,6 @@ public class Fragment_Home_AlarmAdd extends Fragment {
                 } else {
                     // 수정하는게 맞을때
 
-
                     // 기존의 알람을 취소허고
                     pendingIntent = PendingIntent.getBroadcast(getContext(),
                             alarmNum, my_intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -341,7 +340,8 @@ public class Fragment_Home_AlarmAdd extends Fragment {
                 String minute = setMinute(min);
 
                 Toast.makeText(getContext(), "ampmhour : " + ampmhour + ", min : " + minute, Toast.LENGTH_LONG).show();
-                alarmRegsiter_Time = ampmhour + minute;
+                //10-05 여기 고침
+                alarmRegsiter_Time = ampmhour + " " +minute;
             }
         });
 

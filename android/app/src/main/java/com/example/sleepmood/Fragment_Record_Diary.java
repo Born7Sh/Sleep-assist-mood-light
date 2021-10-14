@@ -1,6 +1,9 @@
 package com.example.sleepmood;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,12 +14,21 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
 public class Fragment_Record_Diary extends Fragment {
 
@@ -24,11 +36,19 @@ public class Fragment_Record_Diary extends Fragment {
     private RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
 
-    private ArrayList<DiaryData> diaryData = new ArrayList<DiaryData>();
+    private ArrayList<DiaryData> diaryData = new ArrayList<>();
+    private List<DiaryData> result;
+    private SharedPreferences sharedPreferences;
 
     MainActivity activity;
     // 데이터 공유 용도
     private SharedViewModel sharedViewModel;
+
+    private SharedPreferences pref;
+    private String checkFirst;
+
+    private SharedPreferences pref_id;
+    private String user_id;
 
     @Override
     public void onAttach(Context context) {
@@ -53,20 +73,32 @@ public class Fragment_Record_Diary extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        DiaryData a = new DiaryData("1","21/08/24","오늘은 수면을 취했다");
-        DiaryData b = new DiaryData("2","21/08/25","오늘은 밥을 먹었다");
-        DiaryData c = new DiaryData("3","21/08/26","오늘은 코딩을 했다");
-        DiaryData d = new DiaryData("4","21/08/27","내일은 라면을 먹을까?");
 
-        diaryData.add(a);
-        diaryData.add(b);
-        diaryData.add(c);
-        diaryData.add(d);
+        pref = getActivity().getSharedPreferences("token", Activity.MODE_PRIVATE);
+        checkFirst = pref.getString("token", "NULL");
 
-        sharedViewModel.setAllLiveDiaryData(diaryData);
+        pref_id = getActivity().getSharedPreferences("id", Activity.MODE_PRIVATE);
+        user_id = pref_id.getString("id", "NULL");
 
-        diaryData = sharedViewModel.getLiveDiaryData().getValue();
 
+        // 디이어리 데이터 가져오는 부분.
+//        RetroBuilder retro = new RetroBuilder();
+//        Call<List<DiaryData>> call2 = retro.service.getDiaryToday("born7sh@gmail.com");
+//        call2.enqueue(new Callback<List<DiaryData>>() {
+//            @Override
+//            public void onResponse(Call<List<DiaryData>> call, Response<List<DiaryData>> response) {
+//                if(response.isSuccessful()){
+//                    List<DiaryData> reportL = response.body();
+//                    Log.v("알림", "일단 들어는옴2");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<DiaryData>> call, Throwable t) {
+//                Log.v("알림", "안됨2");
+//            }
+//
+//        });
         mContext = view.getContext();
         recyclerView = view.findViewById(R.id.recycler_view);
 
@@ -80,16 +112,64 @@ public class Fragment_Record_Diary extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        DiaryAdapter adapter = new DiaryAdapter(mContext, diaryData);
-        recyclerView.setAdapter(adapter);
 
-        ImageView diaryAdd = (ImageView)view.findViewById(R.id.diaryAdd);
+        ImageView diaryAdd = (ImageView) view.findViewById(R.id.diaryAdd);
         diaryAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Activity_Diary_add.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    private void callDiaryData() {
+        RetroBuilder retro = new RetroBuilder();
+        Call<List<DiaryData>> call2 = retro.service.getDiaryAll(user_id, "Bearer " + checkFirst);
+        call2.enqueue(new Callback<List<DiaryData>>() {
+            @Override
+            public void onResponse(Call<List<DiaryData>> call, Response<List<DiaryData>> response) {
+                Log.v("알림", "일단 응답옴");
+                if (response.isSuccessful()) {
+                    if (result != null) {
+                        result.clear();
+                    }
+                    Log.v("알림", "성공");
+                    result = response.body();
+                    diaryData.addAll(result);
+
+                    DiaryAdapter adapter = new DiaryAdapter(mContext, diaryData);
+                    recyclerView.setAdapter(adapter);
+
+                } else {
+                    Log.v("알림", "onsponse에서의 실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<DiaryData>> call, Throwable t) {
+                Log.e("알림", "진짜 실패");
 
             }
         });
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            public void run() {
+                diaryData.clear();
+                callDiaryData();
+            }
+        }, 200);
+
+
 
     }
 }

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SharedViewModel extends ViewModel {
@@ -90,7 +89,7 @@ public class SharedViewModel extends ViewModel {
     // 수정
     public void setLiveDiaryData(DiaryData beforeDiaryData, DiaryData afterDiaryData) {
         for (int i = 0; i < diaryDataitems.size(); i++) {
-            if (diaryDataitems.get(i).getDiary_id() == beforeDiaryData.getDiary_id()) {
+            if (diaryDataitems.get(i).getEmail() == beforeDiaryData.getEmail()) {
                 diaryDataitems.set(i, afterDiaryData);
                 break;
             }
@@ -115,7 +114,7 @@ public class SharedViewModel extends ViewModel {
     // 삭제
     public void deleteLiveDiaryData(DiaryData diaryData) {
         for (int i = 0; i < diaryDataitems.size(); i++) {
-            if (diaryDataitems.get(i).getDiary_id() == diaryData.getDiary_id()) {
+            if (diaryDataitems.get(i).getEmail() == diaryData.getEmail()) {
                 diaryDataitems.remove(i);
                 break;
             }

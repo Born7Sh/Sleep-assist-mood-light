@@ -21,13 +21,13 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/alarm_time"
         android:layout_marginTop="-50dp"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="오전  8시 30분"
         android:textColor="#FFFFFF"
-        android:textSize="45dp"
+        android:textSize="35dp"
         />
 
 

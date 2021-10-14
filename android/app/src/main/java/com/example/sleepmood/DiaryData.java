@@ -1,37 +1,37 @@
 package com.example.sleepmood;
 
 public class DiaryData {
-    private String diary_id;
-    private String diary_date;
-    private String diary_content;
+    private String email;
+    private String datetime;
+    private String description;
 
-    public DiaryData(String diary_id, String diary_date, String diary_content) {
-        this.diary_id = diary_id;
-        this.diary_date = diary_date;
-        this.diary_content = diary_content;
+    public DiaryData(String email, String datetime, String description) {
+        this.email = email;
+        this.datetime = datetime;
+        this.description = description;
     }
 
-    public String getDiary_id() {
-        return diary_id;
+    public String getEmail() {
+        return email;
     }
 
-    public void setDiary_id(String diary_id) {
-        this.diary_id = diary_id;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getDiary_date() {
-        return diary_date;
+    public String getDate() {
+        return datetime;
     }
 
-    public void setDiary_date(String diary_date) {
-        this.diary_date = diary_date;
+    public void setDate(String date) {
+        this.datetime = date;
     }
 
-    public String getDiary_content() {
-        return diary_content;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDiary_content(String diary_content) {
-        this.diary_content = diary_content;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
