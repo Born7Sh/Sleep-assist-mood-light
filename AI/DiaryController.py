@@ -96,13 +96,37 @@ class DiaryController:
         self.description = dbc.getCursor().fetchall()
         dbc.getDB().commit()
         
-        print(self.description)
+        #print(self.description)
         
-        f= open("DayDiary.txt",'w')
+        f= open("DayDiary.txt",'w+',encoding = 'utf-8')
 
         f.close()
         #car num
-        f= open("DayDiary.txt",'a')
+        f= open("DayDiary.txt",'a',encoding = 'utf-8')
+        f.write(self.description[0][0] + '\n')
+        f.close()
+    
+    
+    def getLast(self,dbc,email):
+        sql = """select description from diary where email = %s ORDER BY id DESC LIMIT 1;"""
+        now = datetime.datetime.now()
+        del_now = datetime.timedelta(days = 1)
+        now = now-del_now
+        #nowstr = now.strftime('%Y-05-11 %H:00:00')
+        nowstr = now.strftime('%Y-%m-%d 08:00:00')
+        dt = nowstr.split()
+        dbc.getCursor().execute(sql,(email))
+        #self.weather = list(cursor.fetchall())
+        self.description = dbc.getCursor().fetchall()
+        dbc.getDB().commit()
+        
+        print(self.description)
+        
+        f= open("DayDiary.txt",'w+',encoding = 'utf-8')
+
+        f.close()
+        #car num
+        f= open("DayDiary.txt",'a+',encoding = 'utf-8')
         f.write(self.description[0][0] + '\n')
         f.close()
     
@@ -120,14 +144,14 @@ class DiaryController:
         self.description = dbc.getCursor().fetchall()
         dbc.getDB().commit()
         
-        print(self.description)
+        #print(self.description)
         
-        f= open("WeekDiary.txt",'w')
+        f= open("WeekDiary.txt",'w',encoding = 'utf-8')
 
         f.close()
         for i in range(len(self.description)):
             #car num
-            f= open("WeekDiary.txt",'a')
+            f= open("WeekDiary.txt",'a',encoding = 'utf-8')
             f.write(self.description[i][0] + '\n')
             f.close()
             
@@ -145,14 +169,14 @@ class DiaryController:
         self.description = dbc.getCursor().fetchall()
         dbc.getDB().commit()
         
-        print(self.description)
+        #print(self.description)
         
-        f= open("MonthDiary.txt",'w')
+        f= open("MonthDiary.txt",'w',encoding = 'utf-8')
 
         f.close()
         for i in range(len(self.description)):
             #car num
-            f= open("MonthDiary.txt",'a')
+            f= open("MonthDiary.txt",'a',encoding = 'utf-8')
             f.write(self.description[i][0] + '\n')
             f.close()
             
@@ -166,31 +190,31 @@ class DiaryController:
         #for k in sorted(ranks, key=ranks.get, reverse=True)[:100]:
            #print("\t".join([str(k), str(ranks[k]), str(tr.dictCount[k])]))
         #print(tr.summarize(0.2))
-        return tr.summarize(0.2)
+        return tr.summarize(0.3)
     
     def getWeekSum(self):
         tr = TextRank()
         tagger = Komoran()
         stopword = set([('있', 'VV'), ('하', 'VV'), ('되', 'VV') ])
-        tr.loadSents(RawSentenceReader('DayDiary.txt'), lambda sent: filter(lambda x:x not in stopword and x[1] in ('NNG', 'NNP', 'VV', 'VA'), tagger.pos(sent)))
+        tr.loadSents(RawSentenceReader('WeekDiary.txt'), lambda sent: filter(lambda x:x not in stopword and x[1] in ('NNG', 'NNP', 'VV', 'VA'), tagger.pos(sent)))
         tr.build()
         ranks = tr.rank()
         #for k in sorted(ranks, key=ranks.get, reverse=True)[:100]:
            #print("\t".join([str(k), str(ranks[k]), str(tr.dictCount[k])]))
         #print(tr.summarize(0.2))
-        return tr.summarize(0.2)
+        return tr.summarize(0.5)
     
     def getMonthSum(self):
         tr = TextRank()
         tagger = Komoran()
         stopword = set([('있', 'VV'), ('하', 'VV'), ('되', 'VV') ])
-        tr.loadSents(RawSentenceReader('DayDiary.txt'), lambda sent: filter(lambda x:x not in stopword and x[1] in ('NNG', 'NNP', 'VV', 'VA'), tagger.pos(sent)))
+        tr.loadSents(RawSentenceReader('MonthDiary.txt'), lambda sent: filter(lambda x:x not in stopword and x[1] in ('NNG', 'NNP', 'VV', 'VA'), tagger.pos(sent)))
         tr.build()
         ranks = tr.rank()
         #for k in sorted(ranks, key=ranks.get, reverse=True)[:100]:
            #print("\t".join([str(k), str(ranks[k]), str(tr.dictCount[k])]))
         #print(tr.summarize(0.2))
-        return tr.summarize(0.2)
+        return tr.summarize(0.38)
     
     def getDayKey(self):
         
@@ -202,7 +226,7 @@ class DiaryController:
         for k in sorted(kw, key=kw.get, reverse=True):
             #print(kw[k])
             if kw[k] >= 0.05:
-                self.keyw = self.keyw +","+ k
+                self.keyw = self.keyw +"," + k[0][0]
         return self.keyw
     def getWeekKey(self):
                 
@@ -214,7 +238,7 @@ class DiaryController:
         for k in sorted(kw, key=kw.get, reverse=True):
             #print(kw[k])
             if kw[k] >= 0.05:
-                self.keyw = self.keyw + "," + k
+                self.keyw = self.keyw + "," + k[0][0]
         return self.keyw
             
     def getMonthKey(self):
@@ -223,11 +247,11 @@ class DiaryController:
         stopword = set([('있', 'VV'), ('하', 'VV'), ('되', 'VV'), ('없', 'VV') ])
         tr.load(RawTaggerReader('MonthDiary.txt'), lambda w: w not in stopword and (w[1] in ('NNG', 'NNP', 'VV', 'VA')))
         tr.build()
-        kw = tr.extract(0.1)
+        kw = tr.extract(0.2)
         for k in sorted(kw, key=kw.get, reverse=True):
             #print(kw[k])
             if kw[k] >= 0.05:
-                self.keyw = self.keyw + "," + k
+                self.keyw = self.keyw + "," + k[0][0]
         return self.keyw
                 
     def getSumId(self,dbc,email):
@@ -251,7 +275,11 @@ class DiaryController:
 db = DBConnect()
 
 dc = DiaryController()
-
-print(dc.getMonthSum())
-#dc. getSumId(db,"born7s@gmail.com")
+dc.getWeek(db,"born7sh@gmail.com")
+dc.getMonth(db,"born7sh@gmail.com")
+#print(dc.getMonthSum())
+#dc. getSumId(db,"born7sh@gmail.com")
+#dc.getLast(db,"born7sh@gmail.com")
+print("키",dc.getMonthKey())
+print("요약",dc.getMonthSum())
 #dc.getWeek(db,"born7sh@gmail.com")

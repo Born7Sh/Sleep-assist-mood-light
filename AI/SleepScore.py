@@ -191,10 +191,6 @@ class SleepScore:
         self.getSleep(email)
         self.makeSleepRepo(email)
             
-ss = SleepStatus()
-ss.setX(0)
-ss.setY(0)
-ss.setGyro(3)
 
 sd = SleepScore()
 sd.setDB()
@@ -207,10 +203,6 @@ user_list = ul.getUserList()
 for i in range(len(user_list)):
     sd.makeScore(user_list[i])
 
-#sd.getSleep("born7sh@gmail.com")
-#sd.makeScore("born7sh@gmail.com")
-#sd.getSleep("born7sh@gmail.com")
-#sd.setSStatus(ss)
 """
 sd.timeCal("2021-09-24 22:00:00", "2021-09-25 18:00:00")
 print(sd.sleep_time)

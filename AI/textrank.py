@@ -200,23 +200,23 @@ print('Load...')
 from konlpy.tag import Komoran
 tagger = Komoran()
 stopword = set([('있', 'VV'), ('하', 'VV'), ('되', 'VV') ])
-tr.loadSents(RawSentenceReader('DayDiary.txt'), lambda sent: filter(lambda x:x not in stopword and x[1] in ('NNG', 'NNP', 'VV', 'VA'), tagger.pos(sent)))
+tr.loadSents(RawSentenceReader('original.txt'), lambda sent: filter(lambda x:x not in stopword and x[1] in ('NNG', 'NNP', 'VV', 'VA'), tagger.pos(sent)))
 print('Build...')
 tr.build()
 ranks = tr.rank()
-#for k in sorted(ranks, key=ranks.get, reverse=True)[:100]:
- #  print("\t".join([str(k), str(ranks[k]), str(tr.dictCount[k])]))
-print(tr.summarize(0.2))
-"""
+for k in sorted(ranks, key=ranks.get, reverse=True)[:100]:
+   print("\t".join([str(k), str(ranks[k]), str(tr.dictCount[k])]))
+#print(tr.summarize(0.2))
 
 tr = TextRank(window=5, coef=1)
 print('Load...')
 stopword = set([('있', 'VV'), ('하', 'VV'), ('되', 'VV'), ('없', 'VV') ])
-tr.load(RawTaggerReader('DayDiary.txt'), lambda w: w not in stopword and (w[1] in ('NNG', 'NNP', 'VV', 'VA')))
+tr.load(RawTaggerReader('original.txt'), lambda w: w not in stopword and (w[1] in ('NNG', 'NNP', 'VV', 'VA')))
 print('Build...')
 tr.build()
 kw = tr.extract(0.1)
 for k in sorted(kw, key=kw.get, reverse=True):
-    #print("%s\t%g" % (k, kw[k]))
-    print(k[0])
+    print("%s\t%g" % (k, kw[k]))
+    #print(k[0])
+    """
     
